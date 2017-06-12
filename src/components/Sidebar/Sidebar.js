@@ -22,6 +22,7 @@ class Sidebar extends PureComponent {
         <Button className="Sidebar__menuBtn" onClick={this.toggleMenu} key="button">
           {this.state.open ? <i className="icon-close Sidebar__menuBtn__icon" /> : <i className="icon-dehaze Sidebar__menuBtn__icon" />}
         </Button>
+        <Button className="Sidebar__menuBtn Sidebar__languageBtn">EN</Button>
       </div>
     )
   }

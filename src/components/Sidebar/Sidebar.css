@@ -14,7 +14,6 @@
   width: 40px;
   height: 40px;
   border-radius: 4px;
-  border: 1px solid #222;
   margin-top: 20px;
   display: flex!important;
   align-items: center;
@@ -22,8 +21,12 @@
   margin-left: 10px;
 }
 
-
 .Sidebar__menuBtn__icon {
   color: #222;
   font-size: 24px;
+}
+
+.Sidebar__languageBtn {
+  position: absolute;
+  bottom: 20px;
 }
