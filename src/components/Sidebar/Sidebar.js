@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { Button } from 'reactstrap'
 import OpenSidebar from '../OpenSidebar'
 import './Sidebar.css'
 
@@ -18,9 +19,9 @@ class Sidebar extends PureComponent {
     return (
       <div className="Sidebar__container">
         {this.state.open ? <OpenSidebar closeMenu={this.toggleMenu} key="opensidebar"/> : null}
-        <button className="Sidebar__menuBtn" onClick={this.toggleMenu} key="button">
+        <Button className="Sidebar__menuBtn" onClick={this.toggleMenu} key="button">
           {this.state.open ? <i className="icon-close Sidebar__menuBtn__icon" /> : <i className="icon-dehaze Sidebar__menuBtn__icon" />}
-        </button>
+        </Button>
       </div>
     )
   }
