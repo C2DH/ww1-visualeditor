@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import './LoginForm.css'
 
 class LoginForm extends PureComponent {
@@ -21,14 +21,17 @@ class LoginForm extends PureComponent {
   setPassword = this.setCredential('password')
 
   handleSubmit = e => {
-    if (! this.props.loading) {
-      e.preventDefault()
+    e.preventDefault()
+    const { credentials } = this.state
+    const { loading } = this.props
+
+    if (! loading && credentials.username !== '' && credentials.password !== '') {
       this.props.onSubmit(this.state.credentials)
     }
   }
 
   render() {
-    const { loading } = this.props
+    const { loading, error } = this.props
     return (
       <div>
         <h3 className="LoginForm__title">Login</h3>
@@ -42,7 +45,12 @@ class LoginForm extends PureComponent {
               <Input onChange={this.setPassword} type="password" placeholder="Password" />
             </FormGroup>
             <Button disabled={loading}>Submit</Button>
-            {loading && <div>Log in...</div>}
+            <div className='LoginForm__bottom'>
+              {loading && <div className="LoginForm__loading">Loggged in Visual Editor please wait...</div>}
+              {!!error && <Alert color="danger">
+               Please enter a valid combination of username and password.
+             </Alert>}
+            </div>
           </Form>
       </div>
     )

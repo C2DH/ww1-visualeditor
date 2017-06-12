@@ -9,6 +9,8 @@ import {
   AUTH_WITH_TOKEN_SUCCESS,
   TOKEN_REFRESHED,
   LOGOUT,
+  logout,
+  tokenRefreshed,
 } from '../actions'
 
 const makeAuth = ({
@@ -17,7 +19,9 @@ const makeAuth = ({
   refreshTokenCall,
 }) => {
 
-  // Local Storage
+  // redux saga helpers for Local Storage
+  // TODO: Sorround shit above in a try/catch prevent bugged behaviour on
+  // mobile safari anonymous navigaton
   const STORAGE_KEY_NS = 'www1Visualeditor'
   function *lsGetAccessToken() {
     return yield call([window.localStorage, 'getItem'], `${STORAGE_KEY_NS}:accessToken`)
@@ -42,7 +46,7 @@ const makeAuth = ({
     yield lsRemoveRefreshToken()
   }
 
-  // Get tokens from redux store
+  // redux saga helpers for getting tokens from redux store
   function *getAccessToken() {
     return yield select(state => state.auth.accessToken)
   }
@@ -50,31 +54,48 @@ const makeAuth = ({
     return yield select(state => state.auth.refreshToken)
   }
 
-  // apiFn fn or an array of [fn, token, refreshToken]
-  function* authApiCall(api, ...args) {
-    let [apiFn, accessToken, refreshToken] = typeof api === 'function' ? [api] : api
-
-    // Take access token from store
-    if (!accessToken) {
-      accessToken =  yield getAccessToken()
+  function* apiCallWithRefresh(accessToken, refreshToken, apiFn, ...args) {
+    try {
+      const result = yield call(apiFn(accessToken), ...args)
+      // Response ok no need to refresh
+      return [result, { accessToken, refreshToken }]
+    } catch (error) {
+      // refresh token and retry the call
+      if (error.status === 401) {
+        let refresh
+        try {
+          refresh = yield call(refreshTokenCall, refreshToken)
+        } catch (_) {
+          // Fuck off if the refresh call fails throw the original 401 error
+          throw error
+        }
+        const result = yield call(apiFn(refresh.access_token), ...args)
+        return [result, { accessToken: refresh.access_token, refreshToken: refresh.refresh_token }]
+      } else {
+        // Normal error handling
+        throw error
+      }
     }
+  }
 
-    // Take refresh token from store
-    if (!refreshToken) {
-      refreshToken =  yield getRefreshToken()
-    }
+  // make an auth api call (curry given or taken from store accessToken)
+  function* authApiCall(apiFn, ...args) {
+    const accessToken =  yield getAccessToken()
+    const refreshToken =  yield getRefreshToken()
 
     try {
-      return yield call(apiFn(accessToken), ...args)
+      const [result, refresh] = yield apiCallWithRefresh(accessToken, refreshToken, apiFn, ...args)
+      if (refresh) {
+        yield lsStoreAccessToken(refresh.accessToken)
+        yield lsStoreRefreshToken(refresh.refreshToken)
+        yield put(tokenRefreshed(refresh))
+      }
+      return result
     } catch (error) {
+      if (error.status === 403 || error.status === 401) {
+        yield put(logout())
+      }
       throw error
-      // TODO: Implement logout/refresh
-      // if (error.status === 401) {
-      //   const data = yield call(refreshTokenCall, refreshToken)
-      //
-      // } else {
-      //   throw error
-      // }
     }
   }
 
@@ -87,15 +108,14 @@ const makeAuth = ({
       try {
         // Curried me
         const me = token => () => meCall(token)
-        const user = yield authApiCall([me, lsAccessToken, lsRefreshToken])
+        const [
+          user,
+          { accessToken, refreshToken }
+        ] = yield apiCallWithRefresh(lsAccessToken, lsRefreshToken, me)
         // Save tokens and user info in redux store
         yield put({
           type: AUTH_WITH_TOKEN_SUCCESS,
-          payload: {
-            user,
-            accessToken: lsAccessToken,
-            refreshToken: lsRefreshToken
-          },
+          payload: { user, accessToken, refreshToken }
         })
       } catch (error) {
         // TODO: Improve error message...
@@ -104,7 +124,7 @@ const makeAuth = ({
           error: error.message ? error.message : error,
         })
         // The token was wrong...
-        // yield lsRemoveTokens()
+        yield lsRemoveTokens()
       }
     }
   }

@@ -1,3 +1,9 @@
 .LoginForm__title {
   margin-bottom: 30px;
 }
+.LoginForm__bottom {
+  padding-top: 20px;
+}
+.LoginForm__loading {
+  font-weight: bold;
+}

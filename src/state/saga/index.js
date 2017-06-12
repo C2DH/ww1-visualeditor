@@ -5,7 +5,7 @@ import * as api from '../../api'
 const { authFlow, authApiCall } = makeAuth({
   meCall: api.me,
   loginCall: api.login,
-  refreshTokenCall: null,
+  refreshTokenCall: api.refreshToken,
 })
 
 export default function* rootSaga() {

@@ -30,3 +30,8 @@ export const login = ({ username, password }) =>
   oauth('password')
     .send({ username, password })
     .then(extractBody)
+
+export const refreshToken = token =>
+  oauth('refresh_token')
+    .send({ refresh_token: token })
+    .then(extractBody)
