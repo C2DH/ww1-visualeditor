@@ -8,6 +8,7 @@ import Layout from './components/Layout'
 // Pages
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Themes from './pages/Themes'
 
 const App = () => (
   <Provider store={store}>
@@ -16,6 +17,7 @@ const App = () => (
         <Switch>
           <Route path='/' exact component={Home} />
           <Route path='/login' exact component={Login} />
+          <Route path='/themes' exact component={Themes} />
         </Switch>
       </Layout>
     </Router>
