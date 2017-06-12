@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './state'
+import { AuthRoute, GuestRoute } from './authRoutes'
 
 import Layout from './components/Layout'
 
@@ -15,9 +16,9 @@ const App = () => (
     <Router>
       <Layout>
         <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/login' exact component={Login} />
-          <Route path='/themes' exact component={Themes} />
+          <GuestRoute path='/login' exact component={Login} />
+          <AuthRoute path='/' exact component={Home} />
+          <AuthRoute path='/themes' exact component={Themes} />
         </Switch>
       </Layout>
     </Router>
