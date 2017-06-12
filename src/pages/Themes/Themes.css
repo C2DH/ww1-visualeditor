@@ -3,3 +3,7 @@
   display: flex;
   border-bottom: 1px solid #222;
 }
+
+.ThemesCard__deleteBtn {
+  margin-left: auto;
+}

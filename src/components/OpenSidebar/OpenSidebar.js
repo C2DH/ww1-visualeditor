@@ -18,7 +18,8 @@ class OpenSidebar extends PureComponent {
   }
 
   render () {
-    const { logout } = this.props
+
+    const { logout, setLang } = this.props
     return (
      <div className="OpenSidebar">
        <ul className="OpenSidebar__toplist">
@@ -35,9 +36,9 @@ class OpenSidebar extends PureComponent {
        <div className="OpenSidebar__Language__container">
          <h6>Language</h6>
          <div className="OpenSidebar__LanguageBtn_container">
-           <Button className="OpenSidebar__LanguageBtn">EN</Button>
-           <Button className="OpenSidebar__LanguageBtn">FR</Button>
-           <Button className="OpenSidebar__LanguageBtn">DE</Button>
+           <Button onClick={() => setLang('EN')} className="OpenSidebar__LanguageBtn">EN</Button>
+           <Button onClick={() => setLang('FR')} className="OpenSidebar__LanguageBtn">FR</Button>
+           <Button onClick={() => setLang('DE')} className="OpenSidebar__LanguageBtn">DE</Button>
          </div>
        </div>
      </div>
