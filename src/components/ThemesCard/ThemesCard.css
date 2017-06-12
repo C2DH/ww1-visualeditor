@@ -1,0 +1,10 @@
+.ThemesCard__card {
+  margin-top: 20px;
+}
+
+.ThemesCard__textContainer {
+  display:inline-flex;
+  height: 60px;
+  padding: 10px;
+  align-items: center;
+}
