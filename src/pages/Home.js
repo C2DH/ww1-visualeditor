@@ -2,9 +2,8 @@ import React from 'react'
 import { Button } from 'reactstrap'
 
 const Home = () => (
-  <div>
-
-    <Button color='primary'>Hello</Button>
+  <div className="text-center">
+    <h1>Hello!</h1>
   </div>
 )
 

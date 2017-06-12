@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button } from 'reactstrap'
 import './OpenSidebar.css'
+import { logout } from '../../state/actions'
 
 class OpenSidebar extends PureComponent {
 
@@ -16,6 +18,7 @@ class OpenSidebar extends PureComponent {
   }
 
   render () {
+    const { logout } = this.props
     return (
      <div className="OpenSidebar">
        <ul className="OpenSidebar__toplist">
@@ -27,7 +30,7 @@ class OpenSidebar extends PureComponent {
        <ul className="OpenSidebar__bottomlist">
          <li><Button className="OpenSidebar__btn" outline color="primary">Help</Button></li>
          <li><Button className="OpenSidebar__btn" outline color="primary">Report a bug</Button></li>
-         <li><Button className="OpenSidebar__btn" outline color="primary">Logout</Button></li>
+         <li><Button onClick={logout} className="OpenSidebar__btn" outline color="primary">Logout</Button></li>
        </ul>
        <div className="OpenSidebar__Language__container">
          <h6>Language</h6>
@@ -42,4 +45,6 @@ class OpenSidebar extends PureComponent {
   }
 }
 
-export default OpenSidebar
+export default connect(undefined, {
+  logout,
+})(OpenSidebar)

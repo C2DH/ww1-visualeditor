@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
-
-const dummy = (prevState = 'dummy', action) => prevState
+import auth from './auth'
 
 export default combineReducers({
-  dummy,
+  auth,
 })
