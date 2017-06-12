@@ -9,14 +9,16 @@ import Layout from './components/Layout'
 // Pages
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Themes from './pages/Themes'
 
 const App = () => (
   <Provider store={store}>
     <Router>
       <Layout>
         <Switch>
-          <AuthRoute path='/' exact component={Home} />
           <GuestRoute path='/login' exact component={Login} />
+          <AuthRoute path='/' exact component={Home} />
+          <AuthRoute path='/themes' exact component={Themes} />
         </Switch>
       </Layout>
     </Router>

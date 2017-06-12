@@ -22,14 +22,14 @@ class OpenSidebar extends PureComponent {
     return (
      <div className="OpenSidebar">
        <ul className="OpenSidebar__toplist">
-         <li><Button className="OpenSidebar__btn" outline color="primary">Home</Button></li>
-         <li><Button className="OpenSidebar__btn" outline color="primary">Themes</Button></li>
-         <li><Button className="OpenSidebar__btn" outline color="primary">Static Pages</Button></li>
-         <li><Button className="OpenSidebar__btn" outline color="primary">Education</Button></li>
+         <li><Link to="/" onClick={this.props.closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Home</Button></Link></li>
+         <li><Link to="/themes" onClick={this.props.closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Themes</Button></Link></li>
+         <li><Link to="/" onClick={this.props.closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Static Pages</Button></Link></li>
+         <li><Link to="/" onClick={this.props.closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Education</Button></Link></li>
        </ul>
        <ul className="OpenSidebar__bottomlist">
-         <li><Button className="OpenSidebar__btn" outline color="primary">Help</Button></li>
-         <li><Button className="OpenSidebar__btn" outline color="primary">Report a bug</Button></li>
+         <li><Link to="/" onClick={this.props.closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Help</Button></Link></li>
+         <li><Link to="/" onClick={this.props.closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Report a bug</Button></Link></li>
          <li><Button onClick={logout} className="OpenSidebar__btn" outline color="primary">Logout</Button></li>
        </ul>
        <div className="OpenSidebar__Language__container">
