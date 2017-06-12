@@ -1,0 +1,29 @@
+.Sidebar__container {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: #EBEBEB;
+  text-align: center;
+}
+
+.Sidebar__menuBtn {
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #222;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+
+.Sidebar__menuBtn__icon {
+  color: #222;
+  font-size: 24px;
+}

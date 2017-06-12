@@ -1,0 +1,11 @@
+.Layout {
+  height: 100%;
+}
+
+.Layout__container {
+  padding-left: 60px;
+  background-color: #fff;
+  width: 100%;
+  overflow: hidden;
+  min-height: 100vh;
+}

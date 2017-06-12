@@ -1,0 +1,16 @@
+.OpenSidebar {
+  position: absolute;
+  left: 60px;
+  background-color: #F7F7EB;
+  height: 100%;
+  width: 350px;
+  z-index: 99;
+}
+
+.OpenSidebar__list {
+  list-style: none!important;
+  margin-top: 80px;
+  font-size: 28px;
+  margin-left: 30px;
+  text-align: left;
+}
