@@ -1,15 +1,15 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import AddButton from '../../components/AddButton'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
-import './ThemeDetail.css'
+import './Chapter.css'
 
-const ThemeDetail = () => (
+const Chapter = () => (
   <Container>
     <Row className="ThemeDetail__topRow">
       <Breadcrumb>
         <BreadcrumbItem className="ThemeDetail__topRow_title"><a href="#">Theme title</a></BreadcrumbItem>
+        <BreadcrumbItem className="ThemeDetail__topRow_title" active>Chapter title</BreadcrumbItem>
       </Breadcrumb>
       <div className="ThemeDetail__topRow_btnContainer">
         <Button className="ThemeDetail__topRow_btn">Save</Button>
@@ -18,15 +18,13 @@ const ThemeDetail = () => (
       </div>
     </Row>
     <Row>
-      <Col md="9" className="no-padding-left">
-        <div className="ThemeDetail__title_edit_container">
+      <div className="Chapter__main_container">
+        <div className="Chapter__show_modules_container">
+          <Button><i className="fa fa-cog" /> Show modules</Button>
         </div>
-      </Col>
-      <Col md="3">
-        <AddButton label="Add Chapter" />
-      </Col>
+      </div>
     </Row>
   </Container>
 )
 
-export default ThemeDetail
+export default Chapter

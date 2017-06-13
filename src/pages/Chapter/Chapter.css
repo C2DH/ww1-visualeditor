@@ -1,0 +1,11 @@
+.Chapter__main_container {
+  min-height: 78vh;
+  width: 100%;
+  background-color: #ccc;
+}
+
+.Chapter__show_modules_container {
+  position: absolute;
+  bottom: 10px;
+  padding-left: 10px;
+}

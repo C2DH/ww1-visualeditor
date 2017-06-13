@@ -7,17 +7,24 @@
 }
 
 .ThemeDetail__topRow_title {
-  padding-top: 15px;
+  position: relative;
+  top: 10px;
+  font-size: 18px;
+}
+
+.ThemeDetail__topRow_title a {
+  color: #222;
 }
 
 .ThemeDetail__topRow_btnContainer {
   margin-left: auto;
   display: inline-flex;
-  padding: 5px;
+  padding: 10px;
 }
 
 .ThemeDetail__topRow_btn {
   margin-left: 5px;
+  height: 50px;
 }
 
 .ThemeDetail__title_edit_container {
