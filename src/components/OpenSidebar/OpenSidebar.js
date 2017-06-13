@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button } from 'reactstrap'
+import { Button, ButtonGroup } from 'reactstrap'
 import './OpenSidebar.css'
 import { logout } from '../../state/actions'
 
@@ -36,9 +36,11 @@ class OpenSidebar extends PureComponent {
        <div className="OpenSidebar__Language__container">
          <h6>Language</h6>
          <div className="OpenSidebar__LanguageBtn_container">
-           <Button onClick={() => setLang('EN')} className="OpenSidebar__LanguageBtn">EN</Button>
-           <Button onClick={() => setLang('FR')} className="OpenSidebar__LanguageBtn">FR</Button>
-           <Button onClick={() => setLang('DE')} className="OpenSidebar__LanguageBtn">DE</Button>
+           <ButtonGroup>
+             <Button onClick={() => setLang('EN')} className="OpenSidebar__LanguageBtn">EN</Button>{' '}
+             <Button onClick={() => setLang('FR')} className="OpenSidebar__LanguageBtn">FR</Button>{' '}
+             <Button onClick={() => setLang('DE')} className="OpenSidebar__LanguageBtn">DE</Button>
+           </ButtonGroup>
          </div>
        </div>
      </div>

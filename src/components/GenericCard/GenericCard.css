@@ -1,10 +1,14 @@
-.ThemesCard__card {
+.GenericCard__card {
   margin-top: 20px;
 }
 
-.ThemesCard__textContainer {
+.GenericCard__textContainer {
   display:inline-flex;
   height: 60px;
   padding: 10px;
   align-items: center;
+}
+
+.GenericCard_footerButton {
+  margin-left: auto;
 }
