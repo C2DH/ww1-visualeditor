@@ -1,0 +1,9 @@
+.AddButton__button {
+  width: 36px;
+  height: 36px;
+  padding: 0.5rem 0.6rem;
+}
+
+.AddButton__label {
+  padding-left: 8px;
+}

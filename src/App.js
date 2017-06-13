@@ -17,8 +17,8 @@ const App = () => (
       <Layout>
         <Switch>
           <GuestRoute path='/login' exact component={Login} />
-          <AuthRoute path='/' exact component={Home} />
-          <AuthRoute path='/themes' exact component={Themes} />
+          <GuestRoute path='/' exact component={Home} />
+          <GuestRoute path='/themes' exact component={Themes} />
         </Switch>
       </Layout>
     </Router>

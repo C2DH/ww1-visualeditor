@@ -1,0 +1,13 @@
+.Home__Col-title-container {
+  padding-top: 25px;
+  display: inline-flex;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.Home__titlebadge {
+  margin-left: auto;
+  margin-top: 5px;
+  height: 18px;
+  margin-right: 5px;
+}
