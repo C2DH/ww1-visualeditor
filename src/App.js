@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Themes from './pages/Themes'
 import ThemeDetail from './pages/ThemeDetail'
+import ThemeEdit from './pages/ThemeEdit'
 
 const App = () => (
   <Provider store={store}>
@@ -21,6 +22,7 @@ const App = () => (
           <GuestRoute path='/' exact component={Home} />
           <GuestRoute path='/themes' exact component={Themes} />
           <GuestRoute path='/themes/:themeId' exact component={ThemeDetail} />
+          <GuestRoute path='/themes/:themeId/edit' exact component={ThemeEdit} />
         </Switch>
       </Layout>
     </Router>

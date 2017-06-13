@@ -17,7 +17,6 @@ const ThemeDetail = () => (
     <Row>
       <Col md="9" className="no-padding-left">
         <div className="ThemeDetail__title_edit_container">
-
         </div>
       </Col>
       <Col md="3">
