@@ -6,7 +6,7 @@ import AddButton from '../../components/AddButton'
 import './ThemeEdit.css'
 
 const ThemeEdit = () => (
-  <Container>
+  <Container fluid>
     <Row>
       <Col md="3">
         <div className="ThemeEdit__actions_container">

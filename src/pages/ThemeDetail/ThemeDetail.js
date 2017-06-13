@@ -6,7 +6,7 @@ import { Button } from 'reactstrap'
 import './ThemeDetail.css'
 
 const ThemeDetail = () => (
-  <Container>
+  <Container fluid>
     <Row className="ThemeDetail__topRow">
       <Breadcrumb>
         <BreadcrumbItem className="ThemeDetail__topRow_title"><a href="#">Theme title</a></BreadcrumbItem>
