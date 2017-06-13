@@ -11,6 +11,7 @@ const Themes = () => (
       <h3>Themes</h3>
       <ThemesSearchInput />
     </Row>
+
     <Row>
       <Col md="3" className="Themes__AddButton-container">
         <AddButton label="Add theme" />
@@ -21,7 +22,12 @@ const Themes = () => (
           cover="https://images.pexels.com/photos/417070/pexels-photo-417070.jpeg?h=350&auto=compress&cs=tinysrgb"
          />
       </Col>
-      <Col md="3"></Col>
+      <Col md="3">
+        <ThemeCard
+          title="Theme title"
+          cover="http://via.placeholder.com/350x150"
+         />
+      </Col>
       <Col md="3"></Col>
     </Row>
   </Container>

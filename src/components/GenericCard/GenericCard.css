@@ -12,3 +12,7 @@
 .GenericCard_footerButton {
   margin-left: auto;
 }
+
+.GenericCard__img {
+  height: 160px;
+}
