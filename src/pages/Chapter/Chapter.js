@@ -35,6 +35,9 @@ class Chapter extends PureComponent {
     </Row>
     <Row>
       <div className={this.state.open ? "Chapter__main_container_open" : "Chapter__main_container"}>
+        <div className="Chapter__edit_button_container">
+          <Button><i className="fa fa-pencil" /></Button>
+        </div>
         <div className="Chapter__show_modules_button_container">
           <Button onClick={this.toggleModule}><i className="fa fa-cog" /> Show modules</Button>
         </div>
@@ -43,10 +46,20 @@ class Chapter extends PureComponent {
     {this.state.open ?
       <Row>
         <div className="Chapter__module_container">
-          <div className="Chapters__AddButton_container">
-            <AddButton label="Add module" />
-          </div>
-          <ThemeCard />
+          <Col md="3">
+            <div className="Chapters__AddButton_container">
+              <AddButton label="Add module" />
+            </div>
+          </Col>
+          <Col md="3">
+            <ThemeCard title="module 1" cover="https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg?h=350&auto=compress&cs=tinysrgb"/>
+          </Col>
+          <Col md="3">
+            <ThemeCard title="module 1" cover="https://images.pexels.com/photos/36372/pexels-photo.jpg?h=350&auto=compress&cs=tinysrgb"/>
+          </Col>
+          <Col md="3">
+            <ThemeCard title="module 1" cover="https://images.pexels.com/photos/37860/border-collie-jump-water-british-sheepdog-37860.jpeg?h=350&auto=compress&cs=tinysrgb"/>
+          </Col>
         </div>
       </Row> : null}
     </Container>

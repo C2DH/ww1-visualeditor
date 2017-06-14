@@ -18,6 +18,12 @@
   padding-left: 10px;
 }
 
+.Chapter__edit_button_container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .Chapter__module_container {
   display: inline-flex;
   align-items: center;
