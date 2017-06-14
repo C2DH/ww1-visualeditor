@@ -39,7 +39,7 @@ class Chapter extends PureComponent {
           <Button><i className="fa fa-pencil" /></Button>
         </div>
         <div className="Chapter__show_modules_button_container">
-          <Button onClick={this.toggleModule}><i className="fa fa-cog" /> Show modules</Button>
+          <Button onClick={this.toggleModule}><i className="fa fa-cog" /> {this.state.open ? "Hide modules" : "Show modules"}</Button>
         </div>
       </div>
     </Row>

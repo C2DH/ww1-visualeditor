@@ -9,6 +9,10 @@
   align-items: center;
 }
 
+.GenericCard__title {
+  font-size: 20px;
+}
+
 .GenericCard_footerButton {
   margin-left: auto;
 }

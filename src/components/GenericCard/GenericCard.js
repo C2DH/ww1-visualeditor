@@ -7,7 +7,7 @@ const GenericCard = ({ title="", cover="", footerButton=null}) => (
     <Card className="GenericCard__card">
       <CardImg top width="100%" src={cover} alt="Card image cap" className="GenericCard__img"/>
       <div className="GenericCard__textContainer">
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="GenericCard__title">{title}</CardTitle>
         <div className="GenericCard_footerButton">{ footerButton }</div>
       </div>
     </Card>

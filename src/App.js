@@ -15,8 +15,9 @@ import ThemeEdit from './pages/ThemeEdit'
 import Chapter from './pages/Chapter'
 import ChapterEdit from './pages/ChapterEdit'
 import Module from './pages/Module'
-
 import Translate from './pages/Translate'
+import Documents from './pages/Documents'
+
 
 const App = () => (
   <Provider store={store}>
@@ -31,8 +32,10 @@ const App = () => (
           <GuestRoute path='/themes/:themeId/chapters/:chapterId' exact component={Chapter} />
           <GuestRoute path='/themes/:themeId/chapters/:chapterId/edit' exact component={ChapterEdit} />
           <GuestRoute path='/themes/:themeId/chapters/:chapterId/modules/:moduleId' exact component={Module} />
-
+          {/* temporary path */}
           <GuestRoute path='/translate' exact component={Translate} />
+          <GuestRoute path='/docs' exact component={Documents} />
+
         </Switch>
       </Layout>
     </Router>
