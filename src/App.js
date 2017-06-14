@@ -13,6 +13,7 @@ import Themes from './pages/Themes'
 import ThemeDetail from './pages/ThemeDetail'
 import ThemeEdit from './pages/ThemeEdit'
 import Chapter from './pages/Chapter'
+import ChapterEdit from './pages/ChapterEdit'
 
 
 const App = () => (
@@ -26,6 +27,7 @@ const App = () => (
           <GuestRoute path='/themes/:themeId' exact component={ThemeDetail} />
           <GuestRoute path='/themes/:themeId/edit' exact component={ThemeEdit} />
           <GuestRoute path='/themes/:themeId/chapters/:chapterId' exact component={Chapter} />
+          <GuestRoute path='/themes/:themeId/chapters/:chapterId/edit' exact component={ChapterEdit} />
         </Switch>
       </Layout>
     </Router>

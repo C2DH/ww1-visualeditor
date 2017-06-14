@@ -1,71 +1,3 @@
-.ThemeEdit__actions_container {
-  padding-top: 30px;
-  padding-right: 20px;
-  width: 100%;
-  height: 100vh;
-  border-right: 1px solid #ccc;
-}
-
-.ThemeEdit__actions_img_buttons_container {
-  display: inline-flex;
-  padding: 10px;
-}
-
-.ThemeEdit__actions_img_button {
-  padding: 0.2rem 0.35rem;
-  margin-right: 5px;
-}
-
-.ThemeEdit__actions_Colorbutton-taupe-gray {
-  min-height: 30px;
-  background-color: #818A91;
-}
-
-.ThemeEdit__actions_Colorbutton-seven-gray {
-  min-height: 30px;
-  background-color: #777;
-}
-
-.ThemeEdit__actions_Colorbutton-dark-gray {
-  min-height: 30px;
-  background-color: #ADADAD;
-}
-
-.ThemeEdit__actions_Colorbutton-nine-gray {
-  min-height: 30px;
-  background-color: #999;
-}
-
-.ThemeEdit__actions_Colorbutton-montana {
-  min-height: 30px;
-  background-color: #373A3C;
-}
-
-.ThemeEdit__actions_Colorbutton-gainsboro {
-  min-height: 30px;
-  background-color: #DDD;
-}
-
-.ThemeEdit__action_hex_input {
-  max-height: 35px;
-}
-
-.ThemeEdit__actions_text_color_button-white {
-  min-height: 30px;
-  background-color: #fff;
-}
-
-.ThemeEdit__actions_text_color_button-black {
-  min-height: 30px;
-  background-color: #000;
-}
-
-.ThemeEdit__actions_bottom_btn_container {
-  position: absolute;
-  bottom: 20px;
-  width: 80%;
-}
-
 .ThemeEdit__right_container {
   padding: 20px;
   margin-top: 40px;
@@ -73,9 +5,4 @@
   height: 90vh;
   width: 100%;
   background-color: #ccc;
-}
-
-.ThemeEdit__image_title_container {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
