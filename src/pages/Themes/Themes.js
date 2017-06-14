@@ -6,7 +6,7 @@ import ThemeCard from '../../components/ThemeCard'
 import './Themes.css'
 
 const Themes = () => (
-  <Container>
+  <Container fluid className="margin-r-l-20">
     <Row className="Themes__topRow">
       <h3>Themes</h3>
       <ThemesSearchInput />

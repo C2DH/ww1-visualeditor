@@ -74,3 +74,8 @@
   width: 100%;
   background-color: #ccc;
 }
+
+.ThemeEdit__image_title_container {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}

@@ -6,11 +6,11 @@ import AddButton from '../../components/AddButton'
 import './ThemeEdit.css'
 
 const ThemeEdit = () => (
-  <Container fluid>
+  <Container fluid className="margin-r-l-20">
     <Row>
       <Col md="3">
         <div className="ThemeEdit__actions_container">
-          <FormGroup className="margin-bottom-20">
+          <FormGroup className="margin-bottom-15">
             <Label for="exampleSelect">Background</Label>
             <Input type="select" name="select" id="exampleSelect" size="sm">
               <option>1</option>
@@ -21,8 +21,8 @@ const ThemeEdit = () => (
             </Input>
           </FormGroup>
           <AddButton label="Add image" />
-          <ListGroup className="margin-top-20">
-            <ListGroupItem>Image title</ListGroupItem>
+          <ListGroup className="margin-top-15">
+            <ListGroupItem className="ThemeEdit__image_title_container">Image title</ListGroupItem>
             <ListGroupItem className="ThemeEdit__actions_img_buttons_container">
               <Button className="ThemeEdit__actions_img_button"><i className="fa fa-arrow-up" /></Button>
               <Button className="ThemeEdit__actions_img_button"><i className="fa fa-arrow-down" /></Button>
@@ -33,7 +33,7 @@ const ThemeEdit = () => (
           </ListGroup>
           <hr />
           <Label>Background overlay</Label>
-          <ButtonGroup className="margin-bottom-20">
+          <ButtonGroup className="margin-bottom-15">
              <Button className="ThemeEdit__actions_Colorbutton-taupe-gray" />
              <Button className="ThemeEdit__actions_Colorbutton-seven-gray" />
              <Button className="ThemeEdit__actions_Colorbutton-dark-gray" />

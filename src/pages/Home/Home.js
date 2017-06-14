@@ -10,7 +10,7 @@ class Home extends PureComponent {
   render() {
 
     return (
-      <Container>
+      <Container fluid className="margin-r-l-20">
         <Row>
           <Col md="3">
             <div className="Home__Col-title-container">

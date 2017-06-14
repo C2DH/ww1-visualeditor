@@ -5,7 +5,7 @@ import { Button } from 'reactstrap'
 import './Chapter.css'
 
 const Chapter = () => (
-  <Container fluid>
+  <Container fluid className="margin-r-l-20">
     <Row className="ThemeDetail__topRow">
       <Breadcrumb>
         <BreadcrumbItem className="ThemeDetail__topRow_title"><a href="#">Theme title</a></BreadcrumbItem>

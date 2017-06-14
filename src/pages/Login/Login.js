@@ -15,7 +15,7 @@ class Login extends PureComponent {
   render() {
     const { login, loading, error } = this.props
     return (
-      <Container>
+      <Container fluid className="margin-r-l-10">
         <Row className="Login__containerRow">
           <Col md="4" />
           <Col md="4">
