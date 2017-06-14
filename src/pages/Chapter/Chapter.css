@@ -1,11 +1,33 @@
 .Chapter__main_container {
-  min-height: 78vh;
+  position: relative;
+  min-height: 500px;
   width: 100%;
   background-color: #ccc;
 }
 
-.Chapter__show_modules_container {
+.Chapter__main_container_open {
+  position: relative;
+  min-height: 260px;
+  width: 100%;
+  background-color: #ccc;
+}
+
+.Chapter__show_modules_button_container {
   position: absolute;
   bottom: 10px;
   padding-left: 10px;
+}
+
+.Chapter__module_container {
+  display: inline-flex;
+  align-items: center;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  width: 100%;
+}
+
+.Chapters__AddButton_container {
+  margin-left: 20px;
+  padding: 15px;
+  margin-right: 20px;
 }
