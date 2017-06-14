@@ -33,3 +33,7 @@ body {
 .grid {
   display: grid;
 }
+
+.relative {
+  position: relative;
+}

@@ -16,6 +16,8 @@ import Chapter from './pages/Chapter'
 import ChapterEdit from './pages/ChapterEdit'
 import Module from './pages/Module'
 
+import Translate from './pages/Translate'
+
 const App = () => (
   <Provider store={store}>
     <Router>
@@ -29,6 +31,8 @@ const App = () => (
           <GuestRoute path='/themes/:themeId/chapters/:chapterId' exact component={Chapter} />
           <GuestRoute path='/themes/:themeId/chapters/:chapterId/edit' exact component={ChapterEdit} />
           <GuestRoute path='/themes/:themeId/chapters/:chapterId/modules/:moduleId' exact component={Module} />
+
+          <GuestRoute path='/translate' exact component={Translate} />
         </Switch>
       </Layout>
     </Router>

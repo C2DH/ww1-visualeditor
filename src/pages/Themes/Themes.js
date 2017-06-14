@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import ThemesSearchInput from '../../components/ThemesSearchInput'
+import TopSearchInput from '../../components/TopSearchInput'
 import AddButton from '../../components/AddButton'
 import ThemeCard from '../../components/ThemeCard'
 import './Themes.css'
@@ -9,7 +9,7 @@ const Themes = () => (
   <Container fluid className="margin-r-l-20">
     <Row className="Themes__topRow">
       <h3>Themes</h3>
-      <ThemesSearchInput />
+      <TopSearchInput />
     </Row>
 
     <Row>

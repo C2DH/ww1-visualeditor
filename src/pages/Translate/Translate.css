@@ -1,0 +1,18 @@
+.Translate__text_container_row {
+  margin-top: 50px;
+}
+
+.Translate__textarea {
+  min-height: 300px;
+}
+
+.Translate__confirm_container {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  margin-right: 20px;
+  position: fixed;
+  bottom: 10px;
+  width: 90%;
+  z-index: 99;
+  background-color: #fff;
+}
