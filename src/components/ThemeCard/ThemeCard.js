@@ -4,7 +4,7 @@ import { Button } from 'reactstrap'
 import './ThemeCard.css'
 
 
-const ThemeCard = ({ title="", cover=null }) => (
+const ThemeCard = ({ title="", cover=null, editButtons=null }) => (
   <GenericCard
     className="ThemeCard__card"
     title={title}

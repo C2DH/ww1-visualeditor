@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import AddButton from '../../components/AddButton'
+import ChapterCard from '../../components/ChapterCard'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
 import './ThemeDetail.css'
@@ -24,6 +25,7 @@ const ThemeDetail = () => (
       </Col>
       <Col md="3">
         <AddButton label="Add Chapter" />
+        <ChapterCard title="chapter title" cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb" />
       </Col>
     </Row>
   </Container>

@@ -11,6 +11,7 @@
 
 .GenericCard__title {
   font-size: 20px;
+  padding-top: 20px;
 }
 
 .GenericCard_footerButton {
@@ -19,4 +20,11 @@
 
 .GenericCard__img {
   height: 160px;
+}
+
+.GenericCard__editButtons_container {
+  position: absolute;
+  display: inline-flex;
+  padding: 10px;
+  width: 100%;
 }
