@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Row, Col, Label, Button } from 'reactstrap'
-import ThemeCard from '../../components/ThemeCard'
+import ThemeCard from '../../components/cards/ThemeCard'
+import ColorSelection from '../../components/ColorSelection'
 import './Module.css'
 
 const Module = () => (
@@ -22,7 +23,7 @@ const Module = () => (
             <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />
           </Col>
           <Col md="4">
-            <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />
+            <ColorSelection />
           </Col>
           <Col md="4">
             <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />

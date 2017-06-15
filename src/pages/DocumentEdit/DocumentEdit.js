@@ -1,7 +1,5 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import { ButtonGroup, Button, FormGroup, Label, Input } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
 import SideEditToolbar from '../../components/SideEditToolbar'
 import './DocumentEdit.css'
 

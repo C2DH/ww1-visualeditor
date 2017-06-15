@@ -1,0 +1,7 @@
+.ColorSelection__container {
+  display: grid;
+}
+
+.ColorSelection__color_button {
+  min-height: 30px;
+}

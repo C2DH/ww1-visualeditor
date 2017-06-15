@@ -18,6 +18,7 @@ import Module from './pages/Module'
 import Translate from './pages/Translate'
 import Documents from './pages/Documents'
 import DocumentEdit from './pages/DocumentEdit'
+import TestControlled from './pages/TestControlled'
 
 
 const App = () => (
@@ -37,6 +38,7 @@ const App = () => (
           <GuestRoute path='/translate' exact component={Translate} />
           <GuestRoute path='/docs' exact component={Documents} />
           <GuestRoute path='/docs/:docId/edit' exact component={DocumentEdit} />
+          <GuestRoute path='/test' exact component={TestControlled} />
 
         </Switch>
       </Layout>

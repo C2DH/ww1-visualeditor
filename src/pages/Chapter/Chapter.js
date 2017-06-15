@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
-import ThemeCard from '../../components/ThemeCard'
+import ThemeCard from '../../components/cards/ThemeCard'
 import AddButton from '../../components/AddButton'
 import './Chapter.css'
 

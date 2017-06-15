@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from 'reactstrap'
 import HeadingRow from '../../components/HeadingRow'
 import TopSearchInput from '../../components/TopSearchInput'
 import AddButton from '../../components/AddButton'
-import ThemeCard from '../../components/ThemeCard'
+import ThemeCard from '../../components/cards/ThemeCard'
 import './Documents.css'
 
 const Documents = () => (

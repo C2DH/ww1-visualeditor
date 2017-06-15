@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import AddButton from '../../components/AddButton'
-import ChapterCard from '../../components/ChapterCard'
+import ChapterCard from '../../components/cards/ChapterCard'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
 import './ThemeDetail.css'
