@@ -9,7 +9,7 @@ const Module = () => (
       <Col md="3">
         <div className="SideEditToolbar__container">
           <Label for="exampleSelect">Chose a module</Label>
-          <div className="SideEditToolbar__bottom_btn_container">
+          <div className="Module__action_bottom_btn_container">
             <hr />
             <Button size="sm" block>Done</Button>
             <Button size="sm" block>Exit</Button>
