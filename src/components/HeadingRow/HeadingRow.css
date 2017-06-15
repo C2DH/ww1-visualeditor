@@ -1,0 +1,9 @@
+.HeadingRow__row {
+  padding-top: 30px;
+  display: flex;
+  border-bottom: 1px solid #222;
+}
+
+.HeadingRow__title {
+  padding-bottom: 15px;
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
+import HeadingRow from '../../components/HeadingRow'
 import TopSearchInput from '../../components/TopSearchInput'
 import AddButton from '../../components/AddButton'
 import ThemeCard from '../../components/ThemeCard'
@@ -7,10 +8,9 @@ import './Documents.css'
 
 const Documents = () => (
   <Container fluid className="margin-r-l-20">
-    <Row className="Themes__topRow">
-      <h3>Select documents</h3>
+    <HeadingRow title="Select documents">
       <TopSearchInput />
-    </Row>
+    </HeadingRow>
 
     <Row>
       <Col md="3">
@@ -92,7 +92,7 @@ const Documents = () => (
          />
       </Col>
     </Row>
-    
+
     <div className="Translate__confirm_container">
       <Row>
         <Col md="3">

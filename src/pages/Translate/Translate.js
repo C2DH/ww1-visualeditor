@@ -1,12 +1,11 @@
 import React from 'react'
 import { Container, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap'
+import HeadingRow from '../../components/HeadingRow'
 import './Translate.css'
 
 const Translate = () => (
   <Container fluid className="margin-r-l-20">
-    <Row className="Themes__topRow">
-      <h3>Translate</h3>
-    </Row>
+    <HeadingRow title="Translate" />
 
     <Row className="Translate__text_container_row">
       <Col md="4">
