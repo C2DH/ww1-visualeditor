@@ -23,7 +23,7 @@ const Module = () => (
             <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />
           </Col>
           <Col md="4">
-            <ColorSelection />
+            <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />
           </Col>
           <Col md="4">
             <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />

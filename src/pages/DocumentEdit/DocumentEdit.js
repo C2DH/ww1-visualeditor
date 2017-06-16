@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import SideEditToolbar from '../../components/SideEditToolbar'
+import TextAlignSelection from '../../components/TextAlignSelection'
 import './DocumentEdit.css'
 
 const DocumentEdit = () => (
@@ -8,6 +9,7 @@ const DocumentEdit = () => (
     <Row>
       <Col md="3">
         <SideEditToolbar>
+          <TextAlignSelection />
         </SideEditToolbar>
       </Col>
       <Col md="9">
