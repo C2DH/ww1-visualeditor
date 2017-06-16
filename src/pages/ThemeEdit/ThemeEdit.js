@@ -11,7 +11,8 @@ import './ThemeEdit.css'
 
 class ThemeEdit extends PureComponent {
   state = {
-    value: '#ddd'
+    bgColor: '#ddd',
+    textColor: '#000'
   }
 
   render () {
@@ -43,12 +44,18 @@ class ThemeEdit extends PureComponent {
               </ListGroup>
               <hr />
               <ColorSelection
-                onChange={(color) => this.setState({ value: color })}
-                value={this.state.value}
+                label="Background overlay"
+                onChange={(color) => this.setState({ bgColor: color })}
+                value={this.state.bgColor}
                 colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
               />
               <hr />
-              <TextColorSelection
+              <ColorSelection
+                label="Text color"
+                onChange={(color) => this.setState({ textColor: color })}
+                value={this.state.textColor}
+                colors={['#fff', '#000']}
+                hexInput={false}
               />
               <div className="ThemeEdit__action_bottom_btn_container">
                 <hr />

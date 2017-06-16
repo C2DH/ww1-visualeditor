@@ -6,7 +6,7 @@ class ColorSelection extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      inputValue: props.value.toLowerCase()
+      inputValue: (props.value || '').toLowerCase()
     }
   }
 
@@ -33,10 +33,10 @@ class ColorSelection extends PureComponent {
   }
 
   render () {
-    const { value, colors, onChange } = this.props
+    const { value, colors, onChange, hexInput } = this.props
     return (
       <div className="ColorSelection__container">
-        <Label>Background overlay</Label>
+        <Label>{this.props.label}</Label>
         <ButtonGroup className="margin-bottom-15">
           {colors.map(color => (
                <Button
@@ -45,20 +45,26 @@ class ColorSelection extends PureComponent {
                  className="ColorSelection__color_button"
                  style={{
                    backgroundColor: color,
-                   border: `1px solid ${value.toLowerCase() === color.toLowerCase() ? '#000' : 'transparent'}`
+                   border: `1px solid ${value.toLowerCase() === color.toLowerCase() ? '#000' : '#ccc'}`
                  }}
                />
           ))}
         </ButtonGroup>
-        <FormGroup row className="margin-bottom-0" color={this.isValidHex(this.state.inputValue) ? null : 'danger'}>
-          <Label for="hex" sm={2} className="ColorSelection__hex_label">Hex</Label>
-          <Col sm={6}>
-            <Input type="text" value={this.state.inputValue} onChange={this.handleInputChange} name="hex" id="hex" placeholder="#" className="ColorSelection__hex_input" size="sm" />
-          </Col>
-        </FormGroup>
+        {hexInput && (
+          <FormGroup row className="margin-bottom-0" color={this.isValidHex(this.state.inputValue) ? null : 'danger'}>
+            <Label for="hex" sm={2} className="ColorSelection__hex_label">Hex</Label>
+            <Col sm={6}>
+              <Input type="text" value={this.state.inputValue} onChange={this.handleInputChange} name="hex" id="hex" placeholder="#" className="ColorSelection__hex_input" size="sm" />
+            </Col>
+          </FormGroup>
+        )}
       </div>
     )
   }
+}
+
+ColorSelection.defaultProps = {
+  hexInput: true
 }
 
 
