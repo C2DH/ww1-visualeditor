@@ -10,7 +10,7 @@ import './ThemeEdit.css'
 
 class ThemeEdit extends PureComponent {
   state = {
-    value: '#DDD'
+    value: '#ddd'
   }
 
   render () {
@@ -46,12 +46,6 @@ class ThemeEdit extends PureComponent {
                 value={this.state.value}
                 colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
               />
-              <FormGroup row>
-                <Label for="hex" sm={2}>Hex</Label>
-                <Col sm={6}>
-                  <Input type="text" name="hex" id="hex" placeholder="#" className="ThemeEdit__action_hex_input" size="sm" />
-                </Col>
-              </FormGroup>
               <hr />
               <div className="grid">
                 <Label>Text color</Label>

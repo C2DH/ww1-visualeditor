@@ -13,10 +13,6 @@
   margin-right: 5px;
 }
 
-.ThemeEdit__action_hex_input {
-  max-height: 35px;
-}
-
 .ThemeEdit__action_text_color_button-white {
   min-height: 30px;
   background-color: #fff;

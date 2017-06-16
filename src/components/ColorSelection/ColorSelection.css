@@ -5,3 +5,12 @@
 .ColorSelection__color_button {
   min-height: 30px;
 }
+
+.ColorSelection__hex_input {
+  max-height: 35px;
+}
+
+.ColorSelection__hex_label {
+  position: relative;
+  bottom: 5px;
+}
