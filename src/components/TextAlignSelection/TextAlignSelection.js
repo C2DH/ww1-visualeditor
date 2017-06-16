@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Label, ButtonGroup, Button } from 'reactstrap'
 import './TextAlignSelection.css'
 
-const TextAlignSelection = () => (
-  <div className="grid">
-    <Label>Text position</Label>
-    <ButtonGroup>
-      <Button className="TextAlignSelection__btn"><i className="fa fa-align-left" /></Button>
-      <Button className="TextAlignSelection__btn"><i className="fa fa-align-center" /></Button>
-      <Button className="TextAlignSelection__btn"><i className="fa fa-align-right" /></Button> 
-    </ButtonGroup>
-  </div>
-)
+class TextAlignSelection extends PureComponent {
+  render () {
+    const { value, onChange, textAligns } = this.props
+    console.log(value)
+    return (
+
+      <div className="grid">
+        <Label>Text position</Label>
+        <ButtonGroup>
+          {textAligns.map(textAlign => (
+            <Button
+              key={textAlign}
+              onClick={() => onChange(textAlign)}
+              className={value === textAlign ? "TextAlignSelection__btn_active" : "TextAlignSelection__btn"}
+              >
+              <i className={`fa fa-align-${textAlign}`} />
+            </Button>
+          ))}
+        </ButtonGroup>
+      </div>
+    )
+  }
+}
+
 
 export default TextAlignSelection

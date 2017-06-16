@@ -2,3 +2,11 @@
   max-height: 30px;
   padding: 0.3rem 0.5rem;
 }
+
+.TextAlignSelection__btn_active:hover,
+.TextAlignSelection__btn_active {
+  max-height: 30px;
+  padding: 0.3rem 0.5rem;
+  color: #fff;
+  background-color: #000;
+}

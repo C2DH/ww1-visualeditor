@@ -5,7 +5,6 @@ import { ListGroup, ListGroupItem } from 'reactstrap'
 import AddButton from '../../components/AddButton'
 import SideEditToolbar from '../../components/SideEditToolbar'
 import ColorSelection from '../../components/ColorSelection'
-import TextColorSelection from '../../components/TextColorSelection'
 import './ThemeEdit.css'
 
 
@@ -66,7 +65,7 @@ class ThemeEdit extends PureComponent {
           </Col>
 
           <Col md="9">
-            <div className="ThemeEdit__right_container" style={{backgroundColor: this.state.value}}/>
+            <div className="ThemeEdit__right_container" style={{backgroundColor: this.state.bgColor}}/>
           </Col>
         </Row>
       </Container>
