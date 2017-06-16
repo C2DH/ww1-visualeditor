@@ -13,22 +13,11 @@
   margin-right: 5px;
 }
 
-.ThemeEdit__action_text_color_button-white {
-  min-height: 30px;
-  background-color: #fff;
-}
-
-.ThemeEdit__action_text_color_button-black {
-  min-height: 30px;
-  background-color: #000;
-}
-
 .ThemeEdit__action_bottom_btn_container {
   position: absolute;
   bottom: 20px;
   width: 80%;
 }
-
 
 .ThemeEdit__right_container {
   padding: 20px;

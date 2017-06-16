@@ -1,0 +1,9 @@
+.TextColorselection__btn_white {
+  min-height: 30px;
+  background-color: #fff;
+}
+
+.TextColorselection__btn_black {
+  min-height: 30px;
+  background-color: #000;
+}

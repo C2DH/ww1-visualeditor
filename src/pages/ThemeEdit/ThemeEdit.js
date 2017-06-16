@@ -5,6 +5,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap'
 import AddButton from '../../components/AddButton'
 import SideEditToolbar from '../../components/SideEditToolbar'
 import ColorSelection from '../../components/ColorSelection'
+import TextColorSelection from '../../components/TextColorSelection'
 import './ThemeEdit.css'
 
 
@@ -47,13 +48,8 @@ class ThemeEdit extends PureComponent {
                 colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
               />
               <hr />
-              <div className="grid">
-                <Label>Text color</Label>
-                <ButtonGroup>
-                  <Button className="ThemeEdit__action_text_color_button-white" />
-                  <Button className="ThemeEdit__action_text_color_button-black" />
-                </ButtonGroup>
-              </div>
+              <TextColorSelection
+              />
               <div className="ThemeEdit__action_bottom_btn_container">
                 <hr />
                 <Button size="sm" block>Done</Button>
