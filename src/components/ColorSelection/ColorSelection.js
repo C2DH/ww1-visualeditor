@@ -45,7 +45,8 @@ class ColorSelection extends PureComponent {
                  className="ColorSelection__color_button"
                  style={{
                    backgroundColor: color,
-                   border: `1px solid ${value.toLowerCase() === color.toLowerCase() ? '#000' : '#ccc'}`
+                   border: `1px solid ${value.toLowerCase() === color.toLowerCase() ? '#000' : '#ccc'}`,
+                   zIndex: `${value.toLowerCase() === color.toLowerCase() ? '1' : 'auto'}`
                  }}
                />
           ))}
