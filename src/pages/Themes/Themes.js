@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import HeadingRow from '../../components/HeadingRow'
 import TopSearchInput from '../../components/TopSearchInput'
@@ -37,10 +38,12 @@ class Themes extends PureComponent {
           </Col>
           {themes && themes.map(theme => (
             <Col md="3" key={theme.id}>
-              <ThemeCard
-                title={theme.metadata.title.en_US}
-                cover="http://via.placeholder.com/350x150"
-               />
+              <Link to={`/themes/${theme.id}`}>
+                <ThemeCard
+                  title={theme.metadata.title.en_US}
+                  cover="http://via.placeholder.com/350x150"
+                 />
+               </Link>
             </Col>
           ))}
 

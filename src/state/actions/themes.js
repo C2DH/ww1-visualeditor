@@ -14,3 +14,18 @@ export const loadThemes = (params = {}) => ({
 export const unloadThemes = () => ({
   type: GET_THEMES_UNLOAD,
 })
+
+export const GET_THEME = 'GET_THEME'
+export const GET_THEME_SUCCESS = 'GET_THEME_SUCCESS'
+export const GET_THEME_FAILURE = 'GET_THEME_FAILURE'
+export const GET_THEME_LOADING = 'GET_THEME_LOADING'
+export const GET_THEME_UNLOAD = 'GET_THEME_UNLOAD'
+
+export const loadTheme = (id) => ({
+  type: GET_THEME,
+  payload: id,
+})
+
+export const unloadTheme = () => ({
+  type: GET_THEME_UNLOAD,
+})

@@ -43,3 +43,10 @@ export const getThemes = token => () =>
     }),
     orderby: 'priority',
   })).then(extractBody)
+
+export const getTheme = token => (id) =>
+  withToken(token, request.get(`/api/story/${id}`).query({
+    filters: JSON.stringify({
+      'tags__slug': 'theme',
+    }),
+  })).then(extractBody)

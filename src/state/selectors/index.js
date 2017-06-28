@@ -9,3 +9,9 @@ export const getThemes = createSelector(
   state => state.entities.themes,
   (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
 )
+
+export const getTheme = createSelector(
+  state => state.themeDetail.id,
+  state => state.entities.themes,
+  (id, data) => maybeNull(id)(id => data[id])
+)
