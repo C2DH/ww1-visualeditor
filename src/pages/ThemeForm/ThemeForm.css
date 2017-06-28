@@ -1,0 +1,29 @@
+.ThemeEdit__action_image_title_container {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.ThemeEdit__action_img_buttons_container {
+  display: inline-flex;
+  padding: 10px;
+}
+
+.ThemeEdit__action_img_button {
+  padding: 0.2rem 0.35rem;
+  margin-right: 5px;
+}
+
+.ThemeEdit__action_bottom_btn_container {
+  position: absolute;
+  bottom: 20px;
+  width: 80%;
+}
+
+.ThemeEdit__right_container {
+  padding: 20px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  height: 90vh;
+  width: 100%;
+  background-color: #ccc;
+}

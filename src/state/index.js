@@ -14,4 +14,8 @@ const store = createStore(
 )
 sagaMiddleware.run(rootSaga)
 
+// TODO: Move in other place
+export const wrapAuthApiCall = apiFn => (...args) =>
+  apiFn(store.getState().auth.accessToken)(...args)
+
 export default store
