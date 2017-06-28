@@ -52,6 +52,6 @@ export const getTheme = token => (id) =>
   })).then(extractBody)
 
 export const updateTheme = token => (theme) =>
-  withToken(token, request.put(`/api/story/${theme.id}/?parser=json`).send({
-    metadata: theme.metadata,
+  withToken(token, request.patch(`/api/story/${theme.id}/`).send({
+    metadata: JSON.stringify(theme.metadata),
   })).then(extractBody)
