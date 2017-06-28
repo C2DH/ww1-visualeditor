@@ -27,18 +27,18 @@ const App = () => (
       <Layout>
         <Switch>
           <GuestRoute path='/login' exact component={Login} />
-          <GuestRoute path='/' exact component={Home} />
-          <GuestRoute path='/themes' exact component={Themes} />
-          <GuestRoute path='/themes/:themeId' exact component={ThemeDetail} />
-          <GuestRoute path='/themes/:themeId/edit' exact component={ThemeEdit} />
-          <GuestRoute path='/themes/:themeId/chapters/:chapterId' exact component={Chapter} />
-          <GuestRoute path='/themes/:themeId/chapters/:chapterId/edit' exact component={ChapterEdit} />
-          <GuestRoute path='/themes/:themeId/chapters/:chapterId/modules/:moduleId' exact component={Module} />
+          <AuthRoute path='/' exact component={Home} />
+          <AuthRoute path='/themes' exact component={Themes} />
+          <AuthRoute path='/themes/:themeId' exact component={ThemeDetail} />
+          <AuthRoute path='/themes/:themeId/edit' exact component={ThemeEdit} />
+          <AuthRoute path='/themes/:themeId/chapters/:chapterId' exact component={Chapter} />
+          <AuthRoute path='/themes/:themeId/chapters/:chapterId/edit' exact component={ChapterEdit} />
+          <AuthRoute path='/themes/:themeId/chapters/:chapterId/modules/:moduleId' exact component={Module} />
           {/* temporary path */}
-          <GuestRoute path='/translate' exact component={Translate} />
-          <GuestRoute path='/docs' exact component={Documents} />
-          <GuestRoute path='/docs/:docId/edit' exact component={DocumentEdit} />
-          <GuestRoute path='/test' exact component={TestControlled} />
+          <AuthRoute path='/translate' exact component={Translate} />
+          <AuthRoute path='/docs' exact component={Documents} />
+          <AuthRoute path='/docs/:docId/edit' exact component={DocumentEdit} />
+          <AuthRoute path='/test' exact component={TestControlled} />
 
         </Switch>
       </Layout>

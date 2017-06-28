@@ -35,3 +35,11 @@ export const refreshToken = token =>
   oauth('refresh_token')
     .send({ refresh_token: token })
     .then(extractBody)
+
+export const getThemes = token => () =>
+  withToken(token, request.get('/api/story').query({
+    filters: JSON.stringify({
+      'tags__slug': 'theme',
+    }),
+    orderby: 'priority',
+  })).then(extractBody)

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
 // import Spinner from '../common/Spinner'
 // TODO: Make a spinner component
-const Spinner = () => <div />
+const Spinner = () => <div>Yo</div>
 
 /**
  * Ensure user logged otherwise redirect them to login
@@ -74,6 +74,7 @@ export const GuestRoute = connect(({ auth }) => ({ auth }))(({
     {...rest}
     render={props => {
       if (auth.user) {
+        console.log('Go back to copaning!')
         return (
           <Redirect
             to={{
