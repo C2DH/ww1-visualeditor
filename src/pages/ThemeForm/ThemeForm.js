@@ -18,10 +18,20 @@ const renderColorSelection = ({ input: { onChange, value }, ...passProps  }) => 
 )
 
 class ThemeForm extends PureComponent {
+  state = {
+    lang: 'en_US',
+  }
   render () {
     const { handleSubmit, backgroundColor } = this.props
     return (
       <form onSubmit={handleSubmit}>
+        <button onClick={() => {
+          if (this.state.lang === 'en_US') {
+            this.setState({ lang: 'fr_FR' })
+          } else {
+            this.setState({ lang: 'en_US' })
+          }
+        }}>Change Lang!</button>
         <Container fluid className="margin-r-l-20">
           <Row>
             <Col md="3">
@@ -72,6 +82,14 @@ class ThemeForm extends PureComponent {
 
             <Col md="9">
               <div className="ThemeEdit__right_container" style={{ backgroundColor }}>
+                <Field
+                  name={`metadata.title.${this.state.lang}`}
+                  component='input'
+                 />
+                <Field
+                  name={`metadata.abstract.${this.state.lang}`}
+                  component='textarea'
+                 />
               </div>
             </Col>
           </Row>
