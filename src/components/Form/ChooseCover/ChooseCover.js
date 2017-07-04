@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { ListGroup, ListGroupItem, Button } from 'reactstrap'
 import AddButton from '../../AddButton'
 import './ChooseCover.css'
 import {
@@ -12,16 +13,18 @@ class ChooseCover extends PureComponent {
     this.props.hideWidgetFullPage()
   }
 
-  showDocumentChooser = () => {
-    this.props.showWidgetFullPage('documentChooser')
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.choosedDocument !== nextProps.choosedDocument && nextProps.choosedDocument) {
       this.props.input.onChange([nextProps.choosedDocument])
       this.props.hideWidgetFullPage()
     }
   }
+
+  showDocumentChooser = () => {
+    this.props.showWidgetFullPage('documentChooser')
+  }
+
+  emptyCover = () => this.props.input.onChange([])
 
   render() {
     const { input: { value, onChange } } = this.props
@@ -34,7 +37,14 @@ class ChooseCover extends PureComponent {
     }
 
     return (
-      <div>Got {value.length} covers!</div>
+      <ListGroup className="margin-top-15">
+        <ListGroupItem className="ThemeEdit__action_image_title_container">{value[0].title}</ListGroupItem>
+        <ListGroupItem className="ThemeEdit__action_img_buttons_container">
+          <Button className="ThemeEdit__action_img_button flex-right"><i className="fa fa-crop" /></Button>
+          <Button className="ThemeEdit__action_img_button" onClick={this.showDocumentChooser}><i className="fa fa-file-image-o" /></Button>
+          <Button className="ThemeEdit__action_img_button" onClick={this.emptyCover}><i className="fa fa-trash-o" /></Button>
+        </ListGroupItem>
+      </ListGroup>
     )
   }
 }

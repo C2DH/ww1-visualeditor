@@ -12,12 +12,9 @@ import ChooseCover from '../../components/Form/ChooseCover'
 
 import './ThemeForm.css'
 
-const ChooseImage = ({ onCancel }) => (
-  <div style={{ height: '100vh', width: '100vw' }}>
-    Scegli immagine
-    <button onClick={onCancel}>X</button>
-  </div>
-)
+import {
+  getCurrentLanguage,
+} from '../../state/selectors'
 
 const renderColorSelection = ({ input: { onChange, value }, ...passProps  }) => (
   <ColorSelection
@@ -27,35 +24,48 @@ const renderColorSelection = ({ input: { onChange, value }, ...passProps  }) => 
   />
 )
 
+                    // {covers.length === 0 && (
+                    //   <AddButton label="Add image" onClick={() => {
+                    //     this.setState({ choosingImage: true })
+                    //   }} />
+                    // )}
+                    //
+                    // {covers.length > 0 && (
+                    //   <ListGroup className="margin-top-15">
+                    //     <ListGroupItem className="ThemeEdit__action_image_title_container">{covers[0].title}</ListGroupItem>
+                    //     <ListGroupItem className="ThemeEdit__action_img_buttons_container">
+                    //       <Button className="ThemeEdit__action_img_button flex-right"><i className="fa fa-crop" /></Button>
+                    //       <Button className="ThemeEdit__action_img_button"><i className="fa fa-file-image-o" /></Button>
+                    //       <Button className="ThemeEdit__action_img_button" onClick={this.clearCover}><i className="fa fa-trash-o" /></Button>
+                    //     </ListGroupItem>
+                    //   </ListGroup>
+                    // )}
 class ThemeForm extends PureComponent {
-  state = {
-    lang: 'en_US',
-    choosingImage: false,
-  }
-
   clearCover = () => {
     this.props.arrayRemoveAll('theme', 'covers')
   }
 
   render () {
-    const { handleSubmit, backgroundColor, backgroundType, covers } = this.props
-    console.info({ covers })
+    const {
+      handleSubmit,
+      backgroundColor,
+      backgroundImage,
+      backgroundType,
+      covers,
+      language,
+    } = this.props
+    console.log({ backgroundImage })
 
-    if (this.state.choosingImage) {
-      return <ChooseImage onCancel={() => {
-        this.setState({ choosingImage: false })
-      }} />
+    // TODO: Improve
+    let themeContainerStyle = {}
+    if (backgroundImage) {
+      themeContainerStyle = { backgroundImage: `url(${backgroundImage})` }
+    } else if (backgroundColor) {
+      themeContainerStyle = { backgroundColor }
     }
 
     return (
       <form onSubmit={handleSubmit}>
-        <button onClick={() => {
-          if (this.state.lang === 'en_US') {
-            this.setState({ lang: 'fr_FR' })
-          } else {
-            this.setState({ lang: 'en_US' })
-          }
-        }}>Change Lang!</button>
         <Container fluid className="margin-r-l-20">
           <Row>
             <Col md="3">
@@ -68,30 +78,13 @@ class ThemeForm extends PureComponent {
                   </Field>
                 </FormGroup>
 
-                <Field
-                  name='covers'
-                  component={ChooseCover}
-                />
-
                 {backgroundType === 'image' && (
                   <div>
 
-                    {covers.length === 0 && (
-                      <AddButton label="Add image" onClick={() => {
-                        this.setState({ choosingImage: true })
-                      }} />
-                    )}
-
-                    {covers.length > 0 && (
-                      <ListGroup className="margin-top-15">
-                        <ListGroupItem className="ThemeEdit__action_image_title_container">{covers[0].title}</ListGroupItem>
-                        <ListGroupItem className="ThemeEdit__action_img_buttons_container">
-                          <Button className="ThemeEdit__action_img_button flex-right"><i className="fa fa-crop" /></Button>
-                          <Button className="ThemeEdit__action_img_button"><i className="fa fa-file-image-o" /></Button>
-                          <Button className="ThemeEdit__action_img_button" onClick={this.clearCover}><i className="fa fa-trash-o" /></Button>
-                        </ListGroupItem>
-                      </ListGroup>
-                    )}
+                    <Field
+                      name='covers'
+                      component={ChooseCover}
+                    />
 
                     <hr />
                     <Field
@@ -128,13 +121,13 @@ class ThemeForm extends PureComponent {
             </Col>
 
             <Col md="9">
-              <div className="ThemeEdit__right_container" style={{ backgroundColor }}>
+              <div className="ThemeEdit__right_container" style={themeContainerStyle}>
                 <Field
-                  name={`metadata.title.${this.state.lang}`}
+                  name={`metadata.title.${language.code}`}
                   component='input'
                  />
                 <Field
-                  name={`metadata.abstract.${this.state.lang}`}
+                  name={`metadata.abstract.${language.code}`}
                   component='textarea'
                  />
               </div>
@@ -151,7 +144,9 @@ const selector = formValueSelector('theme')
 const mapStateToProps = state => ({
   backgroundType: selector(state, 'backgroundType'),
   backgroundColor: selector(state, 'metadata.background.overlay'),
+  backgroundImage: selector(state, 'covers[0].attachment'),
   covers: selector(state, 'covers'),
+  language: getCurrentLanguage(state),
 })
 
 export default reduxForm({
