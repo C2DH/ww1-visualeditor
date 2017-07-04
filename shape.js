@@ -48,6 +48,13 @@
   moduleDetail: {
 
   }
+  ,
+  // Paginate stuff of shit
+  imageDocuments: {
+    ids: [],
+    data: {},
+    pagination: {}
+  }
 
 }
 

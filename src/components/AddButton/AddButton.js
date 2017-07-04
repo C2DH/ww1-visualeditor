@@ -4,13 +4,14 @@ import './AddButton.css'
 
 class AddButton extends PureComponent {
   render () {
+    const { label, onClick } = this.props
     return (
       <div>
         <span>
-          <Button className="AddButton__button">
+          <Button className="AddButton__button" onClick={onClick}>
             <i className="fa fa-plus" aria-hidden="true" ></i>
           </Button>
-          <span className="AddButton__label">{this.props.label}</span>
+          <span className="AddButton__label">{label}</span>
         </span>
       </div>
     )

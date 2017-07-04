@@ -8,6 +8,21 @@ export const withToken = (token, baseRequest) =>
 // headers and so on are useless
 export const extractBody = ({ body }) => body
 
+// Build params for shitty miller
+const buildMillerParams = (params) => {
+  let newParams = params
+
+  if (newParams.filters && typeof newParams.filters !== 'string') {
+    newParams = { ...newParams, filters: JSON.stringify(newParams.filters) }
+  }
+
+  if (newParams.exclude && typeof newParams.exclude !== 'string') {
+    newParams = { ...newParams, exclude: JSON.stringify(newParams.exclude) }
+  }
+
+  return newParams
+}
+
 // TODO: Implement
 export const me = token => {
   return new Promise((resolve) => {
@@ -51,7 +66,23 @@ export const getTheme = token => (id) =>
     }),
   })).then(extractBody)
 
-export const updateTheme = token => (theme) =>
+export const updateTheme = token => theme =>
   withToken(token, request.patch(`/api/story/${theme.id}/`).send({
+    covers: theme.covers.map(({ id }) => id),
     metadata: JSON.stringify(theme.metadata),
   })).then(extractBody)
+
+export const getDocuments = token => (params = {}) =>
+  withToken(
+    token,
+    request
+      .get(`/api/document/`)
+      .query(buildMillerParams({
+        ...params,
+        filters: {
+          ...params.filters,
+          data__type: 'image',
+        }
+      }))
+  )
+  .then(extractBody)

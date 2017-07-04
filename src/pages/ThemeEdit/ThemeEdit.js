@@ -16,7 +16,10 @@ class ThemeEdit extends PureComponent {
     return (
       <ThemeForm
         onSubmit={updateTheme}
-        initialValues={theme}
+        initialValues={{
+          ...theme,
+          backgroundType: theme.covers.length > 0 ? 'image' : 'color',
+        }}
       />
     )
   }

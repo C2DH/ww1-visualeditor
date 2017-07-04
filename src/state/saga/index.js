@@ -1,10 +1,12 @@
 import { fork, put } from 'redux-saga/effects'
 import makeAuth from './auth'
 import createMakeCollection from './hos/collection'
+import createMakePaginateCollection from './hos/paginateCollection'
 import { takeLatestAndCancel } from './effects'
 import * as api from '../../api'
 import {
   GET_THEMES,
+  GET_DOCUMENTS,
   GET_THEME,
   GET_THEME_SUCCESS,
   GET_THEME_LOADING,
@@ -20,6 +22,7 @@ const { authFlow, authApiCall } = makeAuth({
 
 // Curry the api call
 const makeCollection = createMakeCollection(authApiCall)
+const makePaginateCollection = createMakePaginateCollection(authApiCall)
 
 function* handleGetTheme({ payload }) {
   const themeId = payload
@@ -34,6 +37,7 @@ function* handleGetTheme({ payload }) {
 
 export default function* rootSaga() {
   yield fork(authFlow)
+  yield fork(makePaginateCollection(GET_DOCUMENTS, api.getDocuments))
   yield fork(makeCollection(GET_THEMES, api.getThemes))
   // TODO: makeDetail
   yield fork(
