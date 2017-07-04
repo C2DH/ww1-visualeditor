@@ -3,10 +3,28 @@ import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './saga'
 
+const preloadedState = {
+  // Hardcoed \w endless love
+  languages: [
+    {
+      label: 'EN',
+      code: 'en_US',
+    },
+    {
+      label: 'FR',
+      code: 'fr_FR',
+    },
+    {
+      label: 'DE',
+      code: 'de_DE',
+    },
+  ]
+}
+
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(
   rootReducer,
-  undefined,
+  preloadedState,
   compose(
     applyMiddleware(sagaMiddleware),
     window.devToolsExtension ? window.devToolsExtension() : f => f

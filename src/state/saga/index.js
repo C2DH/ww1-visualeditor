@@ -35,6 +35,7 @@ function* handleGetTheme({ payload }) {
 export default function* rootSaga() {
   yield fork(authFlow)
   yield fork(makeCollection(GET_THEMES, api.getThemes))
+  // TODO: makeDetail
   yield fork(
     takeLatestAndCancel,
     GET_THEME,

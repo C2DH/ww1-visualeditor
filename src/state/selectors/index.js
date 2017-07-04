@@ -1,8 +1,16 @@
 import { createSelector } from 'reselect'
-import { isNull } from 'lodash'
+import { isNull, find } from 'lodash'
 
 // fp <3
 const maybeNull = a => fn => isNull(a) ? null : fn(a)
+
+export const getLanguages = state => state.languages
+
+export const getCurrentLanguage = createSelector(
+  state => getLanguages(state),
+  state => state.settings.language,
+  (languages, currentLangCode) => find(languages, { code: currentLangCode })
+)
 
 export const getThemes = createSelector(
   state => state.themes.ids,
