@@ -10,6 +10,7 @@ import SideEditToolbar from '../../components/SideEditToolbar'
 import ChooseCover from '../../components/Form/ChooseCover'
 import Bbox from '../../components/Form/Bbox'
 import ColorSelection, { isValidHex } from '../../components/Form/ColorSelection'
+import Select from '../../components/Form/Select'
 
 import './ThemeForm.css'
 
@@ -17,6 +18,7 @@ import {
   getCurrentLanguage,
 } from '../../state/selectors'
 
+// TODO: Disable submit when invalid form, show a loader when submit ecc
 class ThemeForm extends PureComponent {
   clearCover = () => {
     this.props.arrayRemoveAll('theme', 'covers')
@@ -50,10 +52,12 @@ class ThemeForm extends PureComponent {
               <SideEditToolbar>
                 <FormGroup className="margin-bottom-15">
                   <Label for="exampleSelect">Background</Label>
-                  <Field name="backgroundType" component='select'>
-                    <option value='color'>color</option>
-                    <option value='image'>image</option>
+
+                  <Field name="backgroundType" component={Select}>
+                    <option value='color'>Color</option>
+                    <option value='image'>Image</option>
                   </Field>
+
                 </FormGroup>
 
                 {backgroundType === 'image' && (

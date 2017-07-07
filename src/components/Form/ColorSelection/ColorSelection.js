@@ -13,7 +13,7 @@ class ColorSelection extends PureComponent {
     const { input: { value, onChange }, meta, colors, hexInput } = this.props
     return (
       <div className="ColorSelection__container">
-        <Label>{this.props.label} RF</Label>
+        <Label>{this.props.label}</Label>
         <ButtonGroup className="margin-bottom-15">
           {colors.map(color => (
                <Button
