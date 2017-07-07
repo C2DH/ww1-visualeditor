@@ -18,7 +18,7 @@ import {
   getCurrentLanguage,
 } from '../../state/selectors'
 
-// TODO: Disable submit when invalid form, show a loader when submit ecc
+// TODO: Show a loader when submit ecc
 class ThemeForm extends PureComponent {
   clearCover = () => {
     this.props.arrayRemoveAll('theme', 'covers')
@@ -33,6 +33,7 @@ class ThemeForm extends PureComponent {
       covers,
       language,
       color,
+      invalid,
     } = this.props
     console.log({ backgroundImage })
 
@@ -104,7 +105,7 @@ class ThemeForm extends PureComponent {
                  />
                 <div className="ThemeEdit__action_bottom_btn_container">
                   <hr />
-                  <Button size="sm" type='submit' block>Done</Button>
+                  <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
                   <Button size="sm" block>Exit</Button>
               </div>
               </SideEditToolbar>
