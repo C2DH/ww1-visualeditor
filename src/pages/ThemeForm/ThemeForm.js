@@ -6,24 +6,16 @@ import { ButtonGroup, Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 import AddButton from '../../components/AddButton'
 import SideEditToolbar from '../../components/SideEditToolbar'
-import ColorSelection from '../../components/ColorSelection'
 
 import ChooseCover from '../../components/Form/ChooseCover'
 import Bbox from '../../components/Form/Bbox'
+import ColorSelection, { isValidHex } from '../../components/Form/ColorSelection'
 
 import './ThemeForm.css'
 
 import {
   getCurrentLanguage,
 } from '../../state/selectors'
-
-const renderColorSelection = ({ input: { onChange, value }, ...passProps  }) => (
-  <ColorSelection
-    onChange={onChange}
-    value={value}
-    {...passProps}
-  />
-)
 
 class ThemeForm extends PureComponent {
   clearCover = () => {
@@ -84,7 +76,8 @@ class ThemeForm extends PureComponent {
                       label="Background overlay"
                       colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                       name="metadata.background.overlay"
-                      component={renderColorSelection}
+                      component={ColorSelection}
+                      validate={[isValidHex]}
                      />
                   </div>
                 )}
@@ -93,7 +86,7 @@ class ThemeForm extends PureComponent {
                     label="Background color"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     name="metadata.background.backgroundColor"
-                    component={renderColorSelection}
+                    component={ColorSelection}
                    />
                 )}
 
@@ -103,7 +96,7 @@ class ThemeForm extends PureComponent {
                   colors={['#fff', '#000']}
                   hexInput={false}
                   name="metadata.color"
-                  component={renderColorSelection}
+                  component={ColorSelection}
                  />
                 <div className="ThemeEdit__action_bottom_btn_container">
                   <hr />
