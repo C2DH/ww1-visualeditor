@@ -9,6 +9,7 @@ import SideEditToolbar from '../../components/SideEditToolbar'
 import ColorSelection from '../../components/ColorSelection'
 
 import ChooseCover from '../../components/Form/ChooseCover'
+import Bbox from '../../components/Form/Bbox'
 
 import './ThemeForm.css'
 
@@ -24,22 +25,6 @@ const renderColorSelection = ({ input: { onChange, value }, ...passProps  }) => 
   />
 )
 
-                    // {covers.length === 0 && (
-                    //   <AddButton label="Add image" onClick={() => {
-                    //     this.setState({ choosingImage: true })
-                    //   }} />
-                    // )}
-                    //
-                    // {covers.length > 0 && (
-                    //   <ListGroup className="margin-top-15">
-                    //     <ListGroupItem className="ThemeEdit__action_image_title_container">{covers[0].title}</ListGroupItem>
-                    //     <ListGroupItem className="ThemeEdit__action_img_buttons_container">
-                    //       <Button className="ThemeEdit__action_img_button flex-right"><i className="fa fa-crop" /></Button>
-                    //       <Button className="ThemeEdit__action_img_button"><i className="fa fa-file-image-o" /></Button>
-                    //       <Button className="ThemeEdit__action_img_button" onClick={this.clearCover}><i className="fa fa-trash-o" /></Button>
-                    //     </ListGroupItem>
-                    //   </ListGroup>
-                    // )}
 class ThemeForm extends PureComponent {
   clearCover = () => {
     this.props.arrayRemoveAll('theme', 'covers')
@@ -53,6 +38,7 @@ class ThemeForm extends PureComponent {
       backgroundType,
       covers,
       language,
+      color,
     } = this.props
     console.log({ backgroundImage })
 
@@ -84,6 +70,13 @@ class ThemeForm extends PureComponent {
                     <Field
                       name='covers'
                       component={ChooseCover}
+                      buttons={(
+                        <Field
+                          name='metadata.background.bbox'
+                          image={backgroundImage}
+                          component={Bbox}
+                        />
+                      )}
                     />
 
                     <hr />
@@ -122,14 +115,24 @@ class ThemeForm extends PureComponent {
 
             <Col md="9">
               <div className="ThemeEdit__right_container" style={themeContainerStyle}>
-                <Field
-                  name={`metadata.title.${language.code}`}
-                  component='input'
-                 />
-                <Field
-                  name={`metadata.abstract.${language.code}`}
-                  component='textarea'
-                 />
+                <div>
+                  <Field
+                    name={`metadata.title.${language.code}`}
+                    className="Theme__input"
+                    autoComplete="off"
+                    component='input'
+                    style={{ color }}
+                   />
+                </div>
+                <div>
+                  <Field
+                    name={`metadata.abstract.${language.code}`}
+                    className="Theme__input"
+                    autoComplete="off"
+                    component='textarea'
+                    style={{ color }}
+                   />
+                </div>
               </div>
             </Col>
           </Row>
@@ -144,6 +147,7 @@ const selector = formValueSelector('theme')
 const mapStateToProps = state => ({
   backgroundType: selector(state, 'backgroundType'),
   backgroundColor: selector(state, 'metadata.background.overlay'),
+  color: selector(state, 'metadata.color'),
   backgroundImage: selector(state, 'covers[0].attachment'),
   covers: selector(state, 'covers'),
   language: getCurrentLanguage(state),

@@ -7,6 +7,7 @@ import entities from './entities'
 import themes from './themes'
 import themeDetail from './themeDetail'
 import chooseDocuments from './chooseDocuments'
+import bboxCrop from './bboxCrop'
 import ui from './ui'
 
 export default combineReducers({
@@ -19,4 +20,5 @@ export default combineReducers({
   themes,
   themeDetail,
   chooseDocuments,
+  bboxCrop,
 })

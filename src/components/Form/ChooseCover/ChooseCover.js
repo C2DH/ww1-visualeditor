@@ -27,7 +27,7 @@ class ChooseCover extends PureComponent {
   emptyCover = () => this.props.input.onChange([])
 
   render() {
-    const { input: { value, onChange } } = this.props
+    const { input: { value, onChange }, buttons } = this.props
 
     // No cover choosed
     if (value.length === 0) {
@@ -40,7 +40,7 @@ class ChooseCover extends PureComponent {
       <ListGroup className="margin-top-15">
         <ListGroupItem className="ThemeEdit__action_image_title_container">{value[0].title}</ListGroupItem>
         <ListGroupItem className="ThemeEdit__action_img_buttons_container">
-          <Button className="ThemeEdit__action_img_button flex-right"><i className="fa fa-crop" /></Button>
+          {buttons}
           <Button className="ThemeEdit__action_img_button" onClick={this.showDocumentChooser}><i className="fa fa-file-image-o" /></Button>
           <Button className="ThemeEdit__action_img_button" onClick={this.emptyCover}><i className="fa fa-trash-o" /></Button>
         </ListGroupItem>

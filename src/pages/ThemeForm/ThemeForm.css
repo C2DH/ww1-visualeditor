@@ -27,3 +27,12 @@
   width: 100%;
   background-color: #ccc;
 }
+
+.Theme__input {
+  background-color: transparent;
+  border: 0px;
+  font-weight: bold;
+  font-size: 50px;
+  width: 100%;
+  outline: none;
+}
