@@ -1,3 +1,5 @@
+/** SUPER TODO Align classnames.... **/
+
 .ThemeEdit__action_image_title_container {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -26,13 +28,26 @@
   height: 90vh;
   width: 100%;
   background-color: #ccc;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.Theme__input {
+
+.ThemeEdit__overlay-title-input {
   background-color: transparent;
   border: 0px;
   font-weight: bold;
-  font-size: 50px;
-  width: 100%;
+  font-size: 35px;
+  outline: none;
+}
+
+.ThemeEdit__overlay-description-input {
+  background-color: transparent;
+  border: 0px;
+  font-size: 18px;
+  resize: none;
   outline: none;
 }

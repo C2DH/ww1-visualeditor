@@ -113,24 +113,21 @@ class ThemeForm extends PureComponent {
 
             <Col md="9">
               <div className="ThemeEdit__right_container" style={themeContainerStyle}>
-                <div>
                   <Field
                     name={`metadata.title.${language.code}`}
-                    className="Theme__input"
+                    className="ThemeEdit__overlay-title-input"
                     autoComplete="off"
                     component='input'
                     style={{ color }}
                    />
-                </div>
-                <div>
                   <Field
                     name={`metadata.abstract.${language.code}`}
-                    className="Theme__input"
+                    className="ThemeEdit__overlay-description-input"
+                    rows={10}
                     autoComplete="off"
                     component='textarea'
                     style={{ color }}
                    />
-                </div>
               </div>
             </Col>
           </Row>
