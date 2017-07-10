@@ -74,3 +74,4 @@ export const getTheme = createSelector(
   state => state.entities.themes,
   (id, data) => maybeNull(id)(id => data[id])
 )
+export const isThemeSaving = state => state.themeDetail.saving

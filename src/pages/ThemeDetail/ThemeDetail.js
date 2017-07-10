@@ -9,6 +9,7 @@ import './ThemeDetail.css'
 
 import {
   getTheme,
+  isThemeSaving,
 } from '../../state/selectors'
 
 import {
@@ -27,7 +28,7 @@ class ThemeDetail extends PureComponent {
   }
 
   render() {
-    const { theme } = this.props
+    const { theme, saving } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <Row className="ThemeDetail__topRow">
@@ -36,7 +37,7 @@ class ThemeDetail extends PureComponent {
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
             <Button className="ThemeDetail__topRow_btn">Save</Button>
-            <Button className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
+            <Button disabled={saving} className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
               {theme.status === 'draft' ? 'Publish' : 'Unpublish'}
             </Button>
             <Button className="ThemeDetail__topRow_btn">Preview</Button>
@@ -61,6 +62,7 @@ class ThemeDetail extends PureComponent {
 
 const mapStateToProps = state => ({
   theme: getTheme(state),
+  saving: isThemeSaving(state),
 })
 
 export default connect(mapStateToProps, {
