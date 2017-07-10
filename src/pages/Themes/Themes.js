@@ -34,7 +34,7 @@ class Themes extends PureComponent {
 
         <Row>
           <Col md="3" className="Themes__AddButton-container">
-            <AddButton label="Add theme" />
+            <AddButton label="Add theme" tag={Link} to={'/themes/new'} />
           </Col>
           {themes && themes.map(theme => (
             <Col md="3" key={theme.id}>

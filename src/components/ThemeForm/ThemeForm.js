@@ -43,8 +43,11 @@ class ThemeForm extends PureComponent {
         themeContainerStyle = { backgroundImage: `url(${backgroundImage})` }
       }
       if (backgroundColorOverlay) {
-        const rgba = hexToRgb(backgroundColorOverlay).concat(['0.3']).join(',')
-        overlayStyle = { backgroundColor: `rgba(${rgba})` }
+        const rgb = hexToRgb(backgroundColorOverlay)
+        if (rgb) {
+          const rgba = rgb.concat(['0.3']).join(',')
+          overlayStyle = { backgroundColor: `rgba(${rgba})` }
+        }
       }
     } else {
       if (backgroundColor) {

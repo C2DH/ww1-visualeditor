@@ -1,4 +1,5 @@
 import request from 'superagent'
+import { findKey } from 'lodash'
 
 // Inject token in Authorization header when provided
 export const withToken = (token, baseRequest) =>
@@ -97,6 +98,23 @@ export const updateTheme = token => theme => {
       .send({
         covers: themeToUpdate.covers.map(({ id }) => id),
         metadata: JSON.stringify(themeToUpdate.metadata),
+      })
+  )
+  .then(extractBody)
+}
+
+export const createTheme = token => (theme, languages = []) => {
+  const themeToCreate = prepareTheme(theme)
+  return withToken(
+    token,
+    request.post(`/api/story/`)
+      .send({
+        // First non empty in lang title
+        // TODO: What if empty?????
+        ...themeToCreate,
+        title: themeToCreate.metadata.title[findKey(themeToCreate.metadata.title)],
+        covers: themeToCreate.covers.map(({ id }) => id),
+        metadata: JSON.stringify(themeToCreate.metadata),
       })
   )
   .then(extractBody)

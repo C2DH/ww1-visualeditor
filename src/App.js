@@ -11,6 +11,7 @@ import FullPageWidgets from './components/FullPageWidgets'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Themes from './pages/Themes'
+import NewTheme from './pages/NewTheme'
 import Theme from './pages/Theme'
 // import Chapter from './pages/Chapter'
 // import ChapterEdit from './pages/ChapterEdit'
@@ -33,6 +34,7 @@ const App = () => (
             <GuestRoute path='/login' exact component={Login} />
             <AuthRoute path='/' exact component={Home} />
             <AuthRoute path='/themes' exact component={Themes} />
+            <AuthRoute path='/themes/new' exact component={NewTheme} />
             <AuthRoute path='/themes/:themeId' component={Theme} />
             {/* <AuthRoute path='/themes/:themeId/edit' exact component={ThemeEdit} />
             <AuthRoute path='/themes/:themeId/chapters/:chapterId' exact component={Chapter} />

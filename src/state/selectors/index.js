@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { isNull, find } from 'lodash'
+import { TAG_THEME } from '../consts'
 
 // fp <3
 const maybeNull = a => fn => isNull(a) ? null : fn(a)
@@ -41,6 +42,31 @@ export const getThemes = createSelector(
   state => state.themes.ids,
   state => state.entities.themes,
   (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
+)
+
+export const newTheme = createSelector(
+  getLanguages,
+  (languages) => {
+    const emptyMultilangObj = languages.reduce((r, l) => ({
+      ...r,
+      [l.code]: '',
+    }), {})
+    return {
+      backgroundType: 'image',
+      covers: [],
+      metadata: {
+        title: emptyMultilangObj,
+        abstract: emptyMultilangObj,
+        background: {
+          backgroundColor: '',
+          bbox: [],
+          overlay: '',
+        },
+        color: '',
+      },
+      tags: [TAG_THEME],
+    }
+  }
 )
 
 export const getTheme = createSelector(
