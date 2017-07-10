@@ -24,7 +24,7 @@ const OpenSidebar = ({ closeMenu, logout, languages, setLanguage }) => (
       <div className="OpenSidebar__LanguageBtn_container">
         <ButtonGroup>
           {languages.map(language => (
-            <Button onClick={() => setLanguage(language.code)} className="OpenSidebar__LanguageBtn">{language.label}</Button>
+            <Button key={language.code} onClick={() => setLanguage(language.code)} className="OpenSidebar__LanguageBtn">{language.label}</Button>
           ))}
         </ButtonGroup>
       </div>
