@@ -29,3 +29,23 @@ export const loadTheme = (id) => ({
 export const unloadTheme = () => ({
   type: GET_THEME_UNLOAD,
 })
+
+export const PUBLISH_THEME = 'PUBLISH_THEME'
+export const PUBLISH_THEME_SUCCESS = 'PUBLISH_THEME_SUCCESS'
+export const PUBLISH_THEME_FAILURE = 'PUBLISH_THEME_FAILURE'
+export const PUBLISH_THEME_LOADING = 'PUBLISH_THEME_LOADING'
+
+export const publishTheme = (id) => ({
+  type: PUBLISH_THEME,
+  payload: id,
+})
+
+export const UNPUBLISH_THEME = 'UNPUBLISH_THEME'
+export const UNPUBLISH_THEME_SUCCESS = 'UNPUBLISH_THEME_SUCCESS'
+export const UNPUBLISH_THEME_FAILURE = 'UNPUBLISH_THEME_FAILURE'
+export const UNPUBLISH_THEME_LOADING = 'UNPUBLISH_THEME_LOADING'
+
+export const unpublishTheme = (id) => ({
+  type: UNPUBLISH_THEME,
+  payload: id,
+})

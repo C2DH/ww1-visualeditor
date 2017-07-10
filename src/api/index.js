@@ -104,6 +104,12 @@ export const updateTheme = token => theme => {
   .then(extractBody)
 }
 
+export const updateThemeStatus = token => (id, status) =>
+  withToken(token,request.patch(`/api/story/${id}/`)
+    .send({ status })
+  )
+  .then(extractBody)
+
 export const createTheme = token => (theme, languages = []) => {
   const themeToCreate = prepareTheme(theme)
   return withToken(
