@@ -16,7 +16,6 @@ import Theme from './pages/Theme'
 // import Chapter from './pages/Chapter'
 // import ChapterEdit from './pages/ChapterEdit'
 // import Module from './pages/Module'
-import Translate from './pages/Translate'
 // import Documents from './pages/Documents'
 // import DocumentEdit from './pages/DocumentEdit'
 // import TestControlled from './pages/TestControlled'
@@ -36,7 +35,6 @@ const App = () => (
             <AuthRoute path='/themes' exact component={Themes} />
             <AuthRoute path='/themes/new' exact component={NewTheme} />
             <AuthRoute path='/themes/:themeId' component={Theme} />
-            <AuthRoute path='/translate' exact component={Translate} />
             {/* <AuthRoute path='/themes/:themeId/edit' exact component={ThemeEdit} />
             <AuthRoute path='/themes/:themeId/chapters/:chapterId' exact component={Chapter} />
             <AuthRoute path='/themes/:themeId/chapters/:chapterId/edit' exact component={ChapterEdit} />
