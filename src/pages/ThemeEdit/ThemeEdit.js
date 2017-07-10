@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import ThemeForm from '../ThemeForm'
+import ThemeForm from '../../components/ThemeForm'
 import {
   getTheme,
 } from '../../state/selectors'
