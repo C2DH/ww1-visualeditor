@@ -8,6 +8,28 @@ export const withToken = (token, baseRequest) =>
 // headers and so on are useless
 export const extractBody = ({ body }) => body
 
+// Prepare theme for server...
+const prepareTheme = theme => {
+  let themeForServer = { ...theme }
+
+  // Empty background image fields...
+  if (themeForServer.backgroundType === 'color') {
+    themeForServer = {
+      ...themeForServer,
+      metadata: {
+        ...themeForServer.metadata,
+        background: {
+          ...themeForServer.metadata.background,
+          overlay: '',
+        }
+      },
+      covers: []
+    }
+  }
+
+  return themeForServer
+}
+
 // Build params for shitty miller
 const buildMillerParams = (params) => {
   let newParams = params
@@ -66,11 +88,19 @@ export const getTheme = token => (id) =>
     }),
   })).then(extractBody)
 
-export const updateTheme = token => theme =>
-  withToken(token, request.patch(`/api/story/${theme.id}/`).send({
-    covers: theme.covers.map(({ id }) => id),
-    metadata: JSON.stringify(theme.metadata),
-  })).then(extractBody)
+
+export const updateTheme = token => theme => {
+  const themeToUpdate = prepareTheme(theme)
+  return withToken(
+    token,
+    request.patch(`/api/story/${theme.id}/`)
+      .send({
+        covers: themeToUpdate.covers.map(({ id }) => id),
+        metadata: JSON.stringify(themeToUpdate.metadata),
+      })
+  )
+  .then(extractBody)
+}
 
 export const getDocuments = token => (params = {}) =>
   withToken(

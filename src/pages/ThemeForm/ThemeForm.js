@@ -11,6 +11,7 @@ import ChooseCover from '../../components/Form/ChooseCover'
 import Bbox from '../../components/Form/Bbox'
 import ColorSelection, { isValidHex } from '../../components/Form/ColorSelection'
 import Select from '../../components/Form/Select'
+import { hexToRgb } from '../../utils'
 
 import './ThemeForm.css'
 
@@ -20,14 +21,11 @@ import {
 
 // TODO: Show a loader when submit ecc
 class ThemeForm extends PureComponent {
-  clearCover = () => {
-    this.props.arrayRemoveAll('theme', 'covers')
-  }
-
-  render () {
+  render() {
     const {
       handleSubmit,
       backgroundColor,
+      backgroundColorOverlay,
       backgroundImage,
       backgroundType,
       covers,
@@ -35,14 +33,23 @@ class ThemeForm extends PureComponent {
       color,
       invalid,
     } = this.props
-    console.log({ backgroundImage })
 
-    // TODO: Improve
+    // Styles for preview
     let themeContainerStyle = {}
-    if (backgroundImage) {
-      themeContainerStyle = { backgroundImage: `url(${backgroundImage})` }
-    } else if (backgroundColor) {
-      themeContainerStyle = { backgroundColor }
+    let overlayStyle = {}
+
+    if (backgroundType === 'image') {
+      if (backgroundImage) {
+        themeContainerStyle = { backgroundImage: `url(${backgroundImage})` }
+      }
+      if (backgroundColorOverlay) {
+        const rgba = hexToRgb(backgroundColorOverlay).concat(['0.3']).join(',')
+        overlayStyle = { backgroundColor: `rgba(${rgba})` }
+      }
+    } else {
+      if (backgroundColor) {
+        themeContainerStyle = { backgroundColor }
+      }
     }
 
     return (
@@ -113,6 +120,7 @@ class ThemeForm extends PureComponent {
 
             <Col md="9">
               <div className="ThemeEdit__right_container" style={themeContainerStyle}>
+                <div className="ThemeEdit__overlay" style={overlayStyle}>
                   <Field
                     name={`metadata.title.${language.code}`}
                     className="ThemeEdit__overlay-title-input"
@@ -128,6 +136,7 @@ class ThemeForm extends PureComponent {
                     component='textarea'
                     style={{ color }}
                    />
+                 </div>
               </div>
             </Col>
           </Row>
@@ -141,7 +150,8 @@ const selector = formValueSelector('theme')
 
 const mapStateToProps = state => ({
   backgroundType: selector(state, 'backgroundType'),
-  backgroundColor: selector(state, 'metadata.background.overlay'),
+  backgroundColor: selector(state, 'metadata.background.backgroundColor'),
+  backgroundColorOverlay: selector(state, 'metadata.background.overlay'),
   color: selector(state, 'metadata.color'),
   backgroundImage: selector(state, 'covers[0].attachment'),
   covers: selector(state, 'covers'),
