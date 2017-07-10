@@ -46,16 +46,9 @@ const buildMillerParams = (params) => {
   return newParams
 }
 
-// TODO: Implement
-export const me = token => {
-  return new Promise((resolve) => {
-    resolve({
-      id: 2,
-      user: 'fuma',
-      email: 'fumagalli.gf@gmail.com'
-    })
-  })
-}
+export const me = token =>
+  withToken(token, request.get('/api/profile/me/'))
+    .then(extractBody)
 
 const CLIENT_ID = 'b7X9djWuMXK5WZBCNINieUFyQfnFkIPqgf3MsaN5'
 const oauth = grantType =>

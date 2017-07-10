@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
-// import Spinner from '../common/Spinner'
-// TODO: Make a spinner component
-const Spinner = () => <div>Yo</div>
+import Spinner from './components/Spinner'
 
 /**
  * Ensure user logged otherwise redirect them to login
@@ -19,7 +17,7 @@ export const AuthRoute = connect(({ auth }) => ({ auth }))(({
     render={props => {
       if (auth.authenticatingWithToken || auth.loginLoading) {
         // Show nothing or a cool loading spinner
-        return <Spinner centered />
+        return <Spinner />
       }
       // User authenticated
       if (auth.user) {

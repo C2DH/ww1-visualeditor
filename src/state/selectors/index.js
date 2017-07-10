@@ -43,6 +43,7 @@ export const getThemes = createSelector(
   state => state.entities.themes,
   (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
 )
+export const areThemesLoading = state => state.themes.loading
 
 export const newTheme = createSelector(
   getLanguages,
@@ -75,3 +76,4 @@ export const getTheme = createSelector(
   (id, data) => maybeNull(id)(id => data[id])
 )
 export const isThemeSaving = state => state.themeDetail.saving
+export const isThemeLoading = state => state.themeDetail.loading

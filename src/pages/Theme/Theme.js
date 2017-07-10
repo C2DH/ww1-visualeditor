@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import Spinner from '../../components/Spinner'
 import ThemeDetail from '../ThemeDetail'
 import ThemeEdit from '../ThemeEdit'
 import './Theme.css'
 import {
   getTheme,
+  isThemeLoading,
 } from '../../state/selectors'
 import {
   loadTheme,
@@ -29,9 +31,12 @@ class Theme extends PureComponent {
   }
 
   render() {
-    const { theme, match } = this.props
+    const { theme, loading, match } = this.props
     return (
       <div>
+        {(!theme && loading) && (
+          <Spinner />
+        )}
         {theme && <div>
           <Switch>
             <Route path={`${match.path}`} component={ThemeDetail} exact />
@@ -45,6 +50,7 @@ class Theme extends PureComponent {
 
 const mapStateToProps = state => ({
   theme: getTheme(state),
+  loading: isThemeLoading(state),
 })
 
 export default connect(mapStateToProps, {

@@ -6,12 +6,14 @@ import HeadingRow from '../../components/HeadingRow'
 import TopSearchInput from '../../components/TopSearchInput'
 import AddButton from '../../components/AddButton'
 import ThemeCard from '../../components/cards/ThemeCard'
+import Spinner from '../../components/Spinner'
 import {
   loadThemes,
   unloadThemes,
 } from '../../state/actions'
 import {
   getThemes,
+  areThemesLoading,
 } from '../../state/selectors'
 import './Themes.css'
 
@@ -25,7 +27,7 @@ class Themes extends PureComponent {
   }
 
   render() {
-    const { themes } = this.props
+    const { themes, loading } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <HeadingRow title="Themes">
@@ -36,6 +38,9 @@ class Themes extends PureComponent {
           <Col md="3" className="Themes__AddButton-container">
             <AddButton label="Add theme" tag={Link} to={'/themes/new'} />
           </Col>
+          {(!themes && loading) && (
+            <Col md={9}><Spinner /></Col>
+          )}
           {themes && themes.map(theme => (
             <Col md="3" key={theme.id}>
               <Link to={`/themes/${theme.id}`}>
@@ -55,6 +60,7 @@ class Themes extends PureComponent {
 
 const mapStateToProps = state => ({
   themes: getThemes(state),
+  loading: areThemesLoading(state),
 })
 
 export default connect(mapStateToProps, {
