@@ -36,7 +36,7 @@ export const [
   canLoadMoreDocuments,
   getDocumentsCount,
   getDocumentsLoading,
-] = makePaginateListSelectors(state => state.chooseDocuments.list)
+] = makePaginateListSelectors(state => state.widgets.chooseDocuments.list)
 
 export const getThemes = createSelector(
   state => state.themes.ids,

@@ -76,6 +76,7 @@ export const refreshToken = token =>
 
 export const getThemes = token => () =>
   withToken(token, request.get('/api/story').query({
+    limit: 1000,
     filters: JSON.stringify({
       'tags__slug': 'theme',
     }),

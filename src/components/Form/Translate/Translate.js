@@ -6,42 +6,42 @@ import {
   hideWidgetFullPage,
 } from '../../../state/actions'
 
-class Bbox extends PureComponent {
+class Translate extends PureComponent {
   componentWillUnmount() {
     this.props.hideWidgetFullPage()
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.savedBbox !== nextProps.savedBbox && nextProps.savedBbox) {
-      this.props.input.onChange(nextProps.savedBbox)
+    if (this.props.translations !== nextProps.translations && nextProps.translations) {
+      this.props.input.onChange(nextProps.translations)
       this.props.hideWidgetFullPage()
     }
   }
 
-  showBboxCropper = () => {
-    const { input: { value }, image } = this.props
-    this.props.showWidgetFullPage('bboxCropper', {
-      image,
-      bbox: value,
+  showTranslations = () => {
+    const { input: { value, name } } = this.props
+    this.props.showWidgetFullPage('translate', {
+      translationKey: name,
+      initialValues: value,
     })
   }
 
   render() {
     return (
       <Button
-        onClick={this.showBboxCropper}
+        onClick={this.showTranslations}
         className="ThemeEdit__action_img_button flex-right">
-        <i className="fa fa-crop" />
+        Translate!
       </Button>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  savedBbox: state.widgets.bboxCrop.bbox,
+const mapStateToProps = (state, props) => ({
+  translations: state.widgets.translate ? state.widgets.translate[props.input.name] : null,
 })
 
 export default connect(mapStateToProps, {
   showWidgetFullPage,
   hideWidgetFullPage,
-})(Bbox)
+})(Translate)

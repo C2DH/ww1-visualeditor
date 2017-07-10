@@ -1,8 +1,8 @@
-import resetOn from './hor/resetOn'
+import resetOn from '../hor/resetOn'
 import {
   SAVE_CROP_BBOX,
   BBOX_CROP_UNLOAD,
-} from '../actions'
+} from '../../actions'
 
 const defaultState = {
   bbox: null,

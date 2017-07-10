@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
-import resetOn from './hor/resetOn'
-import paginateCollection from './hor/paginateCollection'
+import resetOn from '../hor/resetOn'
+import paginateCollection from '../hor/paginateCollection'
 import {
   GET_DOCUMENTS,
   GET_DOCUMENTS_UNLOAD,
   CHOOSE_DOCUMENT,
-} from '../actions'
+} from '../../actions'
 
 const choosedDocument = (prevState = null, { type, payload }) => {
   switch (type) {

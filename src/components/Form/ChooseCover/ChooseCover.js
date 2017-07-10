@@ -50,7 +50,7 @@ class ChooseCover extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  choosedDocument: state.chooseDocuments.choosedDocument,
+  choosedDocument: state.widgets.chooseDocuments.choosedDocument,
 })
 
 export default connect(mapStateToProps, {

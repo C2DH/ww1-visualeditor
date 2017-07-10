@@ -15,6 +15,7 @@ const makeCollection = apiCall => (
     yield put({ type: `${actionType}_LOADING` })
     try {
       const { results, count } = yield apiCall(apiFn, {
+        limit: pageSize,
         ...params,
       })
       yield put({

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import DocumentChooser from '../DocumentChooser'
 import BboxCropper from '../BboxCropper'
+import Translate from '../Translate'
 
 const getWidgetComponent = widget => {
   switch (widget) {
@@ -10,6 +11,8 @@ const getWidgetComponent = widget => {
       return DocumentChooser
     case 'bboxCropper':
       return BboxCropper
+    case 'translate':
+      return Translate
     default:
       throw new Error('Invalid widget name')
   }

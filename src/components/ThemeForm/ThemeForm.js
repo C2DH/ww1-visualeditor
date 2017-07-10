@@ -9,6 +9,7 @@ import SideEditToolbar from '../SideEditToolbar'
 
 import ChooseCover from '../Form/ChooseCover'
 import Bbox from '../Form/Bbox'
+import Translate from '../Form/Translate'
 import ColorSelection, { isValidHex } from '../Form/ColorSelection'
 import Select from '../Form/Select'
 import { hexToRgb } from '../../utils'
@@ -131,6 +132,10 @@ class ThemeForm extends PureComponent {
                     component='input'
                     style={{ color }}
                    />
+                   <Field
+                     name={`metadata.title`}
+                     component={Translate}
+                   />
                   <Field
                     name={`metadata.abstract.${language.code}`}
                     className="ThemeEdit__overlay-description-input"
@@ -138,6 +143,10 @@ class ThemeForm extends PureComponent {
                     autoComplete="off"
                     component='textarea'
                     style={{ color }}
+                   />
+                   <Field
+                     name={`metadata.abstract`}
+                     component={Translate}
                    />
                  </div>
               </div>

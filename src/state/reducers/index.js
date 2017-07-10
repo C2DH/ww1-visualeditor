@@ -2,23 +2,21 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import auth from './auth'
 import languages from './languages'
+import widgets from './widgets'
 import settings from './settings'
 import entities from './entities'
 import themes from './themes'
 import themeDetail from './themeDetail'
-import chooseDocuments from './chooseDocuments'
-import bboxCrop from './bboxCrop'
 import ui from './ui'
 
 export default combineReducers({
   form: formReducer,
-  ui,
   auth,
   settings,
+  ui,
+  widgets,
   languages,
   entities,
   themes,
   themeDetail,
-  chooseDocuments,
-  bboxCrop,
 })
