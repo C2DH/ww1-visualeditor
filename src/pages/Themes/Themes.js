@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
@@ -16,6 +17,7 @@ import {
   areThemesLoading,
 } from '../../state/selectors'
 import './Themes.css'
+
 
 class Themes extends PureComponent {
   componentDidMount() {
@@ -45,8 +47,9 @@ class Themes extends PureComponent {
             <Col md="3" key={theme.id}>
               <Link to={`/themes/${theme.id}`}>
                 <ThemeCard
+                  status={theme.status}
                   title={theme.metadata.title.en_US}
-                  cover="http://via.placeholder.com/350x150"
+                  cover={get(theme, 'covers[0].attachment', "http://placehold.it/200x150.png&text=Noimage") }
                  />
                </Link>
             </Col>

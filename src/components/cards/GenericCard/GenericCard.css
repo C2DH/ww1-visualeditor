@@ -28,3 +28,9 @@
   padding: 10px;
   width: 100%;
 }
+
+.GenericCard__div_img {
+  height: 160px;
+  width: 100%;
+  background-size: cover;
+}
