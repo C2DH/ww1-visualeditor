@@ -124,19 +124,30 @@ export const updateStory = token => story => {
   .then(extractBody)
 }
 
-export const createTheme = token => (theme, languages = []) => {
-  const themeToCreate = prepareStory(theme)
+export const createStory = token => (theme, languages = []) => {
+  const storyToCreate = prepareStory(theme)
   return withToken(
     token,
     request.post(`/api/story/`)
       .send({
         // First non empty in lang title
         // TODO: What if empty?????
-        ...themeToCreate,
-        title: themeToCreate.metadata.title[findKey(themeToCreate.metadata.title)],
-        covers: themeToCreate.covers.map(({ id }) => id),
-        metadata: JSON.stringify(themeToCreate.metadata),
+        ...storyToCreate,
+        title: storyToCreate.metadata.title[findKey(storyToCreate.metadata.title)],
+        covers: storyToCreate.covers.map(({ id }) => id),
+        metadata: JSON.stringify(storyToCreate.metadata),
       })
   )
   .then(extractBody)
 }
+
+export const mentionStory = token => (fromStory, toStory) =>
+  withToken(
+    token,
+    request.post(`/api/mention/`)
+      .send({
+        to_story: toStory,
+        from_story: fromStory,
+      })
+  )
+  .then(extractBody)

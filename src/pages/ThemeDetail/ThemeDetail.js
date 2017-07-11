@@ -54,12 +54,14 @@ class ThemeDetail extends PureComponent {
           </Col>
           <Col md="3">
             <AddButton
+              tag={Link}
+              to={`/themes/${theme.id}/chapters/new`}
               label="Add Chapter"
              />
              {theme.stories.map(chapter => (
                <ChapterCard
                  key={chapter.id}
-                 title={chapter.id}
+                 title={chapter.metadata.title.en_US}
                  cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
                />
              ))}
