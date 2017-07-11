@@ -24,6 +24,7 @@ class NewTheme extends PureComponent {
     const { theme } = this.props
     return (
       <ThemeForm
+        exitLink={`/themes`}
         onSubmit={this.createTheme}
         onSubmitSuccess={this.redirectToCreatedTheme}
         initialValues={theme}

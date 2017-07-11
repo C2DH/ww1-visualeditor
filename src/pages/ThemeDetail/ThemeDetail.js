@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import AddButton from '../../components/AddButton'
 import ChapterCard from '../../components/cards/ChapterCard'
@@ -46,6 +47,9 @@ class ThemeDetail extends PureComponent {
         <Row>
           <Col md="9" className="no-padding-left">
             <div className="ThemeDetail__title_edit_container">
+              <div className="ThemeDetail__title_edit_container_button">
+                <Button tag={Link} to={`/themes/${theme.id}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i></Button>
+              </div>
             </div>
           </Col>
           <Col md="3">
@@ -54,6 +58,7 @@ class ThemeDetail extends PureComponent {
              />
              {theme.stories.map(chapter => (
                <ChapterCard
+                 key={chapter.id}
                  title={chapter.id}
                  cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
                />

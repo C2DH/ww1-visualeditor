@@ -32,3 +32,8 @@
   height: 500px;
   background-color: #ddd;
 }
+.ThemeDetail__title_edit_container_button {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector, arrayRemoveAll } from 'redux-form'
+import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { ButtonGroup, Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
@@ -35,6 +36,7 @@ class ThemeForm extends PureComponent {
       color,
       invalid,
       submitting,
+      exitLink,
     } = this.props
 
     // Styles for preview
@@ -119,7 +121,7 @@ class ThemeForm extends PureComponent {
                 <div className="ThemeEdit__action_bottom_btn_container">
                   <hr />
                   <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
-                  <Button size="sm" block>Exit</Button>
+                  <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
               </div>
               </SideEditToolbar>
             </Col>
