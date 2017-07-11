@@ -4,7 +4,7 @@ import { Button } from 'reactstrap'
 import './DocumentCard.css'
 
 
-const DocumentCard = ({ title = '', cover = null, onClick }) => (
+const DocumentCard = ({ title = '', cover = null, onClick, status=null }) => (
   <GenericCard
     className="DocumentCard__card"
     title={title}
