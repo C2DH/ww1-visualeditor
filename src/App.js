@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './state'
 import { AuthRoute, GuestRoute } from './authRoutes'
@@ -18,7 +18,7 @@ import Theme from './pages/Theme'
 // import Module from './pages/Module'
 // import Documents from './pages/Documents'
 // import DocumentEdit from './pages/DocumentEdit'
-// import TestControlled from './pages/TestControlled'
+import TestControlled from './pages/TestControlled'
 
 // const Fullo = () => (
 //   <div>I am fulllo!</div>
@@ -30,6 +30,7 @@ const App = () => (
       <Layout>
         <FullPageWidgets>
           <Switch>
+
             <GuestRoute path='/login' exact component={Login} />
             <AuthRoute path='/' exact component={Home} />
             <AuthRoute path='/themes' exact component={Themes} />
@@ -42,8 +43,8 @@ const App = () => (
             {/* temporary path */}
             {/* <AuthRoute path='/translate' exact component={Translate} />
             <AuthRoute path='/docs' exact component={Documents} />
-            <AuthRoute path='/docs/:docId/edit' exact component={DocumentEdit} />
-            <AuthRoute path='/test' exact component={TestControlled} /> */}
+            <AuthRoute path='/docs/:docId/edit' exact component={DocumentEdit} /> */}
+            <AuthRoute path='/test' exact component={TestControlled} />
           </Switch>
         </FullPageWidgets>
       </Layout>

@@ -1,9 +1,41 @@
 import React, { PureComponent } from 'react'
 import { Container, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap'
 import HeadingRow from '../../components/HeadingRow'
-import ColorSelection from '../../components/ColorSelection'
-import TextAlignSelection from '../../components/TextAlignSelection'
+import ModuleCard from '../../components/cards/ModuleCard'
 import './TestControlled.css'
+
+const ModuleCardTypes = [
+  {
+    id: 1,
+    title: 'modulo 1',
+    cover: 'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 2,
+    title: 'modulo 2',
+    cover: 'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 3,
+    title: 'modulo 3',
+    cover: 'https://images.pexels.com/photos/205769/pexels-photo-205769.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 4,
+    title: 'modulo 4',
+    cover: 'https://images.pexels.com/photos/248771/pexels-photo-248771.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 5,
+    title: 'modulo 5',
+    cover: 'https://images.pexels.com/photos/437886/pexels-photo-437886.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 6,
+    title: 'modulo 6',
+    cover: 'https://images.pexels.com/photos/459644/pexels-photo-459644.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+]
 
 class TestControlled extends PureComponent {
   state = {
@@ -18,7 +50,7 @@ class TestControlled extends PureComponent {
             <Row className="TestControlled__mainRow">
               <p className="TestControlled__test_title">Test 1</p>
               <div className="TestControlled__test_container">
-                <Row>
+                {/* <Row>
                   <Col md="4">
                     <ColorSelection
                       onChange={(color) => this.setState({ value: color })}
@@ -44,7 +76,14 @@ class TestControlled extends PureComponent {
                     Vivamus suscipit tortor eget felis porttitor volutpat. Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
                     Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla quis lorem ut libero malesuada feugiat.
                   </p>
-                </div>
+                </div> */}
+
+                 {ModuleCardTypes.map(modType =>(
+                   <Col md="3" key={modType.id} >
+                     <ModuleCard title={modType.title} cover={modType.cover} />
+                   </Col>
+                 ))}
+
               </div>
 
            </Row>
