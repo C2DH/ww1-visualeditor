@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
@@ -10,6 +11,7 @@ import './ThemeDetail.css'
 
 import {
   getTheme,
+  getCurrentLanguage,
   isThemeSaving,
 } from '../../state/selectors'
 
@@ -29,12 +31,12 @@ class ThemeDetail extends PureComponent {
   }
 
   render() {
-    const { theme, saving } = this.props
+    const { theme, saving, language } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <Row className="ThemeDetail__topRow">
           <Breadcrumb>
-            <BreadcrumbItem className="ThemeDetail__topRow_title"><a href="#">{theme.title}</a></BreadcrumbItem>
+            <BreadcrumbItem className="ThemeDetail__topRow_title">{get(theme, `metadata.title.${language.code}`)}</BreadcrumbItem>
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
             <Button className="ThemeDetail__topRow_btn">Save</Button>
@@ -73,6 +75,7 @@ class ThemeDetail extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  language: getCurrentLanguage(state),
   theme: getTheme(state),
   saving: isThemeSaving(state),
 })
