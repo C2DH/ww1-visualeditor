@@ -9,7 +9,7 @@ import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 // import './ThemeEdit.css'
 
-const createTheme = wrapAuthApiCall(api.createTheme)
+const createTheme = wrapAuthApiCall(api.createStory)
 
 class NewTheme extends PureComponent {
   createTheme = (theme) => {
