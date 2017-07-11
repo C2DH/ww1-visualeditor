@@ -6,6 +6,7 @@ import { ButtonGroup, Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 import AddButton from '../AddButton'
 import SideEditToolbar from '../SideEditToolbar'
+import Spinner from '../Spinner'
 
 import ChooseCover from '../Form/ChooseCover'
 import Bbox from '../Form/Bbox'
@@ -33,6 +34,7 @@ class ThemeForm extends PureComponent {
       language,
       color,
       invalid,
+      submitting,
     } = this.props
 
     // Styles for preview
@@ -153,6 +155,7 @@ class ThemeForm extends PureComponent {
             </Col>
           </Row>
         </Container>
+        {submitting && <Spinner fullpage />}
       </form>
     )
   }
