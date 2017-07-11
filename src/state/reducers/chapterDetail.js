@@ -1,6 +1,6 @@
 import {
-  THEME,
+  CHAPTER,
 } from '../actions'
 import makeStoryDetail from './hor/storyDetail'
 
-export default makeStoryDetail(THEME)
+export default makeStoryDetail(CHAPTER)

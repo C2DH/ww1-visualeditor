@@ -1,3 +1,5 @@
+export const THEME = 'THEME'
+
 export const GET_THEMES = 'GET_THEMES'
 export const GET_THEMES_SUCCESS = 'GET_THEMES_SUCCESS'
 export const GET_THEMES_FAILURE = 'GET_THEMES_FAILURE'
@@ -16,9 +18,6 @@ export const unloadThemes = () => ({
 })
 
 export const GET_THEME = 'GET_THEME'
-export const GET_THEME_SUCCESS = 'GET_THEME_SUCCESS'
-export const GET_THEME_FAILURE = 'GET_THEME_FAILURE'
-export const GET_THEME_LOADING = 'GET_THEME_LOADING'
 export const GET_THEME_UNLOAD = 'GET_THEME_UNLOAD'
 
 export const loadTheme = (id) => ({
@@ -31,9 +30,6 @@ export const unloadTheme = () => ({
 })
 
 export const PUBLISH_THEME = 'PUBLISH_THEME'
-export const PUBLISH_THEME_SUCCESS = 'PUBLISH_THEME_SUCCESS'
-export const PUBLISH_THEME_FAILURE = 'PUBLISH_THEME_FAILURE'
-export const PUBLISH_THEME_LOADING = 'PUBLISH_THEME_LOADING'
 
 export const publishTheme = (id) => ({
   type: PUBLISH_THEME,
@@ -41,9 +37,6 @@ export const publishTheme = (id) => ({
 })
 
 export const UNPUBLISH_THEME = 'UNPUBLISH_THEME'
-export const UNPUBLISH_THEME_SUCCESS = 'UNPUBLISH_THEME_SUCCESS'
-export const UNPUBLISH_THEME_FAILURE = 'UNPUBLISH_THEME_FAILURE'
-export const UNPUBLISH_THEME_LOADING = 'UNPUBLISH_THEME_LOADING'
 
 export const unpublishTheme = (id) => ({
   type: UNPUBLISH_THEME,

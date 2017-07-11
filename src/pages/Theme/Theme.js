@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
 import ThemeDetail from '../ThemeDetail'
 import ThemeEdit from '../ThemeEdit'
+// import NewChapter from '../NewChapter'
+import Chapter from '../Chapter'
 import './Theme.css'
 import {
   getTheme,
@@ -39,8 +41,10 @@ class Theme extends PureComponent {
         )}
         {theme && <div>
           <Switch>
-            <Route path={`${match.path}`} component={ThemeDetail} exact />
-            <Route path={`${match.path}/edit`} component={ThemeEdit} exact />
+            <Route path={`${match.path}`} exact component={ThemeDetail} />
+            <Route path={`${match.path}/edit`} exact component={ThemeEdit} />
+            {/* <Route path={`${match.path}/chapters/new`} exact component={NewChapter} /> */}
+            <Route path={`${match.path}/chapters/:chapterId`} component={Chapter} />
           </Switch>
         </div>}
       </div>

@@ -52,7 +52,12 @@ class ThemeDetail extends PureComponent {
             <AddButton
               label="Add Chapter"
              />
-            <ChapterCard title="chapter title" cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb" />
+             {theme.stories.map(chapter => (
+               <ChapterCard
+                 title={chapter.id}
+                 cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
+               />
+             ))}
           </Col>
         </Row>
       </Container>

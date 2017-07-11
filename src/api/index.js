@@ -1,6 +1,9 @@
 import request from 'superagent'
 import { findKey } from 'lodash'
 
+// Hight value for pagination that means no limit maaan
+const NO_LIMIT = 1000
+
 // Inject token in Authorization header when provided
 export const withToken = (token, baseRequest) =>
   (token ? baseRequest.set('Authorization', `Bearer ${token}`) : baseRequest)
@@ -67,22 +70,46 @@ export const refreshToken = token =>
     .send({ refresh_token: token })
     .then(extractBody)
 
-export const getThemes = token => () =>
-  withToken(token, request.get('/api/story').query({
-    limit: 1000,
-    filters: JSON.stringify({
-      'tags__slug': 'theme',
-    }),
+export const getDocuments = token => (params = {}) =>
+  withToken(
+    token,
+    request
+      .get(`/api/document/`)
+      .query(buildMillerParams({
+        ...params,
+        filters: {
+          ...params.filters,
+          data__type: 'image',
+        }
+      }))
+  )
+  .then(extractBody)
+
+// Stories
+
+export const getStories = token => (params = {}) =>
+  withToken(token, request.get('/api/story/').query({
+    limit: NO_LIMIT,
     orderby: 'priority',
-  })).then(extractBody)
+    ...params,
+  }))
+  .then(extractBody)
 
-export const getTheme = token => (id) =>
-  withToken(token, request.get(`/api/story/${id}`).query({
+export const getStory = token => id =>
+  withToken(token, request.get(`/api/story/${id}/`)).then(extractBody)
+
+export const updateStoryStatus = token => (id, status) =>
+  withToken(token,request.patch(`/api/story/${id}/`)
+    .send({ status })
+  )
+  .then(extractBody)
+
+export const getThemes = token => () =>
+  getStories(token)({
     filters: JSON.stringify({
       'tags__slug': 'theme',
     }),
-  })).then(extractBody)
-
+  })
 
 export const updateTheme = token => theme => {
   const themeToUpdate = prepareTheme(theme)
@@ -96,12 +123,6 @@ export const updateTheme = token => theme => {
   )
   .then(extractBody)
 }
-
-export const updateThemeStatus = token => (id, status) =>
-  withToken(token,request.patch(`/api/story/${id}/`)
-    .send({ status })
-  )
-  .then(extractBody)
 
 export const createTheme = token => (theme, languages = []) => {
   const themeToCreate = prepareTheme(theme)
@@ -119,18 +140,3 @@ export const createTheme = token => (theme, languages = []) => {
   )
   .then(extractBody)
 }
-
-export const getDocuments = token => (params = {}) =>
-  withToken(
-    token,
-    request
-      .get(`/api/document/`)
-      .query(buildMillerParams({
-        ...params,
-        filters: {
-          ...params.filters,
-          data__type: 'image',
-        }
-      }))
-  )
-  .then(extractBody)

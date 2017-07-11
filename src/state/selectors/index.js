@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { isNull, find } from 'lodash'
-import { TAG_THEME } from '../consts'
+import { TAG_THEME, TAG_CHAPTER } from '../consts'
 
 // fp <3
 const maybeNull = a => fn => isNull(a) ? null : fn(a)
@@ -12,6 +12,27 @@ export const getCurrentLanguage = createSelector(
   state => state.settings.language,
   (languages, currentLangCode) => find(languages, { code: currentLangCode })
 )
+
+const createEmptyMultilangObj = languages => languages.reduce((r, l) => ({
+  ...r,
+  [l.code]: '',
+}), {})
+
+const createBasicStory = (languages, tag) => ({
+  backgroundType: 'image',
+  covers: [],
+  metadata: {
+    title: createEmptyMultilangObj(languages),
+    abstract: createEmptyMultilangObj(languages),
+    background: {
+      backgroundColor: '',
+      bbox: [],
+      overlay: '',
+    },
+    color: '',
+  },
+  tags: [tag],
+})
 
 // Make base paginate list state selectors
 const makePaginateListSelectors = selectState => {
@@ -38,37 +59,19 @@ export const [
   getDocumentsLoading,
 ] = makePaginateListSelectors(state => state.widgets.chooseDocuments.list)
 
+// Themes
+
+export const newTheme = createSelector(
+  getLanguages,
+  languages => createBasicStory(languages, TAG_THEME)
+)
+
 export const getThemes = createSelector(
   state => state.themes.ids,
   state => state.entities.themes,
   (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
 )
 export const areThemesLoading = state => state.themes.loading
-
-export const newTheme = createSelector(
-  getLanguages,
-  (languages) => {
-    const emptyMultilangObj = languages.reduce((r, l) => ({
-      ...r,
-      [l.code]: '',
-    }), {})
-    return {
-      backgroundType: 'image',
-      covers: [],
-      metadata: {
-        title: emptyMultilangObj,
-        abstract: emptyMultilangObj,
-        background: {
-          backgroundColor: '',
-          bbox: [],
-          overlay: '',
-        },
-        color: '',
-      },
-      tags: [TAG_THEME],
-    }
-  }
-)
 
 export const getTheme = createSelector(
   state => state.themeDetail.id,
@@ -77,3 +80,17 @@ export const getTheme = createSelector(
 )
 export const isThemeSaving = state => state.themeDetail.saving
 export const isThemeLoading = state => state.themeDetail.loading
+
+// Chapters
+
+export const newChapter = createSelector(
+  getLanguages,
+  languages => createBasicStory(languages, TAG_CHAPTER)
+)
+export const getChapter = createSelector(
+  state => state.chapterDetail.id,
+  state => state.entities.chapters,
+  (id, data) => maybeNull(id)(id => data[id])
+)
+export const isChapterSaving = state => state.chapterDetail.saving
+export const isChapterLoading = state => state.chapterDetail.loading

@@ -7,6 +7,7 @@ import settings from './settings'
 import entities from './entities'
 import themes from './themes'
 import themeDetail from './themeDetail'
+import chapterDetail from './chapterDetail'
 import ui from './ui'
 
 export default combineReducers({
@@ -19,4 +20,5 @@ export default combineReducers({
   entities,
   themes,
   themeDetail,
+  chapterDetail,
 })
