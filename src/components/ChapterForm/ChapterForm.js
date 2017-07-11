@@ -16,13 +16,13 @@ import ColorSelection, { isValidHex } from '../Form/ColorSelection'
 import Select from '../Form/Select'
 import { makeContainerStyles } from '../../utils'
 
-import './ThemeForm.css'
+import './ChapterForm.css'
 
 import {
   getCurrentLanguage,
 } from '../../state/selectors'
 
-class ThemeForm extends PureComponent {
+class ChapterForm extends PureComponent {
   render() {
     const {
       handleSubmit,
@@ -152,7 +152,7 @@ class ThemeForm extends PureComponent {
   }
 }
 
-const selector = formValueSelector('theme')
+const selector = formValueSelector('chapter')
 
 const mapStateToProps = state => ({
   backgroundType: selector(state, 'backgroundType'),
@@ -165,5 +165,5 @@ const mapStateToProps = state => ({
 })
 
 export default reduxForm({
-  form: 'theme',
-})(connect(mapStateToProps)(ThemeForm))
+  form: 'chapter',
+})(connect(mapStateToProps)(ChapterForm))

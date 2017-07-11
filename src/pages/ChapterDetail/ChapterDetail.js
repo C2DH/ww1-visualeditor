@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
@@ -36,7 +37,7 @@ class ChapterDetail extends PureComponent {
     <Row>
       <div className={this.state.open ? "Chapter__main_container_open" : "Chapter__main_container"}>
         <div className="Chapter__edit_button_container">
-          <Button><i className="fa fa-pencil" /></Button>
+          <Button tag={Link} to='/'><i className="fa fa-pencil" /></Button>
         </div>
         <div className="Chapter__show_modules_button_container">
           <Button onClick={this.toggleModule}><i className="fa fa-cog" /> {this.state.open ? "Hide modules" : "Show modules"}</Button>
