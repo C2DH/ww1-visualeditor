@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
 import ChapterDetail from '../ChapterDetail'
 import ChapterEdit from '../ChapterEdit'
+import NewModule from '../NewModule'
 // import NewChapter from '../NewChapter'
 import {
   getChapter,
@@ -43,6 +44,7 @@ class Chapter extends PureComponent {
           <Switch>
             <Route path={`${match.path}`} exact component={ChapterDetail} />
             <Route path={`${match.path}/edit`} exact component={ChapterEdit} />
+            <Route path={`${match.path}/modules/new`} exact component={NewModule} />
           </Switch>
         </div>}
       </div>

@@ -4,8 +4,7 @@ import './TextAlignSelection.css'
 
 class TextAlignSelection extends PureComponent {
   render () {
-    const { value, onChange, textAligns } = this.props
-    console.log(value)
+    const { input: { value, onChange }, textAligns } = this.props
     return (
 
       <div className="grid">

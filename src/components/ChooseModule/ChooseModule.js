@@ -1,10 +1,9 @@
 import React from 'react'
 import { Container, Row, Col, Label, Button } from 'reactstrap'
-import ThemeCard from '../../components/cards/ThemeCard'
-import ColorSelection from '../../components/ColorSelection'
-import './Module.css'
+import ThemeCard from '../cards/ThemeCard'
+import './ChooseModule.css'
 
-const Module = () => (
+const ChooseModule = ({ onChooseModule }) => (
   <Container fluid className="margin-r-l-20">
     <Row>
       <Col md="3">
@@ -20,13 +19,16 @@ const Module = () => (
       <Col md="9">
         <Row>
           <Col md="4">
-            <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />
+            <button onClick={() => onChooseModule('text')}>text</button>
+            {/* <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" /> */}
           </Col>
           <Col md="4">
-            <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />
+            <button onClick={() => onChooseModule('object')}>object</button>
+            {/* <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" /> */}
           </Col>
           <Col md="4">
-            <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" />
+            <button onClick={() => onChooseModule('gallery')}>gallery</button>
+            {/* <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" /> */}
           </Col>
         </Row>
       </Col>
@@ -34,4 +36,4 @@ const Module = () => (
   </Container>
 )
 
-export default Module
+export default ChooseModule
