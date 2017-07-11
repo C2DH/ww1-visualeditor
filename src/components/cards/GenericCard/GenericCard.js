@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardImg, CardTitle, Badge } from 'reactstrap'
+import { Card, CardTitle, Badge } from 'reactstrap'
 import './GenericCard.css'
 
 const PublishedThemeLabel = () => (
