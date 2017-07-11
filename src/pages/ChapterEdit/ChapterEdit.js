@@ -1,19 +1,35 @@
-import React from 'react'
-import { Container, Row, Col } from 'reactstrap'
-import SideEditToolbar from '../../components/SideEditToolbar'
-import './ChapterEdit.css'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import ChapterForm from '../../components/ChapterForm'
+import {
+  getTheme,
+  getChapter,
+} from '../../state/selectors'
+import * as api from '../../api'
+import { wrapAuthApiCall } from '../../state'
 
-const ChapterEdit = () => (
-  <Container fluid className="margin-r-l-20">
-    <Row>
-      <Col md="3">
-        <SideEditToolbar />
-      </Col>
-      <Col md="9">
-        <div className="ThemeEdit__right_container" />
-      </Col>
-    </Row>
-  </Container>
-)
+const updateChapter = wrapAuthApiCall(api.updateStory)
 
-export default ChapterEdit
+class ChapterEdit extends PureComponent {
+  render () {
+    const { theme, chapter } = this.props
+    return (
+      <ChapterForm
+        onSubmit={updateChapter}
+        exitLink={`/themes/${theme.id}/chapters/${chapter.id}`}
+        theme={theme}
+        initialValues={{
+          ...chapter,
+          backgroundType: chapter.covers.length > 0 ? 'image' : 'color',
+        }}
+      />
+    )
+  }
+}
+
+const mapStateToPros = state => ({
+  theme: getTheme(state),
+  chapter: getChapter(state),
+})
+
+export default connect(mapStateToPros)(ChapterEdit)

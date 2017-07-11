@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
 import ChapterDetail from '../ChapterDetail'
-// import ChapterEdit from '../ChapterEdit'
+import ChapterEdit from '../ChapterEdit'
 // import NewChapter from '../NewChapter'
 import {
   getChapter,
@@ -42,6 +42,7 @@ class Chapter extends PureComponent {
         {chapter && <div>
           <Switch>
             <Route path={`${match.path}`} exact component={ChapterDetail} />
+            <Route path={`${match.path}/edit`} exact component={ChapterEdit} />
           </Switch>
         </div>}
       </div>

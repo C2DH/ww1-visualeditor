@@ -12,18 +12,18 @@ export const withToken = (token, baseRequest) =>
 // headers and so on are useless
 export const extractBody = ({ body }) => body
 
-// Prepare theme for server...
-const prepareTheme = theme => {
-  let themeForServer = { ...theme }
+// Prepare story for server...
+const prepareStory = story => {
+  let storyForServer = { ...story }
 
   // Empty background image fields...
-  if (themeForServer.backgroundType === 'color') {
-    themeForServer = {
-      ...themeForServer,
+  if (storyForServer.backgroundType === 'color') {
+    storyForServer = {
+      ...storyForServer,
       metadata: {
-        ...themeForServer.metadata,
+        ...storyForServer.metadata,
         background: {
-          ...themeForServer.metadata.background,
+          ...storyForServer.metadata.background,
           overlay: '',
         }
       },
@@ -31,7 +31,7 @@ const prepareTheme = theme => {
     }
   }
 
-  return themeForServer
+  return storyForServer
 }
 
 // Build params for shitty miller
@@ -111,21 +111,21 @@ export const getThemes = token => () =>
     }),
   })
 
-export const updateTheme = token => theme => {
-  const themeToUpdate = prepareTheme(theme)
+export const updateStory = token => story => {
+  const storyToUpdate = prepareStory(story)
   return withToken(
     token,
-    request.patch(`/api/story/${theme.id}/`)
+    request.patch(`/api/story/${story.id}/`)
       .send({
-        covers: themeToUpdate.covers.map(({ id }) => id),
-        metadata: JSON.stringify(themeToUpdate.metadata),
+        covers: storyToUpdate.covers.map(({ id }) => id),
+        metadata: JSON.stringify(storyToUpdate.metadata),
       })
   )
   .then(extractBody)
 }
 
 export const createTheme = token => (theme, languages = []) => {
-  const themeToCreate = prepareTheme(theme)
+  const themeToCreate = prepareStory(theme)
   return withToken(
     token,
     request.post(`/api/story/`)

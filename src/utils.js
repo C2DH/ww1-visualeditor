@@ -12,3 +12,33 @@ export const hexToRgb = (hexStr) => {
     parseInt(result[3], 16)
   ] : null
 }
+
+// Make styles for form container
+export const makeContainerStyles = (
+  backgroundType,
+  backgroundImage,
+  backgroundColorOverlay,
+  backgroundColor,
+) => {
+  let themeContainerStyle = {}
+  let overlayStyle = {}
+
+  if (backgroundType === 'image') {
+    if (backgroundImage) {
+      themeContainerStyle = { backgroundImage: `url(${backgroundImage})` }
+    }
+    if (backgroundColorOverlay) {
+      const rgb = hexToRgb(backgroundColorOverlay)
+      if (rgb) {
+        const rgba = rgb.concat(['0.3']).join(',')
+        overlayStyle = { backgroundColor: `rgba(${rgba})` }
+      }
+    }
+  } else {
+    if (backgroundColor) {
+      themeContainerStyle = { backgroundColor }
+    }
+  }
+
+  return [ themeContainerStyle, overlayStyle ]
+}
