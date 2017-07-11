@@ -9,14 +9,17 @@ const preloadedState = {
     {
       label: 'EN',
       code: 'en_US',
+      description: 'English',
     },
     {
       label: 'FR',
       code: 'fr_FR',
+      description: 'French',
     },
     {
       label: 'DE',
       code: 'de_DE',
+      description: 'German',
     },
   ]
 }

@@ -11,19 +11,20 @@ import {
   saveTranslations,
   unloadTranslate,
 } from '../../state/actions'
+import './Translate.css'
 
 const TranslateForm = reduxForm({
   form: 'translate',
 })(({ languages, handleSubmit }) => (
   <form onSubmit={handleSubmit}>
-    <Container fluid className="margin-r-l-20">
+    <Container fluid className="margin-r-l-20 Translate__container">
       <HeadingRow title="Translate" />
 
       <Row className="Translate__text_container_row">
         {languages.map(lang => (
           <Col md="4" key={lang.code}>
             <FormGroup>
-              <Label for="englishText">{lang.label}</Label>
+              <Label for="englishText">{lang.description}</Label>
               <Field
                 className="Translate__textarea"
                 name={lang.code}
