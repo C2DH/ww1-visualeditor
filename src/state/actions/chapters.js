@@ -25,3 +25,9 @@ export const unpublishChapter = (id) => ({
   type: UNPUBLISH_CHAPTER,
   payload: id,
 })
+
+export const CHAPTER_UPDATED = 'CHAPTER_UPDATED'
+export const chapterUpdated = (chapter) => ({
+  type: CHAPTER_UPDATED,
+  payload: chapter,
+})

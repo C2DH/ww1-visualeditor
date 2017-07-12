@@ -85,7 +85,7 @@ class ChapterDetail extends PureComponent {
                       {/* TODO: Better preview */}
                       <ModuleCard
                         title={mod.module}
-                        onEditClick={() => this.props.history.push(`/`)}
+                        onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
                         cover={'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'}
                       />
                     </div>

@@ -156,9 +156,32 @@ export const mentionStory = token => (fromStory, toStory) =>
   )
   .then(extractBody)
 
-export const createModule = token => (chapter, module) =>
+// FIXME TODO temporany workaround for not encoded json
+const reParseChapter = chapter => ({
+  ...chapter,
+  metadata: JSON.parse(chapter.metadata),
+  contents: JSON.parse(chapter.contents),
+})
+
+export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
     contents: JSON.stringify({
       modules: get(chapter, 'contents.modules', []).concat(module)
     })
   }))
+  .then(extractBody)
+  .then(reParseChapter)
+
+export const updateModuleChapter = token => (chapter, module, index) =>
+  withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    contents: JSON.stringify({
+      modules: get(chapter, 'contents.modules', []).map((m, i) => {
+        if (i === (index - 1)) {
+          return module
+        }
+        return m
+      })
+    })
+  }))
+  .then(extractBody)
+  .then(reParseChapter)

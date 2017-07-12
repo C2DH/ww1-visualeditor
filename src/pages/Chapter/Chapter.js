@@ -5,7 +5,7 @@ import Spinner from '../../components/Spinner'
 import ChapterDetail from '../ChapterDetail'
 import ChapterEdit from '../ChapterEdit'
 import NewModule from '../NewModule'
-// import NewChapter from '../NewChapter'
+import ModuleEdit from '../ModuleEdit'
 import {
   getChapter,
   isChapterLoading,
@@ -45,6 +45,7 @@ class Chapter extends PureComponent {
             <Route path={`${match.path}`} exact component={ChapterDetail} />
             <Route path={`${match.path}/edit`} exact component={ChapterEdit} />
             <Route path={`${match.path}/modules/new`} exact component={NewModule} />
+            <Route path={`${match.path}/modules/:index/edit`} exact component={ModuleEdit} />
           </Switch>
         </div>}
       </div>

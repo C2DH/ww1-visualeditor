@@ -99,3 +99,11 @@ export const getChapter = createSelector(
 )
 export const isChapterSaving = state => state.chapterDetail.saving
 export const isChapterLoading = state => state.chapterDetail.loading
+
+// Modules
+
+export const getModule = (state, index) => {
+  const chapter = getChapter(state)
+  return maybeNull(chapter)(chapter =>
+    get(chapter, `contents.modules[${index - 1}]`))
+}

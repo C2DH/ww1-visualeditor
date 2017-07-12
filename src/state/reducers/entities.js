@@ -4,6 +4,7 @@ import {
   GET_THEMES_SUCCESS,
   THEME,
   CHAPTER,
+  CHAPTER_UPDATED,
 } from '../actions'
 
 const mergeList = (prevState, list) => ({
@@ -55,7 +56,19 @@ const themes = (prevState = {}, action) => {
   }
 }
 
-const chapters = makeStoryEntityReducer(CHAPTER)
+const chapterEntityReducer = makeStoryEntityReducer(CHAPTER)
+const chapters = (prevState = {}, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case CHAPTER_UPDATED:
+      return {
+        ...prevState,
+        [payload.id]: payload,
+      }
+    default:
+      return chapterEntityReducer(prevState, action)
+  }
+}
 
 export default combineReducers({
   themes,

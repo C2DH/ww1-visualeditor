@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 import ModuleForm from '../../components/ModuleForm'
 import ChooseModule from '../../components/ChooseModule'
 import {
@@ -8,10 +9,13 @@ import {
   getLanguages,
 } from '../../state/selectors'
 import * as api from '../../api'
+import {
+  chapterUpdated,
+} from '../../state/actions'
 import { wrapAuthApiCall } from '../../state'
 import { createEmptyModule } from '../../utils'
 
-const createModule = wrapAuthApiCall(api.createModule)
+const createModuleChapter = wrapAuthApiCall(api.createModuleChapter)
 
 class NewModule extends PureComponent {
   state = {
@@ -21,16 +25,18 @@ class NewModule extends PureComponent {
   chooseModule = moduleType => this.setState({ moduleType })
 
   submit = (module) => {
-    return createModule(this.props.chapter, module)
+    return createModuleChapter(this.props.chapter, module)
   }
 
-  redirectToCreatedChapter = (newChapter) => {
-    console.log('Here new chapter!', newChapter)
-    // this.props.history.replace(`/themes/${newTheme.id}/edit`)
+  submitSuccess = (updatedChapter) => {
+    const { theme, chapter } = this.props
+    const index = get(chapter, 'contents.modules', []).length + 1
+    this.props.chapterUpdated(updatedChapter)
+    this.props.history.replace(`/themes/${theme.id}/chapters/${chapter.id}/modules/${index}/edit`)
   }
 
   render() {
-    const { languages } = this.props
+    const { theme, chapter, languages } = this.props
 
     if (!this.state.moduleType) {
       return <ChooseModule onChooseModule={this.chooseModule} />
@@ -38,19 +44,10 @@ class NewModule extends PureComponent {
 
     return <ModuleForm
       onSubmit={this.submit}
+      onSubmitSuccess={this.submitSuccess}
       module={createEmptyModule(this.state.moduleType, languages)}
+      exitLink={`/themes/${theme.id}/chapters/${chapter.id}`}
     />
-
-    // const { theme, chapter } = this.props
-    // return (
-    //   <ChapterForm
-    //     exitLink={`/themes/${theme.id}`}
-    //     onSubmit={this.createChapter}
-    //     onSubmitSuccess={this.redirectToCreatedChapter}
-    //     theme={theme}
-    //     initialValues={chapter}
-    //   />
-    // )
   }
 }
 
@@ -60,4 +57,6 @@ const mapStateToPros = state => ({
   chapter: getChapter(state),
 })
 
-export default connect(mapStateToPros)(NewModule)
+export default connect(mapStateToPros, {
+  chapterUpdated,
+})(NewModule)
