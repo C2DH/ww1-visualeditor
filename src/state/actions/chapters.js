@@ -1,6 +1,7 @@
 export const CHAPTER = 'CHAPTER'
 
 export const GET_CHAPTER = 'GET_CHAPTER'
+export const GET_CHAPTER_SUCCESS = 'GET_CHAPTER_SUCCESS'
 export const GET_CHAPTER_UNLOAD = 'GET_CHAPTER_UNLOAD'
 
 export const loadChapter = (id) => ({
