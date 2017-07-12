@@ -3,10 +3,10 @@ import ModuleFormText from './ModuleFormText'
 
 class ModuleForm extends PureComponent {
   render() {
-    const { module } = this.props
+    const { module, onSubmit } = this.props
     switch (module.module) {
       case 'text':
-        return <ModuleFormText initialValues={module} />
+        return <ModuleFormText initialValues={module} onSubmit={onSubmit} />
       default:
         throw new Error('Invalid module')
     }
