@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { findKey } from 'lodash'
+import { findKey, get } from 'lodash'
 
 // Hight value for pagination that means no limit maaan
 const NO_LIMIT = 1000
@@ -96,7 +96,11 @@ export const getStories = token => (params = {}) =>
   .then(extractBody)
 
 export const getStory = token => id =>
-  withToken(token, request.get(`/api/story/${id}/`)).then(extractBody)
+  withToken(token, request.get(`/api/story/${id}/`).query({
+    nocache: true,
+    parser: 'yaml',
+  }))
+  .then(extractBody)
 
 export const updateStoryStatus = token => (id, status) =>
   withToken(token,request.patch(`/api/story/${id}/`)
@@ -151,3 +155,10 @@ export const mentionStory = token => (fromStory, toStory) =>
       })
   )
   .then(extractBody)
+
+export const createModule = token => (chapter, module) =>
+  withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    contents: JSON.stringify({
+      modules: get(chapter, 'contents.modules', []).concat(module)
+    })
+  }))

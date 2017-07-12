@@ -119,12 +119,12 @@ class ModuleFormText extends PureComponent {
                   hexInput={false}
                   name="metadata.color"
                   component={ColorSelection}
-                 />
+                 /> */}
                 <div className="ModuleFormText__action_bottom_btn_container">
                   <hr />
                   <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
                   <Button size="sm" block>Exit</Button>
-              </div> */}
+                </div>
               </SideEditToolbar>
             </Col>
 

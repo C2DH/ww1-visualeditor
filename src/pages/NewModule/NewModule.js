@@ -11,8 +11,7 @@ import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 import { createEmptyModule } from '../../utils'
 
-const createChapter = wrapAuthApiCall(api.createStory)
-const mentionStory = wrapAuthApiCall(api.mentionStory)
+const createModule = wrapAuthApiCall(api.createModule)
 
 class NewModule extends PureComponent {
   state = {
@@ -21,14 +20,8 @@ class NewModule extends PureComponent {
 
   chooseModule = moduleType => this.setState({ moduleType })
 
-  createChapter = (chapter) => {
-    return createChapter(chapter, this.props.languages)
-      .then(newChapter => {
-        return mentionStory(this.props.theme.id, {
-          slug: newChapter.slug
-        })
-        .then(() => newChapter)
-      })
+  submit = (module) => {
+    return createModule(this.props.chapter, module)
   }
 
   redirectToCreatedChapter = (newChapter) => {
@@ -44,6 +37,7 @@ class NewModule extends PureComponent {
     }
 
     return <ModuleForm
+      onSubmit={this.submit}
       module={createEmptyModule(this.state.moduleType, languages)}
     />
 
