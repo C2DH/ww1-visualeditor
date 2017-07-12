@@ -5,6 +5,9 @@ import {
   getTheme,
   getChapter,
 } from '../../state/selectors'
+import {
+  chapterUpdated,
+} from '../../state/actions'
 import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 
@@ -16,6 +19,7 @@ class ChapterEdit extends PureComponent {
     return (
       <ChapterForm
         onSubmit={updateChapter}
+        onSubmitSuccess={this.props.chapterUpdated}
         exitLink={`/themes/${theme.id}/chapters/${chapter.id}`}
         theme={theme}
         initialValues={{
@@ -32,4 +36,6 @@ const mapStateToPros = state => ({
   chapter: getChapter(state),
 })
 
-export default connect(mapStateToPros)(ChapterEdit)
+export default connect(mapStateToPros, {
+  chapterUpdated,
+})(ChapterEdit)

@@ -49,6 +49,16 @@ const buildMillerParams = (params) => {
   return newParams
 }
 
+// FIXME TODO temporany workaround for not encoded json
+const smartParseIntoJsonWhenReallyNeeded = data =>
+  typeof data !== 'string' ? data : JSON.parse(data)
+
+const reParse = data => ({
+  ...data,
+  metadata: smartParseIntoJsonWhenReallyNeeded(data.metadata),
+  contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
+})
+
 export const me = token =>
   withToken(token, request.get('/api/profile/me/'))
     .then(extractBody)
@@ -126,6 +136,7 @@ export const updateStory = token => story => {
       })
   )
   .then(extractBody)
+  .then(reParse)
 }
 
 export const createStory = token => (theme, languages = []) => {
@@ -156,13 +167,6 @@ export const mentionStory = token => (fromStory, toStory) =>
   )
   .then(extractBody)
 
-// FIXME TODO temporany workaround for not encoded json
-const reParseChapter = chapter => ({
-  ...chapter,
-  metadata: JSON.parse(chapter.metadata),
-  contents: JSON.parse(chapter.contents),
-})
-
 export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
     contents: JSON.stringify({
@@ -170,7 +174,7 @@ export const createModuleChapter = token => (chapter, module) =>
     })
   }))
   .then(extractBody)
-  .then(reParseChapter)
+  .then(reParse)
 
 export const updateModuleChapter = token => (chapter, module, index) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
@@ -184,4 +188,4 @@ export const updateModuleChapter = token => (chapter, module, index) =>
     })
   }))
   .then(extractBody)
-  .then(reParseChapter)
+  .then(reParse)
