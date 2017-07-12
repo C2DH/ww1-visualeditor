@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
-import ThemeCard from '../../components/cards/ThemeCard'
+import ModuleCard from '../../components/cards/ModuleCard'
 import AddButton from '../../components/AddButton'
 import './ChapterDetail.css'
-
 import {
   publishChapter,
   unpublishChapter,
@@ -17,6 +16,41 @@ import {
   getTheme,
   isChapterSaving,
 } from '../../state/selectors'
+
+const Modulez = [
+  {
+    id: 1,
+    title: 'modulo 1',
+    cover: 'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 2,
+    title: 'modulo 2',
+    cover: 'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 3,
+    title: 'modulo 3',
+    cover: 'https://images.pexels.com/photos/205769/pexels-photo-205769.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 4,
+    title: 'modulo 4',
+    cover: 'https://images.pexels.com/photos/248771/pexels-photo-248771.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 5,
+    title: 'modulo 5',
+    cover: 'https://images.pexels.com/photos/437886/pexels-photo-437886.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+  {
+    id: 6,
+    title: 'modulo 6',
+    cover: 'https://images.pexels.com/photos/459644/pexels-photo-459644.jpeg?h=350&auto=compress&cs=tinysrgb'
+  },
+
+]
+
 
 class ChapterDetail extends PureComponent {
   state = {
@@ -74,14 +108,14 @@ class ChapterDetail extends PureComponent {
                   <AddButton label="Add module" />
                 </div>
               </Col>
-              <Col md="3">
-                <ThemeCard title="module 1" cover="https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg?h=350&auto=compress&cs=tinysrgb"/>
-              </Col>
-              <Col md="3">
-                <ThemeCard title="module 1" cover="https://images.pexels.com/photos/36372/pexels-photo.jpg?h=350&auto=compress&cs=tinysrgb"/>
-              </Col>
-              <Col md="3">
-                <ThemeCard title="module 1" cover="https://images.pexels.com/photos/37860/border-collie-jump-water-british-sheepdog-37860.jpeg?h=350&auto=compress&cs=tinysrgb"/>
+              <Col md="9" style={{overflow: 'auto'}}>
+                <div className="Chapter__module_scroll_container">
+                  {Modulez.map(modulz => (
+                    <div key={modulz.id} className="ChapterDetail__module_card">
+                      <ModuleCard  title={modulz.title} cover={modulz.cover} />
+                    </div>
+                  ))}
+                </div>
               </Col>
             </div>
           </Row> : null}

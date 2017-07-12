@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Container, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap'
 import HeadingRow from '../../components/HeadingRow'
-import ModuleCard from '../../components/cards/ModuleCard'
+import ModuleTypeCard from '../../components/cards/ModuleTypeCard'
 import './TestControlled.css'
 
 const ModuleCardTypes = [
@@ -80,10 +80,9 @@ class TestControlled extends PureComponent {
 
                  {ModuleCardTypes.map(modType =>(
                    <Col md="3" key={modType.id} >
-                     <ModuleCard title={modType.title} cover={modType.cover} />
+                     <ModuleTypeCard title={modType.title} cover={modType.cover} />
                    </Col>
                  ))}
-
               </div>
 
            </Row>

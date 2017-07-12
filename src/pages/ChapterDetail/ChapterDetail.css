@@ -37,3 +37,14 @@
   padding: 15px;
   margin-right: 20px;
 }
+
+.Chapter__module_scroll_container {
+  display: inline-flex;
+  overflow-y: auto;
+}
+
+.ChapterDetail__module_card {
+  min-width: 250px;
+  margin: 5px;
+  margin-top: 0px;
+}
