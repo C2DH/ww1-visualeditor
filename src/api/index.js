@@ -51,7 +51,7 @@ const buildMillerParams = (params) => {
 
 // FIXME TODO temporany workaround for not encoded json
 const smartParseIntoJsonWhenReallyNeeded = data =>
-  typeof data !== 'string' ? data : JSON.parse(data)
+  (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
 
 const reParse = data => ({
   ...data,
