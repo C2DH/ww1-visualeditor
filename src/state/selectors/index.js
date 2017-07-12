@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { isNull, find } from 'lodash'
+import { isNull, find, get } from 'lodash'
 import { TAG_THEME, TAG_CHAPTER } from '../consts'
 
 // fp <3
@@ -11,6 +11,11 @@ export const getCurrentLanguage = createSelector(
   state => getLanguages(state),
   state => state.settings.language,
   (languages, currentLangCode) => find(languages, { code: currentLangCode })
+)
+
+export const makeTranslator = createSelector(
+  state => state.settings.language,
+  lang => (obj, path) => get(obj, `${path}.${lang}`)
 )
 
 const createEmptyMultilangObj = languages => languages.reduce((r, l) => ({

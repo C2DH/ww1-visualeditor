@@ -10,8 +10,8 @@ import { Button } from 'reactstrap'
 import './ThemeDetail.css'
 
 import {
+  makeTranslator,
   getTheme,
-  getCurrentLanguage,
   isThemeSaving,
 } from '../../state/selectors'
 
@@ -31,12 +31,12 @@ class ThemeDetail extends PureComponent {
   }
 
   render() {
-    const { theme, saving, language } = this.props
+    const { theme, saving, trans } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <Row className="ThemeDetail__topRow">
           <Breadcrumb>
-            <BreadcrumbItem className="ThemeDetail__topRow_title">{get(theme, `metadata.title.${language.code}`)}</BreadcrumbItem>
+            <BreadcrumbItem className="ThemeDetail__topRow_title">{trans(theme, 'metadata.title')}</BreadcrumbItem>
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
             <Button className="ThemeDetail__topRow_btn">Save</Button>
@@ -61,11 +61,12 @@ class ThemeDetail extends PureComponent {
               label="Add Chapter"
              />
              {theme.stories.map(chapter => (
-               <ChapterCard
-                 key={chapter.id}
-                 title={chapter.metadata.title.en_US}
-                 cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
-               />
+               <Link to={`/themes/${theme.id}/chapters/${chapter.id}`} key={chapter.id}>
+                 <ChapterCard
+                   title={trans(chapter, 'metadata.title')}
+                   cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
+                 />
+               </Link>
              ))}
           </Col>
         </Row>
@@ -75,7 +76,7 @@ class ThemeDetail extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  language: getCurrentLanguage(state),
+  trans: makeTranslator(state),
   theme: getTheme(state),
   saving: isThemeSaving(state),
 })
