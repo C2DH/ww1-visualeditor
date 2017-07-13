@@ -1,6 +1,7 @@
 export const CHAPTER = 'CHAPTER'
 
 export const GET_CHAPTER = 'GET_CHAPTER'
+export const GET_CHAPTER_SUCCESS = 'GET_CHAPTER_SUCCESS'
 export const GET_CHAPTER_UNLOAD = 'GET_CHAPTER_UNLOAD'
 
 export const loadChapter = (id) => ({
@@ -24,4 +25,10 @@ export const UNPUBLISH_CHAPTER = 'UNPUBLISH_CHAPTER'
 export const unpublishChapter = (id) => ({
   type: UNPUBLISH_CHAPTER,
   payload: id,
+})
+
+export const CHAPTER_UPDATED = 'CHAPTER_UPDATED'
+export const chapterUpdated = (chapter) => ({
+  type: CHAPTER_UPDATED,
+  payload: chapter,
 })

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { isNull, find } from 'lodash'
+import { isNull, find, get } from 'lodash'
 import { TAG_THEME, TAG_CHAPTER } from '../consts'
 
 // fp <3
@@ -11,6 +11,11 @@ export const getCurrentLanguage = createSelector(
   state => getLanguages(state),
   state => state.settings.language,
   (languages, currentLangCode) => find(languages, { code: currentLangCode })
+)
+
+export const makeTranslator = createSelector(
+  state => state.settings.language,
+  lang => (obj, path) => get(obj, `${path}.${lang}`)
 )
 
 const createEmptyMultilangObj = languages => languages.reduce((r, l) => ({
@@ -76,7 +81,11 @@ export const areThemesLoading = state => state.themes.loading
 export const getTheme = createSelector(
   state => state.themeDetail.id,
   state => state.entities.themes,
-  (id, data) => maybeNull(id)(id => data[id])
+  state => state.entities.chapters,
+  (id, data, dataChapters) => maybeNull(id)(id => ({
+    ...data[id],
+    stories: data[id].stories.map(id => dataChapters[id])
+  }))
 )
 export const isThemeSaving = state => state.themeDetail.saving
 export const isThemeLoading = state => state.themeDetail.loading
@@ -94,3 +103,11 @@ export const getChapter = createSelector(
 )
 export const isChapterSaving = state => state.chapterDetail.saving
 export const isChapterLoading = state => state.chapterDetail.loading
+
+// Modules
+
+export const getModule = (state, index) => {
+  const chapter = getChapter(state)
+  return maybeNull(chapter)(chapter =>
+    get(chapter, `contents.modules[${index - 1}]`))
+}

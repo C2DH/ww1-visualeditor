@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
@@ -15,42 +16,8 @@ import {
   getChapter,
   getTheme,
   isChapterSaving,
+  makeTranslator,
 } from '../../state/selectors'
-
-const Modulez = [
-  {
-    id: 1,
-    title: 'modulo 1',
-    cover: 'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'
-  },
-  {
-    id: 2,
-    title: 'modulo 2',
-    cover: 'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'
-  },
-  {
-    id: 3,
-    title: 'modulo 3',
-    cover: 'https://images.pexels.com/photos/205769/pexels-photo-205769.jpeg?h=350&auto=compress&cs=tinysrgb'
-  },
-  {
-    id: 4,
-    title: 'modulo 4',
-    cover: 'https://images.pexels.com/photos/248771/pexels-photo-248771.jpeg?h=350&auto=compress&cs=tinysrgb'
-  },
-  {
-    id: 5,
-    title: 'modulo 5',
-    cover: 'https://images.pexels.com/photos/437886/pexels-photo-437886.jpeg?h=350&auto=compress&cs=tinysrgb'
-  },
-  {
-    id: 6,
-    title: 'modulo 6',
-    cover: 'https://images.pexels.com/photos/459644/pexels-photo-459644.jpeg?h=350&auto=compress&cs=tinysrgb'
-  },
-
-]
-
 
 class ChapterDetail extends PureComponent {
   state = {
@@ -73,14 +40,17 @@ class ChapterDetail extends PureComponent {
   }
 
   render () {
-    const { chapter, theme, saving } = this.props
+    const { trans, chapter, theme, saving } = this.props
+    const modules = get(chapter, 'contents.modules', [])
 
     return (
       <Container fluid className="margin-r-l-20">
         <Row className="ThemeDetail__topRow">
           <Breadcrumb>
-            <BreadcrumbItem className="ThemeDetail__topRow_title"><Link to={`/themes/${theme.id}`}>{theme.title}</Link></BreadcrumbItem>
-            <BreadcrumbItem className="ThemeDetail__topRow_title" active>{chapter.title}</BreadcrumbItem>
+            <BreadcrumbItem className="ThemeDetail__topRow_title">
+              <Link to={`/themes/${theme.id}`}>{trans(theme, 'metadata.title')}</Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem className="ThemeDetail__topRow_title" active>{trans(chapter, 'metadata.title')}</BreadcrumbItem>
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
             <Button className="ThemeDetail__topRow_btn">Save</Button>
@@ -105,14 +75,19 @@ class ChapterDetail extends PureComponent {
             <div className="Chapter__module_container">
               <Col md="3">
                 <div className="Chapters__AddButton_container">
-                  <AddButton label="Add module" />
+                  <AddButton label="Add module" tag={Link} to={`/themes/${theme.id}/chapters/${chapter.id}/modules/new`} />
                 </div>
               </Col>
               <Col md="9" style={{overflow: 'auto'}}>
                 <div className="Chapter__module_scroll_container">
-                  {Modulez.map(modulz => (
-                    <div key={modulz.id} className="ChapterDetail__module_card">
-                      <ModuleCard  title={modulz.title} cover={modulz.cover} />
+                  {modules.map((mod, i) => (
+                    <div key={i} className="ChapterDetail__module_card">
+                      {/* TODO: Better preview */}
+                      <ModuleCard
+                        title={mod.module}
+                        onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
+                        cover={'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'}
+                      />
                     </div>
                   ))}
                 </div>
@@ -125,6 +100,7 @@ class ChapterDetail extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  trans: makeTranslator(state),
   theme: getTheme(state),
   chapter: getChapter(state),
   saving: isChapterSaving(state),

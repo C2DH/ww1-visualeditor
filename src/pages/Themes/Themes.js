@@ -15,6 +15,7 @@ import {
 import {
   getThemes,
   areThemesLoading,
+  makeTranslator,
 } from '../../state/selectors'
 import './Themes.css'
 
@@ -29,7 +30,7 @@ class Themes extends PureComponent {
   }
 
   render() {
-    const { themes, loading } = this.props
+    const { trans, themes, loading } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <HeadingRow title="Themes">
@@ -48,13 +49,12 @@ class Themes extends PureComponent {
               <Link to={`/themes/${theme.id}`}>
                 <ThemeCard
                   status={theme.status}
-                  title={theme.metadata.title.en_US}
+                  title={trans(theme, 'metadata.title')}
                   cover={get(theme, 'covers[0].attachment', "http://placehold.it/200x150.png&text=Noimage") }
                  />
                </Link>
             </Col>
           ))}
-
         </Row>
       </Container>
     )
@@ -62,6 +62,7 @@ class Themes extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  trans: makeTranslator(state),
   themes: getThemes(state),
   loading: areThemesLoading(state),
 })

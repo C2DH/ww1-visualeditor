@@ -49,6 +49,16 @@ const buildMillerParams = (params) => {
   return newParams
 }
 
+// FIXME TODO temporany workaround for not encoded json
+const smartParseIntoJsonWhenReallyNeeded = data =>
+  (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
+
+const reParse = data => ({
+  ...data,
+  metadata: smartParseIntoJsonWhenReallyNeeded(data.metadata),
+  contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
+})
+
 export const me = token =>
   withToken(token, request.get('/api/profile/me/'))
     .then(extractBody)
@@ -126,6 +136,7 @@ export const updateStory = token => story => {
       })
   )
   .then(extractBody)
+  .then(reParse)
 }
 
 export const createStory = token => (theme, languages = []) => {
@@ -156,9 +167,25 @@ export const mentionStory = token => (fromStory, toStory) =>
   )
   .then(extractBody)
 
-export const createModule = token => (chapter, module) =>
+export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
     contents: JSON.stringify({
       modules: get(chapter, 'contents.modules', []).concat(module)
     })
   }))
+  .then(extractBody)
+  .then(reParse)
+
+export const updateModuleChapter = token => (chapter, module, index) =>
+  withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    contents: JSON.stringify({
+      modules: get(chapter, 'contents.modules', []).map((m, i) => {
+        if (i === (index - 1)) {
+          return module
+        }
+        return m
+      })
+    })
+  }))
+  .then(extractBody)
+  .then(reParse)

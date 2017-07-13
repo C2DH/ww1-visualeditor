@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, Field, formValueSelector } from 'redux-form'
+import { reduxForm, Field, formValueSelector, arrayRemoveAll } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { ButtonGroup, Button, FormGroup, Label, Input } from 'reactstrap'
@@ -69,8 +69,9 @@ class ThemeForm extends PureComponent {
                   <div>
 
                     <Field
-                      name='covers'
+                      name='covers[0]'
                       component={ChooseCover}
+                      onEmptyCover={() => this.props.arrayRemoveAll('theme', 'covers')}
                       buttons={(
                         <Field
                           name='metadata.background.bbox'
@@ -166,4 +167,6 @@ const mapStateToProps = state => ({
 
 export default reduxForm({
   form: 'theme',
-})(connect(mapStateToProps)(ThemeForm))
+})(connect(mapStateToProps, {
+  arrayRemoveAll,
+})(ThemeForm))

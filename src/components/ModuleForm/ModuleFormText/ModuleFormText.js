@@ -32,6 +32,7 @@ class ModuleFormText extends PureComponent {
       language,
       invalid,
       submitting,
+      exitLink,
     } = this.props
 
     let overlayStyle = {}
@@ -123,7 +124,7 @@ class ModuleFormText extends PureComponent {
                 <div className="ModuleFormText__action_bottom_btn_container">
                   <hr />
                   <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
-                  <Button size="sm" block>Exit</Button>
+                  <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
                 </div>
               </SideEditToolbar>
             </Col>

@@ -18,6 +18,7 @@ export const unloadThemes = () => ({
 })
 
 export const GET_THEME = 'GET_THEME'
+export const GET_THEME_SUCCESS = 'GET_THEME_SUCCESS'
 export const GET_THEME_UNLOAD = 'GET_THEME_UNLOAD'
 
 export const loadTheme = (id) => ({

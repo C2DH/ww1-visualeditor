@@ -15,7 +15,7 @@ class ChooseCover extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.choosedDocument !== nextProps.choosedDocument && nextProps.choosedDocument) {
-      this.props.input.onChange([nextProps.choosedDocument])
+      this.props.input.onChange(nextProps.choosedDocument)
       this.props.hideWidgetFullPage()
     }
   }
@@ -24,13 +24,13 @@ class ChooseCover extends PureComponent {
     this.props.showWidgetFullPage('documentChooser')
   }
 
-  emptyCover = () => this.props.input.onChange([])
+  emptyCover = () => this.props.onEmptyCover()
 
   render() {
     const { input: { value, onChange }, buttons } = this.props
 
     // No cover choosed
-    if (value.length === 0) {
+    if (!value) {
       return (
         <AddButton label="Add image" onClick={this.showDocumentChooser} />
       )
@@ -38,7 +38,7 @@ class ChooseCover extends PureComponent {
 
     return (
       <ListGroup className="margin-top-15">
-        <ListGroupItem className="ThemeEdit__action_image_title_container">{value[0].title}</ListGroupItem>
+        <ListGroupItem className="ThemeEdit__action_image_title_container">{value.title}</ListGroupItem>
         <ListGroupItem className="ThemeEdit__action_img_buttons_container">
           {buttons}
           <Button className="ThemeEdit__action_img_button" onClick={this.showDocumentChooser}><i className="fa fa-file-image-o" /></Button>
