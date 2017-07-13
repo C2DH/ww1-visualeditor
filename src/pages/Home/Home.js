@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import { Badge } from 'reactstrap';
 import AddButton from '../../components/AddButton'
+import { Link } from 'react-router-dom'
 import './Home.css'
 
 
@@ -18,7 +19,7 @@ class Home extends PureComponent {
               <Badge className="Home__titlebadge">All</Badge>
             </div>
             <div>
-              <AddButton label="Add theme"/>
+              <AddButton label="Add theme" tag={Link} to={'/themes/new'}/>
             </div>
           </Col>
           <Col md="3">
