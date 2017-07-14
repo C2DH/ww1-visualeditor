@@ -63,6 +63,12 @@ class ModuleFormText extends PureComponent {
                   name="text.color"
                   component={ColorSelection}
                  />
+                 <div>
+                  <Field
+                    name="object.id"
+                    component={ChooseCover}
+                   />
+                 </div>
                 <Field
                   label="Text position"
                   textAligns={['left', 'center', 'right']}

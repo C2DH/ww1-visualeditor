@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { findKey, get } from 'lodash'
+import { findKey, get, mapValues, isArray, isPlainObject } from 'lodash'
 
 // Hight value for pagination that means no limit maaan
 const NO_LIMIT = 1000
@@ -163,10 +163,28 @@ const reParse = data => ({
   contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
 })
 
+const onlyId = module => mapValues(module, (v, k, o) => {
+  if (isPlainObject(v)) {
+    if (k === 'id' && typeof v.id !== 'undefined') {
+      return v.id
+    }
+    return onlyId(v)
+  }
+  if (isArray(v)) {
+    return v.map((e, i) => {
+      if (isPlainObject(e)) {
+        return onlyId(e)
+      }
+      return e
+    })
+  }
+  return v
+})
+
 export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
     contents: JSON.stringify({
-      modules: get(chapter, 'contents.modules', []).concat(module)
+      modules: get(chapter, 'contents.modules', []).concat(onlyId(module))
     })
   }))
   .then(extractBody)
@@ -177,7 +195,7 @@ export const updateModuleChapter = token => (chapter, module, index) =>
     contents: JSON.stringify({
       modules: get(chapter, 'contents.modules', []).map((m, i) => {
         if (i === (index - 1)) {
-          return module
+          return onlyId(module)
         }
         return m
       })

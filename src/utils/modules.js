@@ -16,6 +16,7 @@ const createEmptyModuleText = languages => ({
   module: 'text',
   background: {
     color: '#fff',
+    object: {},
   },
   text: {
     color: '#fff',
