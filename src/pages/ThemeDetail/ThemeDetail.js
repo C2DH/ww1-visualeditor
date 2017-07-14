@@ -36,7 +36,7 @@ class ThemeDetail extends PureComponent {
       <Container fluid className="margin-r-l-20">
         <Row className="ThemeDetail__topRow">
           <Breadcrumb>
-            <BreadcrumbItem className="ThemeDetail__topRow_title">{trans(theme, 'metadata.title')}</BreadcrumbItem>
+            <BreadcrumbItem className="ThemeDetail__topRow_title">{`${trans(theme, 'data.title')} (${theme.slug})`}</BreadcrumbItem>
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
             <Button className="ThemeDetail__topRow_btn">Save</Button>
@@ -63,7 +63,7 @@ class ThemeDetail extends PureComponent {
              {theme.stories.map(chapter => (
                <Link to={`/themes/${theme.id}/chapters/${chapter.id}`} key={chapter.id}>
                  <ChapterCard
-                   title={trans(chapter, 'metadata.title')}
+                   title={trans(chapter, 'data.title')}
                    cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
                  />
                </Link>

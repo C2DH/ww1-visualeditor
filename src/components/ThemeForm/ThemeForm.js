@@ -74,7 +74,7 @@ class ThemeForm extends PureComponent {
                       onEmptyCover={() => this.props.arrayRemoveAll('theme', 'covers')}
                       buttons={(
                         <Field
-                          name='metadata.background.bbox'
+                          name='data.background.bbox'
                           image={backgroundImage}
                           component={Bbox}
                         />
@@ -85,7 +85,7 @@ class ThemeForm extends PureComponent {
                     <Field
                       label="Background overlay"
                       colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
-                      name="metadata.background.overlay"
+                      name="data.background.overlay"
                       component={ColorSelection}
                       validate={[isValidHex]}
                      />
@@ -95,7 +95,7 @@ class ThemeForm extends PureComponent {
                   <Field
                     label="Background color"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
-                    name="metadata.background.backgroundColor"
+                    name="data.background.backgroundColor"
                     component={ColorSelection}
                    />
                 )}
@@ -105,7 +105,7 @@ class ThemeForm extends PureComponent {
                   label="Text color"
                   colors={['#fff', '#000']}
                   hexInput={false}
-                  name="metadata.color"
+                  name="data.color"
                   component={ColorSelection}
                  />
                 <div className="ThemeEdit__action_bottom_btn_container">
@@ -120,18 +120,18 @@ class ThemeForm extends PureComponent {
               <div className="ThemeEdit__right_container" style={themeContainerStyle}>
                 <div className="ThemeEdit__overlay" style={overlayStyle}>
                   <Field
-                    name={`metadata.title.${language.code}`}
+                    name={`data.title.${language.code}`}
                     className="ThemeEdit__overlay-title-input"
                     autoComplete="off"
                     component='input'
                     style={{ color }}
                    />
                    <Field
-                     name={`metadata.title`}
+                     name={`data.title`}
                      component={Translate}
                    />
                   <Field
-                    name={`metadata.abstract.${language.code}`}
+                    name={`data.abstract.${language.code}`}
                     className="ThemeEdit__overlay-description-input"
                     rows={10}
                     autoComplete="off"
@@ -139,7 +139,7 @@ class ThemeForm extends PureComponent {
                     style={{ color }}
                    />
                    <Field
-                     name={`metadata.abstract`}
+                     name={`data.abstract`}
                      component={Translate}
                    />
                  </div>
@@ -157,9 +157,9 @@ const selector = formValueSelector('theme')
 
 const mapStateToProps = state => ({
   backgroundType: selector(state, 'backgroundType'),
-  backgroundColor: selector(state, 'metadata.background.backgroundColor'),
-  backgroundColorOverlay: selector(state, 'metadata.background.overlay'),
-  color: selector(state, 'metadata.color'),
+  backgroundColor: selector(state, 'data.background.backgroundColor'),
+  backgroundColorOverlay: selector(state, 'data.background.overlay'),
+  color: selector(state, 'data.color'),
   backgroundImage: selector(state, 'covers[0].attachment'),
   covers: selector(state, 'covers'),
   language: getCurrentLanguage(state),

@@ -26,7 +26,7 @@ const createEmptyMultilangObj = languages => languages.reduce((r, l) => ({
 const createBasicStory = (languages, tag) => ({
   backgroundType: 'image',
   covers: [],
-  metadata: {
+  data: {
     title: createEmptyMultilangObj(languages),
     abstract: createEmptyMultilangObj(languages),
     background: {

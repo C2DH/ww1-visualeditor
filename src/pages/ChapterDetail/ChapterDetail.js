@@ -48,9 +48,9 @@ class ChapterDetail extends PureComponent {
         <Row className="ThemeDetail__topRow">
           <Breadcrumb>
             <BreadcrumbItem className="ThemeDetail__topRow_title">
-              <Link to={`/themes/${theme.id}`}>{trans(theme, 'metadata.title')}</Link>
+              <Link to={`/themes/${theme.id}`}>{`${trans(theme, 'data.title')} (${theme.slug})`}</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem className="ThemeDetail__topRow_title" active>{trans(chapter, 'metadata.title')}</BreadcrumbItem>
+            <BreadcrumbItem className="ThemeDetail__topRow_title" active>{`${trans(chapter, 'data.title')} (${chapter.slug})`}</BreadcrumbItem>
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
             <Button className="ThemeDetail__topRow_btn">Save</Button>

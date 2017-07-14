@@ -49,7 +49,7 @@ class Themes extends PureComponent {
               <Link to={`/themes/${theme.id}`}>
                 <ThemeCard
                   status={theme.status}
-                  title={trans(theme, 'metadata.title')}
+                  title={trans(theme, 'data.title')}
                   cover={get(theme, 'covers[0].attachment', "http://placehold.it/200x150.png&text=Noimage") }
                  />
                </Link>

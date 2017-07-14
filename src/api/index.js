@@ -20,10 +20,10 @@ const prepareStory = story => {
   if (storyForServer.backgroundType === 'color') {
     storyForServer = {
       ...storyForServer,
-      metadata: {
-        ...storyForServer.metadata,
+      data: {
+        ...storyForServer.data,
         background: {
-          ...storyForServer.metadata.background,
+          ...storyForServer.data.background,
           overlay: '',
         }
       },
@@ -48,16 +48,6 @@ const buildMillerParams = (params) => {
 
   return newParams
 }
-
-// FIXME TODO temporany workaround for not encoded json
-const smartParseIntoJsonWhenReallyNeeded = data =>
-  (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
-
-const reParse = data => ({
-  ...data,
-  metadata: smartParseIntoJsonWhenReallyNeeded(data.metadata),
-  contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
-})
 
 export const me = token =>
   withToken(token, request.get('/api/profile/me/'))
@@ -132,11 +122,10 @@ export const updateStory = token => story => {
     request.patch(`/api/story/${story.id}/`)
       .send({
         covers: storyToUpdate.covers.map(({ id }) => id),
-        metadata: JSON.stringify(storyToUpdate.metadata),
+        data: storyToUpdate.data,
       })
   )
   .then(extractBody)
-  .then(reParse)
 }
 
 export const createStory = token => (theme, languages = []) => {
@@ -148,9 +137,8 @@ export const createStory = token => (theme, languages = []) => {
         // First non empty in lang title
         // TODO: What if empty?????
         ...storyToCreate,
-        title: storyToCreate.metadata.title[findKey(storyToCreate.metadata.title)],
+        title: storyToCreate.data.title[findKey(storyToCreate.data.title)],
         covers: storyToCreate.covers.map(({ id }) => id),
-        metadata: JSON.stringify(storyToCreate.metadata),
       })
   )
   .then(extractBody)
@@ -166,6 +154,14 @@ export const mentionStory = token => (fromStory, toStory) =>
       })
   )
   .then(extractBody)
+
+// FIXME TODO temporany workaround for not encoded json
+const smartParseIntoJsonWhenReallyNeeded = data =>
+  (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
+const reParse = data => ({
+  ...data,
+  contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
+})
 
 export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
