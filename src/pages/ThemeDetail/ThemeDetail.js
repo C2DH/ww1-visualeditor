@@ -48,7 +48,7 @@ class ThemeDetail extends PureComponent {
         </Row>
         <Row>
           <Col md="9" className="no-padding-left">
-            <div className="ThemeDetail__title_edit_container">
+            <div className="ThemeDetail__title_edit_container" style={{backgroundImage:`url(${theme.covers[0].attachment})`}}>
               <div className="ThemeDetail__title_edit_container_button">
                 <Button tag={Link} to={`/themes/${theme.id}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i></Button>
               </div>
@@ -59,15 +59,18 @@ class ThemeDetail extends PureComponent {
               tag={Link}
               to={`/themes/${theme.id}/chapters/new`}
               label="Add Chapter"
+              style={{marginBottom: 5}}
              />
-             {theme.stories.map(chapter => (
-               <Link to={`/themes/${theme.id}/chapters/${chapter.id}`} key={chapter.id}>
-                 <ChapterCard
-                   title={trans(chapter, 'data.title')}
-                   cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
-                 />
-               </Link>
-             ))}
+             <div className="ThemeDetail__Chapters_col">
+               {theme.stories.map(chapter => (
+                 <Link to={`/themes/${theme.id}/chapters/${chapter.id}`} key={chapter.id}>
+                   <ChapterCard
+                     title={trans(chapter, 'data.title')}
+                     cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
+                   />
+                 </Link>
+               ))}
+             </div>
           </Col>
         </Row>
       </Container>
