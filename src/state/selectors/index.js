@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect'
-import { isNull, find, get } from 'lodash'
+import { createSelector, defaultMemoize } from 'reselect'
+import { isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
 import { TAG_THEME, TAG_CHAPTER } from '../consts'
 
 // fp <3
@@ -104,10 +104,34 @@ export const getChapter = createSelector(
 export const isChapterSaving = state => state.chapterDetail.saving
 export const isChapterLoading = state => state.chapterDetail.loading
 
-// Modules
+const joinIds = (source, obj) => {
+  const sourceById = keyBy(source, 'id')
 
-export const getModule = (state, index) => {
-  const chapter = getChapter(state)
-  return maybeNull(chapter)(chapter =>
-    get(chapter, `contents.modules[${index - 1}]`))
+  const mapIds = obj => mapValues(obj, (v, k, o) => {
+    if (isPlainObject(v)) {
+      return mapIds(v)
+    }
+    if (isArray(v)) {
+      return v.map(e => {
+        if (isPlainObject(e)) {
+          return mapIds(e)
+        }
+        return e
+      })
+    }
+    if (k === 'id' && (typeof v === 'number' || typeof v === 'string')) {
+      return get(sourceById, v, v)
+    }
+    return v
+  })
+
+  return mapIds(obj)
 }
+
+export const makeGetModule = defaultMemoize(index => createSelector(
+  getChapter,
+  chapter => maybeNull(chapter)(chapter => {
+    const module = get(chapter, `contents.modules[${index - 1}]`)
+    return joinIds(chapter.documents.map(d => ({ ...d, id: d.document_id })), module)
+  })
+))

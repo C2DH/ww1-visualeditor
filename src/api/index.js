@@ -160,6 +160,7 @@ const smartParseIntoJsonWhenReallyNeeded = data =>
   (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
 const reParse = data => ({
   ...data,
+  data: smartParseIntoJsonWhenReallyNeeded(data.data),
   contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
 })
 
@@ -181,6 +182,13 @@ const onlyId = module => mapValues(module, (v, k, o) => {
   return v
 })
 
+export const createChapterCaptions = token => chapterId =>
+  withToken(token, request.post(`/api/caption/extract-from-story/${chapterId}/`).send({
+    key: 'id',
+    parser: 'json',
+  }))
+  .then(extractBody)
+
 export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
     contents: JSON.stringify({
@@ -188,7 +196,6 @@ export const createModuleChapter = token => (chapter, module) =>
     })
   }))
   .then(extractBody)
-  .then(reParse)
 
 export const updateModuleChapter = token => (chapter, module, index) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
@@ -202,4 +209,3 @@ export const updateModuleChapter = token => (chapter, module, index) =>
     })
   }))
   .then(extractBody)
-  .then(reParse)

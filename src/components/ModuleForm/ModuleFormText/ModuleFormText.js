@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, Field, formValueSelector } from 'redux-form'
+import { reduxForm, Field, formValueSelector, change } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { ButtonGroup, Button, FormGroup, Label, Input } from 'reactstrap'
@@ -33,6 +33,7 @@ class ModuleFormText extends PureComponent {
       invalid,
       submitting,
       exitLink,
+      change,
     } = this.props
 
     let overlayStyle = {}
@@ -67,6 +68,7 @@ class ModuleFormText extends PureComponent {
                   <Field
                     name="object.id"
                     component={ChooseCover}
+                    onEmptyCover={() => change('moduleText', 'object', {})}
                    />
                  </div>
                 <Field
@@ -172,4 +174,6 @@ const mapStateToProps = state => ({
 
 export default reduxForm({
   form: 'moduleText',
-})(connect(mapStateToProps)(ModuleFormText))
+})(connect(mapStateToProps, {
+  change,
+})(ModuleFormText))

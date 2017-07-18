@@ -4,7 +4,8 @@ import ModuleForm from '../../components/ModuleForm'
 import {
   getTheme,
   getChapter,
-  getModule,
+  makeGetModule,
+  // getModule,
 } from '../../state/selectors'
 import {
   chapterUpdated,
@@ -13,12 +14,18 @@ import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 
 const updateModuleChapter = wrapAuthApiCall(api.updateModuleChapter)
+const createChapterCaptions = wrapAuthApiCall(api.createChapterCaptions)
+const getStory = wrapAuthApiCall(api.getStory)
 
 class ModuleEdit extends PureComponent {
   submit = (module) => {
     const { chapter } = this.props
     const index = this.props.match.params.index
     return updateModuleChapter(chapter, module, index)
+      .then(chapterUpdated =>
+        createChapterCaptions(chapterUpdated.id)
+          .then(() => getStory(chapterUpdated.id))
+      )
   }
 
   submitSuccess = (updatedChapter) => {
@@ -38,15 +45,16 @@ class ModuleEdit extends PureComponent {
   }
 }
 
-const mapStateToPros = (state, props) => {
+const mapStateToProps = (state, props) => {
   const index = props.match.params.index
+  const getModule = makeGetModule(index)
   return {
-    module: getModule(state, index),
+    module: getModule(state),
     theme: getTheme(state),
     chapter: getChapter(state),
   }
 }
 
-export default connect(mapStateToPros, {
+export default connect(mapStateToProps, {
   chapterUpdated,
 })(ModuleEdit)
