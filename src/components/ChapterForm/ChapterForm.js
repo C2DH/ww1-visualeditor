@@ -97,6 +97,7 @@ class ChapterForm extends PureComponent {
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     name="data.background.backgroundColor"
                     component={ColorSelection}
+                    validate={[isValidHex]}
                    />
                 )}
 

@@ -7,20 +7,19 @@ export const createEmptyModule = (moduleType, languages) => {
   }
 }
 
-const createEmptyMultilangObj = languages => languages.reduce((r, l) => ({
+const createEmptyMultilangObj = (languages, term = '') => languages.reduce((r, l) => ({
   ...r,
-  [l.code]: '',
+  [l.code]: term,
 }), {})
 
 const createEmptyModuleText = languages => ({
   module: 'text',
   background: {
-    color: '#fff',
     object: {},
   },
   text: {
-    color: '#fff',
+    color: '#000',
     position: 'center',
-    content: createEmptyMultilangObj(languages),
+    content: createEmptyMultilangObj(languages, 'Hello I am module text!'),
   }
 })

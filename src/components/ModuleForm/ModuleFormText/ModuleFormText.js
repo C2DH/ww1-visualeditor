@@ -8,6 +8,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap'
 import AddButton from '../../AddButton'
 import SideEditToolbar from '../../SideEditToolbar'
 import Spinner from '../../Spinner'
+import BackgroundPreview from '../../BackgroundPreview'
 
 import ChooseCover from '../../Form/ChooseCover'
 import TextAlignSelection from '../../Form/TextAlignSelection'
@@ -24,6 +25,15 @@ import {
 } from '../../../state/selectors'
 
 class ModuleFormText extends PureComponent {
+  changeBackgroundType = (e) => {
+    if (e.target.value === 'color') {
+      this.props.change('moduleText', 'background.object', null)
+    } else {
+      this.props.change('moduleText', 'background.object', {})
+      this.props.change('moduleText', 'background.color', null)
+    }
+  }
+
   render() {
     const {
       textColor,
@@ -34,7 +44,13 @@ class ModuleFormText extends PureComponent {
       submitting,
       exitLink,
       change,
+      backgroundObject,
+      backgroundImage,
+      backgroundColorOverlay,
+      backgroundColor,
     } = this.props
+
+    const backgroundType = backgroundObject ? 'image' : 'color'
 
     let overlayStyle = {}
     if (textPosition) {
@@ -48,6 +64,9 @@ class ModuleFormText extends PureComponent {
         case 'right':
           overlayStyle = { alignItems: 'flex-end' }
           break
+        default:
+          overlayStyle = {}
+          break
       }
     }
 
@@ -57,6 +76,45 @@ class ModuleFormText extends PureComponent {
           <Row>
             <Col md="3">
               <SideEditToolbar>
+                <div className="margin-bottom-15">
+                  <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+                    <option value="color">Color</option>
+                    <option value="image">Image</option>
+                  </Input>
+                </div>
+                {backgroundType === 'image' && (
+                  <div>
+                    <div className="margin-bottom-15">
+                      <Field
+                        name="background.object.id"
+                        component={ChooseCover}
+                        onEmptyCover={() => change('moduleText', 'object', {})}
+                       />
+                     </div>
+                    <div>
+                      <Field
+                        label="Background Overlay"
+                        name="background.object.overlay"
+                        colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                        component={ColorSelection}
+                        validate={[isValidHex]}
+                       />
+                     </div>
+                  </div>
+                )}
+                {backgroundType === 'color' && (
+                  <div>
+                    <div>
+                      <Field
+                        label="Background Color"
+                        name="background.color"
+                        colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                        component={ColorSelection}
+                        validate={[isValidHex]}
+                       />
+                     </div>
+                  </div>
+                )}
                 <Field
                   label="Text color"
                   colors={['#fff', '#000']}
@@ -64,71 +122,12 @@ class ModuleFormText extends PureComponent {
                   name="text.color"
                   component={ColorSelection}
                  />
-                 <div>
-                  <Field
-                    name="object.id"
-                    component={ChooseCover}
-                    onEmptyCover={() => change('moduleText', 'object', {})}
-                   />
-                 </div>
                 <Field
                   label="Text position"
                   textAligns={['left', 'center', 'right']}
                   name="text.position"
                   component={TextAlignSelection}
                  />
-                {/* <FormGroup className="margin-bottom-15">
-                  <Label for="exampleSelect">Background</Label>
-
-                  <Field name="backgroundType" component={Select}>
-                    <option value='color'>Color</option>
-                    <option value='image'>Image</option>
-                  </Field>
-
-                </FormGroup>
-
-                {backgroundType === 'image' && (
-                  <div>
-
-                    <Field
-                      name='covers'
-                      component={ChooseCover}
-                      buttons={(
-                        <Field
-                          name='metadata.background.bbox'
-                          image={backgroundImage}
-                          component={Bbox}
-                        />
-                      )}
-                    />
-
-                    <hr />
-                    <Field
-                      label="Background overlay"
-                      colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
-                      name="metadata.background.overlay"
-                      component={ColorSelection}
-                      validate={[isValidHex]}
-                     />
-                  </div>
-                )}
-                {backgroundType === 'color' && (
-                  <Field
-                    label="Background color"
-                    colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
-                    name="metadata.background.backgroundColor"
-                    component={ColorSelection}
-                   />
-                )}
-
-                <hr />
-                <Field
-                  label="Text color"
-                  colors={['#fff', '#000']}
-                  hexInput={false}
-                  name="metadata.color"
-                  component={ColorSelection}
-                 /> */}
                 <div className="ModuleFormText__action_bottom_btn_container">
                   <hr />
                   <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
@@ -138,8 +137,14 @@ class ModuleFormText extends PureComponent {
             </Col>
 
             <Col md="9">
-              <div className="ModuleFormText__right_container">
-                <div className="ModuleFormText__overlay" style={overlayStyle}>
+              <BackgroundPreview
+                backgroundType={backgroundType}
+                backgroundColor={backgroundColor}
+                backgroundImage={backgroundImage}
+                backgroundColorOverlay={backgroundColorOverlay}
+                overlayStyle={overlayStyle}
+                containerClassName="ModuleFormText__right_container"
+                overlayClassName="ModuleFormText__overlay">
                   <Field
                     name={`text.content.${language.code}`}
                     className="ModuleFormText__overlay-content-input"
@@ -152,8 +157,7 @@ class ModuleFormText extends PureComponent {
                      name={`text.content`}
                      component={Translate}
                    />
-                 </div>
-              </div>
+              </BackgroundPreview>
             </Col>
           </Row>
         </Container>
@@ -168,8 +172,12 @@ const selector = formValueSelector('moduleText')
 const mapStateToProps = state => ({
   textColor: selector(state, 'text.color'),
   textPosition: selector(state, 'text.position'),
-  covers: selector(state, 'covers'),
+  backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
+  // Background
+  backgroundImage: selector(state, 'background.object.id.attachment'),
+  backgroundColorOverlay: selector(state, 'background.object.overlay'),
+  backgroundColor: selector(state, 'background.color'),
 })
 
 export default reduxForm({
