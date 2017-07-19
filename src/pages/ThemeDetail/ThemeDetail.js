@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import AddButton from '../../components/AddButton'
 import ChapterCard from '../../components/cards/ChapterCard'
+import BackgroundPreview from '../../components/BackgroundPreview'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
 import './ThemeDetail.css'
@@ -48,11 +49,18 @@ class ThemeDetail extends PureComponent {
         </Row>
         <Row>
           <Col md="9" className="no-padding-left">
-            <div className="ThemeDetail__title_edit_container" style={{backgroundImage:`url(${theme.covers[0].attachment})`}}>
-              <div className="ThemeDetail__title_edit_container_button">
-                <Button tag={Link} to={`/themes/${theme.id}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i></Button>
-              </div>
-            </div>
+            <BackgroundPreview
+              containerClassName="ThemeDetail__title_edit_container"
+              overlayClassName="ThemeDetail__title_edit_overlay"
+              backgroundType={get(theme, 'covers', []).length > 0 ? 'image' : 'color'}
+              backgroundImage={get(theme, 'covers[0].attachment')}
+              backgroundColorOverlay={get(theme, 'data.background.overlay')}
+              backgroundColor={get(theme, 'data.background.backgroundColor')}
+            >
+                <div>
+                  <Button tag={Link} to={`/themes/${theme.id}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i></Button>
+                </div>
+            </BackgroundPreview>
           </Col>
           <Col md="3">
             <AddButton

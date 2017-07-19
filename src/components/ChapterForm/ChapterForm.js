@@ -8,6 +8,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap'
 import AddButton from '../AddButton'
 import SideEditToolbar from '../SideEditToolbar'
 import Spinner from '../Spinner'
+import BackgroundPreview from '../BackgroundPreview'
 
 import ChooseCover from '../Form/ChooseCover'
 import Bbox from '../Form/Bbox'
@@ -38,16 +39,12 @@ class ChapterForm extends PureComponent {
       exitLink,
     } = this.props
 
-    // Styles for preview
-    const [
-      themeContainerStyle,
-      overlayStyle
-    ] = makeContainerStyles(
+    const bgPreviewProps = {
       backgroundType,
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
-    )
+    }
 
     return (
       <form onSubmit={handleSubmit}>
@@ -118,8 +115,11 @@ class ChapterForm extends PureComponent {
             </Col>
 
             <Col md="9">
-              <div className="ThemeEdit__right_container" style={themeContainerStyle}>
-                <div className="ThemeEdit__overlay" style={overlayStyle}>
+              <BackgroundPreview
+                containerClassName="ThemeEdit__right_container"
+                overlayClassName="ThemeEdit__overlay"
+                {...bgPreviewProps}
+              >
                   <Field
                     name={`data.title.${language.code}`}
                     className="ThemeEdit__overlay-title-input"
@@ -143,8 +143,7 @@ class ChapterForm extends PureComponent {
                      name={`data.abstract`}
                      component={Translate}
                    />
-                 </div>
-              </div>
+               </BackgroundPreview>
             </Col>
           </Row>
         </Container>

@@ -7,6 +7,7 @@ import {
   CHAPTER,
   GET_CHAPTER_SUCCESS,
   CHAPTER_UPDATED,
+  THEME_UPDATED,
 } from '../actions'
 
 const mergeList = (prevState, list) => ({
@@ -46,6 +47,7 @@ const themeEntityReducer = makeStoryEntityReducer(THEME)
 const themes = (prevState = {}, action) => {
   const { type, payload } = action
   switch (type) {
+    case THEME_UPDATED:
     case GET_THEME_SUCCESS:
       return {
         ...prevState,
@@ -65,6 +67,7 @@ const chapterEntityReducer = makeStoryEntityReducer(CHAPTER)
 const chapters = (prevState = {}, action) => {
   const { type, payload } = action
   switch (type) {
+    case THEME_UPDATED:
     case GET_THEME_SUCCESS:
       return {
         ...prevState,

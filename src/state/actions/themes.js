@@ -43,3 +43,9 @@ export const unpublishTheme = (id) => ({
   type: UNPUBLISH_THEME,
   payload: id,
 })
+
+export const THEME_UPDATED = 'THEME_UPDATED'
+export const themeUpdated = theme => ({
+  type: THEME_UPDATED,
+  payload: theme,
+})
