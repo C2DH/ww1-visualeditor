@@ -1,14 +1,23 @@
 import React from 'react'
+import { get } from 'lodash'
+import { pure } from 'recompose'
+import { connect } from 'react-redux'
 import GenericCard from '../GenericCard'
 import { Button } from 'reactstrap'
 import './ChapterCard.css'
 
+import {
+  makeTranslator,
+} from '../../../state/selectors'
 
-const ChapterCard = ({ title = '', cover = null, chapter }) => (
+const ChapterCard = pure(({ chapter, trans }) => (
   <GenericCard
-    className="ThemeCard__card"
-    title={title}
-    cover={cover}
+    className="ChapterCard__card"
+    title={trans(chapter, 'data.title')}
+    backgroundType={get(chapter, 'covers', []).length > 0 ? 'image' : 'color'}
+    backgroundImage={get(chapter, 'covers[0].attachment')}
+    backgroundColorOverlay={get(chapter, 'data.background.overlay')}
+    backgroundColor={get(chapter, 'data.background.backgroundColor')}
     editButtons={
       <div className="w-100 flex">
         <Button className="ChapterCard__btn_margin"><i className="fa fa-arrow-up" aria-hidden="true"></i></Button>
@@ -18,7 +27,10 @@ const ChapterCard = ({ title = '', cover = null, chapter }) => (
       </div>
     }
   />
-)
+))
 
+const mapStateToProps = state => ({
+  trans: makeTranslator(state),
+})
 
-export default ChapterCard
+export default connect(mapStateToProps)(ChapterCard)

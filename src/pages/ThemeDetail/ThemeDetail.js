@@ -74,8 +74,7 @@ class ThemeDetail extends PureComponent {
                {theme.stories.map(chapter => (
                  <Link to={`/themes/${theme.id}/chapters/${chapter.id}`} key={chapter.id}>
                    <ChapterCard
-                     title={trans(chapter, 'data.title')}
-                     cover="https://images.pexels.com/photos/407202/pexels-photo-407202.jpeg?h=350&auto=compress&cs=tinysrgb"
+                     chapter={chapter}
                    />
                  </Link>
                ))}

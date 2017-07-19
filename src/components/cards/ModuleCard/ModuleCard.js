@@ -1,14 +1,22 @@
 import React from 'react'
+import { get } from 'lodash'
+import { pure } from 'recompose'
+import { connect } from 'react-redux'
 import GenericCard from '../GenericCard'
 import { Button } from 'reactstrap'
 import './ModuleCard.css'
 
+import {
+  makeTranslator,
+} from '../../../state/selectors'
 
-const ModuleCard = ({ title = '', cover = null, onDeleteClick, onMoveLeftClick, onMoveRightClick , onEditClick }) => (
+const ModuleCard = pure(({ module, trans, onDeleteClick, onMoveLeftClick, onMoveRightClick , onEditClick }) => (
   <GenericCard
     className="ModuleCard__card"
-    title={title}
-    cover={cover}
+    title={`${module.module} (???)`}
+    backgroundImage={get(module, 'background.object.id.attachment')}
+    backgroundColor={get(module, 'background.color')}
+    backgroundColorOverlay={get(module, 'background.object.overlay')}
     editButtons={
       <div className="w-100 flex">
         <Button onClick={onMoveLeftClick} className="ModuleCard__btn_margin"><i className="fa fa-arrow-left" aria-hidden="true"></i></Button>
@@ -18,7 +26,11 @@ const ModuleCard = ({ title = '', cover = null, onDeleteClick, onMoveLeftClick, 
       </div>
     }
   />
-)
+))
 
 
-export default ModuleCard
+const mapStateToProps = state => ({
+  trans: makeTranslator(state),
+})
+
+export default connect(mapStateToProps)(ModuleCard)

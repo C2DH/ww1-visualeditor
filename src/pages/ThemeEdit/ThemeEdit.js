@@ -36,10 +36,10 @@ class ThemeEdit extends PureComponent {
   }
 }
 
-const mapStateToPros = state => ({
+const mapStateToProps = state => ({
   theme: getTheme(state),
 })
 
-export default connect(mapStateToPros, {
+export default connect(mapStateToProps, {
   themeUpdated,
 })(ThemeEdit)

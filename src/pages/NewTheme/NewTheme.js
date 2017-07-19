@@ -33,9 +33,9 @@ class NewTheme extends PureComponent {
   }
 }
 
-const mapStateToPros = state => ({
+const mapStateToProps = state => ({
   languages: getLanguages(state),
   theme: newTheme(state),
 })
 
-export default connect(mapStateToPros)(NewTheme)
+export default connect(mapStateToProps)(NewTheme)

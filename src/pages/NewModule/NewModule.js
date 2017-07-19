@@ -21,7 +21,7 @@ const getStory = wrapAuthApiCall(api.getStory)
 
 class NewModule extends PureComponent {
   state = {
-    moduleType: 'text',
+    moduleType: null,
   }
 
   chooseModule = moduleType => this.setState({ moduleType })
@@ -58,12 +58,12 @@ class NewModule extends PureComponent {
   }
 }
 
-const mapStateToPros = state => ({
+const mapStateToProps = state => ({
   languages: getLanguages(state),
   theme: getTheme(state),
   chapter: getChapter(state),
 })
 
-export default connect(mapStateToPros, {
+export default connect(mapStateToProps, {
   chapterUpdated,
 })(NewModule)

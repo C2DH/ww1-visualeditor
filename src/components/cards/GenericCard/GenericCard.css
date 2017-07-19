@@ -34,3 +34,7 @@
   width: 100%;
   background-size: cover;
 }
+
+.GenericCard__div_img_overlay {
+  height: 100%;
+}

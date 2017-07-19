@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeContainerStyles } from '../../utils'
 
-const FormPreview = ({
+const BackgroundPreview = ({
   children,
   containerClassName,
   containerStyle,
@@ -45,4 +45,4 @@ const FormPreview = ({
   )
 }
 
-export default FormPreview
+export default BackgroundPreview

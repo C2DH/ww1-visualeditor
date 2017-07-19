@@ -53,7 +53,6 @@ class ChapterDetail extends PureComponent {
             <BreadcrumbItem className="ThemeDetail__topRow_title" active>{`${trans(chapter, 'data.title')} (${chapter.slug})`}</BreadcrumbItem>
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
-            <Button className="ThemeDetail__topRow_btn">Save</Button>
             <Button disabled={saving} className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
               {chapter.status === 'draft' ? 'Publish' : 'Unpublish'}
             </Button>
@@ -82,11 +81,9 @@ class ChapterDetail extends PureComponent {
                 <div className="Chapter__module_scroll_container">
                   {modules.map((mod, i) => (
                     <div key={i} className="ChapterDetail__module_card">
-                      {/* TODO: Better preview */}
                       <ModuleCard
-                        title={mod.module}
+                        module={mod}
                         onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
-                        cover={'https://images.pexels.com/photos/456710/pexels-photo-456710.jpeg?h=350&auto=compress&cs=tinysrgb'}
                       />
                     </div>
                   ))}

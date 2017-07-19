@@ -47,11 +47,7 @@ class Themes extends PureComponent {
           {themes && themes.map(theme => (
             <Col md="3" key={theme.id}>
               <Link to={`/themes/${theme.id}`}>
-                <ThemeCard
-                  status={theme.status}
-                  title={trans(theme, 'data.title')}
-                  cover={get(theme, 'covers[0].attachment', "http://placehold.it/200x150.png&text=Noimage") }
-                 />
+                <ThemeCard theme={theme} />
                </Link>
             </Col>
           ))}

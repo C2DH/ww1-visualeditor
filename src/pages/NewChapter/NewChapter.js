@@ -42,10 +42,10 @@ class NewChapter extends PureComponent {
   }
 }
 
-const mapStateToPros = state => ({
+const mapStateToProps = state => ({
   languages: getLanguages(state),
   theme: getTheme(state),
   chapter: newChapter(state,)
 })
 
-export default connect(mapStateToPros)(NewChapter)
+export default connect(mapStateToProps)(NewChapter)

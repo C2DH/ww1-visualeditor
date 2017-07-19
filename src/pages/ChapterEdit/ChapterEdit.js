@@ -31,11 +31,11 @@ class ChapterEdit extends PureComponent {
   }
 }
 
-const mapStateToPros = state => ({
+const mapStateToProps = state => ({
   theme: getTheme(state),
   chapter: getChapter(state),
 })
 
-export default connect(mapStateToPros, {
+export default connect(mapStateToProps, {
   chapterUpdated,
 })(ChapterEdit)
