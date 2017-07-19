@@ -40,7 +40,6 @@ class ThemeDetail extends PureComponent {
             <BreadcrumbItem className="ThemeDetail__topRow_title">{`${trans(theme, 'data.title')} (${theme.slug})`}</BreadcrumbItem>
           </Breadcrumb>
           <div className="ThemeDetail__topRow_btnContainer">
-            <Button className="ThemeDetail__topRow_btn">Save</Button>
             <Button disabled={saving} className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
               {theme.status === 'draft' ? 'Publish' : 'Unpublish'}
             </Button>
@@ -59,6 +58,8 @@ class ThemeDetail extends PureComponent {
             >
                 <div>
                   <Button tag={Link} to={`/themes/${theme.id}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i></Button>
+                  <h1>{trans(theme, 'data.title')}</h1>
+                  <h2>{trans(theme, 'data.abstract')}</h2>
                 </div>
             </BackgroundPreview>
           </Col>
