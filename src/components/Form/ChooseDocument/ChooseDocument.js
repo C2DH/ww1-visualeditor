@@ -46,11 +46,11 @@ class ChooseDocument extends PureComponent {
 
     return (
       <ListGroup className="margin-top-15">
-        <ListGroupItem className="ThemeEdit__action_image_title_container">{value.title}</ListGroupItem>
-        <ListGroupItem className="ThemeEdit__action_img_buttons_container">
+        <ListGroupItem className="ChooseDocument__title">{value.title}</ListGroupItem>
+        <ListGroupItem className="ChooseDocument__buttons-container">
           {buttons}
-          <Button className="ThemeEdit__action_img_button" onClick={this.showDocumentChooser}><i className="fa fa-file-image-o" /></Button>
-          <Button className="ThemeEdit__action_img_button" onClick={this.emptyDocument}><i className="fa fa-trash-o" /></Button>
+          <Button className="tiny-btn margin-right-5" onClick={this.showDocumentChooser}><i className="fa fa-file-image-o" /></Button>
+          <Button className="tiny-btn" onClick={this.emptyDocument}><i className="fa fa-trash-o" /></Button>
         </ListGroupItem>
       </ListGroup>
     )

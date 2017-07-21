@@ -1,0 +1,38 @@
+.VisualForm__SideContainer {
+  padding-top: 30px;
+  padding-right: 20px;
+  width: 100%;
+  height: 100vh;
+  border-right: 1px solid #ccc;
+}
+
+.VisualForm__SideContainer__SideForm {
+  height: calc(100vh - 150px);
+  overflow-y: scroll;
+}
+
+.VisualForm__SideContainer__SideActions {
+  position: absolute;
+  height: 100px;
+  bottom: 20px;
+  width: 80%;
+}
+
+.VisualForm__PreviewContainer__Background-container {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  height: 90vh;
+  width: 100%;
+  background-color: #ccc;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+}
+
+.VisualForm__PreviewContainer__Background-overlay {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}

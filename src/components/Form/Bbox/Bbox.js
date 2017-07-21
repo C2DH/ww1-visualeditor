@@ -30,7 +30,7 @@ class Bbox extends PureComponent {
     return (
       <Button
         onClick={this.showBboxCropper}
-        className="ThemeEdit__action_img_button flex-right">
+        className="tiny-btn margin-right-5">
         <i className="fa fa-crop" />
       </Button>
     )

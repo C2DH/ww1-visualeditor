@@ -30,7 +30,7 @@ class Translate extends PureComponent {
     return (
       <Button
         onClick={this.showTranslations}
-        className="ThemeEdit__action_img_button flex-right">
+        className="tiny-btn flex-right">
         <i className="fa fa-language" ></i>
       </Button>
     )

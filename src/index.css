@@ -35,6 +35,10 @@ a, a:hover, a:focus {
   margin-top: 15px;
 }
 
+.margin-right-5 {
+  margin-right: 5px;
+}
+
 .flex {
   display: flex;
 }
@@ -49,4 +53,18 @@ a, a:hover, a:focus {
 
 .relative {
   position: relative;
+}
+
+input.invisible-input,
+textarea.invisible-input {
+  z-index: 9999;
+  opacity: 1;
+  background-color: transparent;
+  border: 0px;
+  resize: none;
+  outline: none;
+}
+
+button.tiny-btn {
+  padding: 0.2rem 0.35rem;
 }

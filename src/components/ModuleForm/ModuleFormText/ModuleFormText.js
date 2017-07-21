@@ -2,13 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector, change } from 'redux-form'
 import { Link } from 'react-router-dom'
-import { Container, Row, Col } from 'reactstrap'
-import { ButtonGroup, Button, FormGroup, Label, Input } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
-import AddButton from '../../AddButton'
-import SideEditToolbar from '../../SideEditToolbar'
-import Spinner from '../../Spinner'
-import BackgroundPreview from '../../BackgroundPreview'
+import { Button, Input } from 'reactstrap'
 
 import ChooseDocument from '../../Form/ChooseDocument'
 import TextAlignSelection from '../../Form/TextAlignSelection'
@@ -16,9 +10,15 @@ import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
-import { makeContainerStyles } from '../../../utils'
 
 import './ModuleFormText.css'
+
+import VisualForm, {
+  SideContainer,
+  SideForm,
+  SideActions,
+  PreviewContainer
+} from '../../VisualForm'
 
 import {
   getCurrentLanguage,
@@ -71,98 +71,87 @@ class ModuleFormText extends PureComponent {
     }
 
     return (
-      <form onSubmit={handleSubmit}>
-        <Container fluid className="margin-r-l-20">
-          <Row>
-            <Col md="3">
-              <SideEditToolbar>
+      <VisualForm onSubmit={handleSubmit} saving={submitting}>
+        <SideContainer>
+          <SideForm>
+            <div className="margin-bottom-15">
+              <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+                <option value="color">Color</option>
+                <option value="image">Image</option>
+              </Input>
+            </div>
+            {backgroundType === 'image' && (
+              <div>
                 <div className="margin-bottom-15">
-                  <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
-                    <option value="color">Color</option>
-                    <option value="image">Image</option>
-                  </Input>
-                </div>
-                {backgroundType === 'image' && (
-                  <div>
-                    <div className="margin-bottom-15">
-                      <Field
-                        name="background.object.id"
-                        component={ChooseDocument}
-                        onEmptyDocument={() => change('moduleText', 'background.object', {})}
-                       />
-                     </div>
-                    <div>
-                      <Field
-                        label="Background Overlay"
-                        name="background.object.overlay"
-                        colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
-                        component={ColorSelection}
-                        validate={[isValidHex]}
-                       />
-                     </div>
-                  </div>
-                )}
-                {backgroundType === 'color' && (
-                  <div>
-                    <div>
-                      <Field
-                        label="Background Color"
-                        name="background.color"
-                        colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
-                        component={ColorSelection}
-                        validate={[isValidHex]}
-                       />
-                     </div>
-                  </div>
-                )}
-                <Field
-                  label="Text color"
-                  colors={['#fff', '#000']}
-                  hexInput={false}
-                  name="text.color"
-                  component={ColorSelection}
-                 />
-                <Field
-                  label="Text position"
-                  textAligns={['left', 'center', 'right']}
-                  name="text.position"
-                  component={TextAlignSelection}
-                 />
-                <div className="ModuleFormText__action_bottom_btn_container">
-                  <hr />
-                  <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
-                  <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
-                </div>
-              </SideEditToolbar>
-            </Col>
-
-            <Col md="9">
-              <BackgroundPreview
-                backgroundType={backgroundType}
-                backgroundColor={backgroundColor}
-                backgroundImage={backgroundImage}
-                backgroundColorOverlay={backgroundColorOverlay}
-                overlayStyle={overlayStyle}
-                containerClassName="ModuleFormText__right_container"
-                overlayClassName="ModuleFormText__overlay">
                   <Field
-                    name={`text.content.${language.code}`}
-                    className="ModuleFormText__overlay-content-input"
-                    rows={10}
-                    autoComplete="off"
-                    component='textarea'
-                    style={{ color: textColor }}
+                    name="background.object.id"
+                    component={ChooseDocument}
+                    onEmptyDocument={() => change('moduleText', 'background.object', {})}
                    />
-                   <Field
-                     name={`text.content`}
-                     component={Translate}
+                 </div>
+                <div>
+                  <Field
+                    label="Background Overlay"
+                    name="background.object.overlay"
+                    colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                    component={ColorSelection}
+                    validate={[isValidHex]}
                    />
-              </BackgroundPreview>
-            </Col>
-          </Row>
-        </Container>
-        {submitting && <Spinner fullpage />}
-      </form>
+                 </div>
+              </div>
+            )}
+            {backgroundType === 'color' && (
+              <div>
+                <div>
+                  <Field
+                    label="Background Color"
+                    name="background.color"
+                    colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                    component={ColorSelection}
+                    validate={[isValidHex]}
+                   />
+                 </div>
+              </div>
+            )}
+            <Field
+              label="Text color"
+              colors={['#fff', '#000']}
+              hexInput={false}
+              name="text.color"
+              component={ColorSelection}
+             />
+            <Field
+              label="Text position"
+              textAligns={['left', 'center', 'right']}
+              name="text.position"
+              component={TextAlignSelection}
+             />
+          </SideForm>
+          <SideActions>
+            <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
+            <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
+          </SideActions>
+        </SideContainer>
+        <PreviewContainer
+          backgroundType={backgroundType}
+          backgroundColor={backgroundColor}
+          backgroundImage={backgroundImage}
+          backgroundColorOverlay={backgroundColorOverlay}
+          overlayStyle={overlayStyle}>
+          <Field
+            name={`text.content.${language.code}`}
+            className="invisible-input ModuleFormText__Preview-content-input"
+            rows={10}
+            autoComplete="off"
+            component='textarea'
+            style={{ color: textColor }}
+           />
+           <Field
+             name={`text.content`}
+             component={Translate}
+           />
+        </PreviewContainer>
+      </VisualForm>
     )
   }
 }

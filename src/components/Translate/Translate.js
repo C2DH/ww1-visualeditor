@@ -53,7 +53,6 @@ class Translate extends PureComponent {
   }
 
   onSubmit = (translations) => {
-    console.log('Just submit', translations)
     return translations
   }
 
