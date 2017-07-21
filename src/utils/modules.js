@@ -31,6 +31,7 @@ const createEmptyModuleObject = languages => ({
   background: {
     object: {},
   },
+  type: 'image',
   position: 'center',
   size: 'medium',
   caption: createEmptyMultilangObj(languages, 'Hello I am module object!'),

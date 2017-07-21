@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 
+import './ModuleFormObject.css'
+
 import VisualForm, {
   SideContainer,
   SideForm,
@@ -50,10 +52,39 @@ class ModuleFormObject extends PureComponent {
       backgroundColorOverlay,
       backgroundColor,
       documentType,
+      documentSize,
+      documentPosition,
       doc,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
+
+    let documentPreviewContainerStyle = {}
+    let documentPreviewStyle = {}
+    let overlayStyle = {}
+    if (doc && documentType === 'image') {
+      documentPreviewStyle.backgroundImage = `url(${doc.attachment})`
+      // Size
+      if (documentSize === 'small') {
+        documentPreviewContainerStyle.width = '50%'
+        documentPreviewContainerStyle.height = '50%'
+      } else if (documentSize === 'medium') {
+        documentPreviewContainerStyle.width = '70%'
+        documentPreviewContainerStyle.height = '70%'
+      } else if (documentSize === 'big') {
+        documentPreviewContainerStyle.width = '100%'
+        documentPreviewContainerStyle.height = '100%'
+        overlayStyle.padding = 0
+      }
+      // Position
+      if (documentPosition === 'left') {
+        overlayStyle.alignItems = 'flex-start'
+      } else if (documentPosition === 'right') {
+        overlayStyle.alignItems = 'flex-end'
+      } else if (documentPosition === 'center') {
+        overlayStyle.alignItems = 'center'
+      }
+    }
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
@@ -153,19 +184,24 @@ class ModuleFormObject extends PureComponent {
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
+          overlayStyle={overlayStyle}
           backgroundColorOverlay={backgroundColorOverlay}>
-          <Field
-            name={`text.caption.${language.code}`}
-            className="invisible-input"
-            style={{ width: '50%' }}
-            rows={10}
-            autoComplete="off"
-            component='textarea'
-           />
-           <Field
-             name={`text.caption`}
-             component={Translate}
-           />
+
+          <div style={documentPreviewContainerStyle}>
+            <div style={documentPreviewStyle} className="ModuleFormObject__DocumentPreview"></div>
+            <div className="ModuleFormObject__DocumentPreview__Caption">
+              <Field
+                name={`text.caption.${language.code}`}
+                className="invisible-input"
+                style={{ width: '100%' }}
+                component='input'
+              />
+              <Field
+                name={`text.caption`}
+                component={Translate}
+              />
+            </div>
+          </div>
         </PreviewContainer>
       </VisualForm>
     )
@@ -178,6 +214,8 @@ const mapStateToProps = state => ({
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
   documentType: selector(state, 'type'),
+  documentSize: selector(state, 'size'),
+  documentPosition: selector(state, 'position'),
   doc: selector(state, 'id'),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
