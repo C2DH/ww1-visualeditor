@@ -75,13 +75,7 @@ export const getDocuments = token => (params = {}) =>
     token,
     request
       .get(`/api/document/`)
-      .query(buildMillerParams({
-        ...params,
-        filters: {
-          ...params.filters,
-          data__type: 'image',
-        }
-      }))
+      .query(buildMillerParams(params))
   )
   .then(extractBody)
 

@@ -21,7 +21,7 @@ const getStory = wrapAuthApiCall(api.getStory)
 
 class NewModule extends PureComponent {
   state = {
-    moduleType: null,
+    moduleType: 'object',
   }
 
   chooseModule = moduleType => this.setState({ moduleType })
@@ -35,7 +35,6 @@ class NewModule extends PureComponent {
   }
 
   submitSuccess = (updatedChapter) => {
-    console.log('Say hello to ', updatedChapter)
     const { theme, chapter } = this.props
     const index = get(chapter, 'contents.modules', []).length + 1
     this.props.chapterUpdated(updatedChapter)

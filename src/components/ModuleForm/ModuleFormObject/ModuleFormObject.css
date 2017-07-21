@@ -1,0 +1,57 @@
+.ModuleFormObject__action_image_title_container {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.ModuleFormObject__action_img_buttons_container {
+  display: inline-flex;
+  padding: 10px;
+}
+
+.ModuleFormObject__action_img_button {
+  padding: 0.2rem 0.35rem;
+  margin-right: 5px;
+}
+
+.ModuleFormObject__right_container {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  /*z-index: 999;*/
+  height: 90vh;
+  width: 100%;
+  background-color: #ccc;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+}
+
+.ModuleFormObject__overlay {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ModuleFormObject__overlay-content-input {
+  z-index: 9999;
+  width: 50%;
+  opacity: 1;
+  background-color: transparent;
+  border: 0px;
+  font-size: 18px;
+  resize: none;
+  outline: none;
+}
+
+.ModuleFormObject__action_bottom_btn_container {
+  position: absolute;
+  height: 100px;
+  bottom: 20px;
+  width: 80%;
+}
+
+.ModuleFormObject__sideform {
+  height: calc(100vh - 150px);
+  overflow-y: scroll;
+}

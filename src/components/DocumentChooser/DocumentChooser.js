@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Container, Row, Col, Button } from 'reactstrap'
 import HeadingRow from '../HeadingRow'
 import TopSearchInput from '../TopSearchInput'
-import AddButton from '..//AddButton'
+import AddButton from '../AddButton'
 import ThemeCard from '../cards/ThemeCard'
 import DocumentCard from '../cards/DocumentCard'
 
@@ -24,11 +24,19 @@ import {
 
 class DocumentChooser extends PureComponent {
   componentDidMount() {
-    this.props.loadDocuments()
+    this.props.loadDocuments({
+      filters: {
+        data__type: this.props.documentType,
+      }
+    })
   }
 
   componentWillUnmount() {
-    this.props.unloadChoseDocuments()
+    this.props.unloadChoseDocuments({
+      filters: {
+        data__type: this.props.documentType,
+      }
+    })
   }
 
   chooseDocument = (doc) => {
@@ -69,6 +77,10 @@ class DocumentChooser extends PureComponent {
       </Container>
     )
   }
+}
+
+DocumentChooser.defaultProps = {
+  documentType: 'audio',
 }
 
 const mapStateToProps = state => ({

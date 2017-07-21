@@ -10,7 +10,7 @@ import SideEditToolbar from '../../SideEditToolbar'
 import Spinner from '../../Spinner'
 import BackgroundPreview from '../../BackgroundPreview'
 
-import ChooseCover from '../../Form/ChooseCover'
+import ChooseDocument from '../../Form/ChooseDocument'
 import TextAlignSelection from '../../Form/TextAlignSelection'
 import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
@@ -87,8 +87,8 @@ class ModuleFormText extends PureComponent {
                     <div className="margin-bottom-15">
                       <Field
                         name="background.object.id"
-                        component={ChooseCover}
-                        onEmptyCover={() => change('moduleText', 'object', {})}
+                        component={ChooseDocument}
+                        onEmptyDocument={() => change('moduleText', 'background.object', {})}
                        />
                      </div>
                     <div>

@@ -10,7 +10,7 @@ import SideEditToolbar from '../SideEditToolbar'
 import Spinner from '../Spinner'
 import BackgroundPreview from '../BackgroundPreview'
 
-import ChooseCover from '../Form/ChooseCover'
+import ChooseDocument from '../Form/ChooseDocument'
 import Bbox from '../Form/Bbox'
 import Translate from '../Form/Translate'
 import ColorSelection, { isValidHex } from '../Form/ColorSelection'
@@ -67,8 +67,8 @@ class ChapterForm extends PureComponent {
 
                     <Field
                       name='covers[0]'
-                      component={ChooseCover}
-                      onEmptyCover={() => this.props.arrayRemoveAll('chapter', 'covers')}
+                      component={ChooseDocument}
+                      onEmptyDocument={() => this.props.arrayRemoveAll('chapter', 'covers')}
                       buttons={(
                         <Field
                           name='data.background.bbox'

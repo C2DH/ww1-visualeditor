@@ -2,6 +2,8 @@ export const createEmptyModule = (moduleType, languages) => {
   switch (moduleType) {
     case 'text':
       return createEmptyModuleText(languages)
+    case 'object':
+      return createEmptyModuleObject(languages)
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }
@@ -22,4 +24,14 @@ const createEmptyModuleText = languages => ({
     position: 'center',
     content: createEmptyMultilangObj(languages, 'Hello I am module text!'),
   }
+})
+
+const createEmptyModuleObject = languages => ({
+  module: 'object',
+  background: {
+    object: {},
+  },
+  position: 'center',
+  size: 'medium',
+  caption: createEmptyMultilangObj(languages, 'Hello I am module object!'),
 })

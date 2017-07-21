@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { ListGroup, ListGroupItem, Button } from 'reactstrap'
 import AddButton from '../../AddButton'
-import './ChooseCover.css'
+import './ChooseDocument.css'
 import {
   showWidgetFullPage,
   hideWidgetFullPage,
 } from '../../../state/actions'
 
-class ChooseCover extends PureComponent {
+class ChooseDocument extends PureComponent {
   componentWillUnmount() {
     this.props.hideWidgetFullPage()
   }
@@ -21,18 +21,26 @@ class ChooseCover extends PureComponent {
   }
 
   showDocumentChooser = () => {
-    this.props.showWidgetFullPage('documentChooser')
+    this.props.showWidgetFullPage('documentChooser', {
+      documentType: this.props.documentType,
+    }, this.props.input.name)
   }
 
-  emptyCover = () => this.props.onEmptyCover()
+  emptyDocument = () => {
+    if (typeof this.props.onEmptyDocument === 'function') {
+      this.props.onEmptyDocument()
+    } else {
+      this.props.input.onChange(null)
+    }
+  }
 
   render() {
-    const { input: { value, onChange }, buttons } = this.props
+    const { input: { value, onChange }, label, buttons } = this.props
 
     // No cover choosed
     if (!value) {
       return (
-        <AddButton label="Add image" onClick={this.showDocumentChooser} />
+        <AddButton label={label} onClick={this.showDocumentChooser} />
       )
     }
 
@@ -42,18 +50,29 @@ class ChooseCover extends PureComponent {
         <ListGroupItem className="ThemeEdit__action_img_buttons_container">
           {buttons}
           <Button className="ThemeEdit__action_img_button" onClick={this.showDocumentChooser}><i className="fa fa-file-image-o" /></Button>
-          <Button className="ThemeEdit__action_img_button" onClick={this.emptyCover}><i className="fa fa-trash-o" /></Button>
+          <Button className="ThemeEdit__action_img_button" onClick={this.emptyDocument}><i className="fa fa-trash-o" /></Button>
         </ListGroupItem>
       </ListGroup>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  choosedDocument: state.widgets.chooseDocuments.choosedDocument,
-})
+const mapStateToProps = (state, ownProps) => {
+  let choosedDocument = null
+  if (state.ui.fullPageWidgets.namespace === ownProps.input.name) {
+      choosedDocument = state.widgets.chooseDocuments.choosedDocument
+  }
+  return {
+    choosedDocument,
+  }
+}
+
+ChooseDocument.defaultProps = {
+  label: 'Add image',
+  documentType: 'image',
+}
 
 export default connect(mapStateToProps, {
   showWidgetFullPage,
   hideWidgetFullPage,
-})(ChooseCover)
+})(ChooseDocument)
