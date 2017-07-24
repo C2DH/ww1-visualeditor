@@ -191,13 +191,13 @@ class ModuleFormObject extends PureComponent {
             <div style={documentPreviewStyle} className="ModuleFormObject__DocumentPreview"></div>
             <div className="ModuleFormObject__DocumentPreview__Caption">
               <Field
-                name={`text.caption.${language.code}`}
+                name={`caption.${language.code}`}
                 className="invisible-input"
                 style={{ width: '100%' }}
                 component='input'
               />
               <Field
-                name={`text.caption`}
+                name={`caption`}
                 component={Translate}
               />
             </div>
