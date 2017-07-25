@@ -4,6 +4,8 @@ export const createEmptyModule = (moduleType, languages) => {
       return createEmptyModuleText(languages)
     case 'object':
       return createEmptyModuleObject(languages)
+    case 'gallery':
+      return createEmptyModuleGallery(languages)
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }
@@ -35,4 +37,14 @@ const createEmptyModuleObject = languages => ({
   position: 'center',
   size: 'medium',
   caption: createEmptyMultilangObj(languages, 'Hello I am module object!'),
+})
+
+const createEmptyModuleGallery = languages => ({
+  module: 'gallery',
+  background: {
+    object: {},
+  },
+  objects: [],
+  layout: 'grid',
+  caption: createEmptyMultilangObj(languages, 'Hello I am module gallery!'),
 })

@@ -1,14 +1,14 @@
-.ChooseDocument__title {
+.DocumentFormItem__title {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-.ChooseDocument__buttons-container {
+.DocumentFormItem__buttons-container {
   display: inline-flex;
   justify-content: flex-end;
   padding: 10px;
 }
 
-.ChooseDocument__button {
+.DocumentFormItem__button {
   padding: 0.2rem 0.35rem;
 }

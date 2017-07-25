@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { ListGroup, ListGroupItem, Button } from 'reactstrap'
 import AddButton from '../../AddButton'
-import './ChooseDocument.css'
+import DocumentFormItem from '../DocumentFormItem'
 import {
   showWidgetFullPage,
   hideWidgetFullPage,
@@ -45,14 +44,12 @@ class ChooseDocument extends PureComponent {
     }
 
     return (
-      <ListGroup className="margin-top-15">
-        <ListGroupItem className="ChooseDocument__title">{value.title}</ListGroupItem>
-        <ListGroupItem className="ChooseDocument__buttons-container">
-          {buttons}
-          <Button className="tiny-btn margin-right-5" onClick={this.showDocumentChooser}><i className="fa fa-file-image-o" /></Button>
-          <Button className="tiny-btn" onClick={this.emptyDocument}><i className="fa fa-trash-o" /></Button>
-        </ListGroupItem>
-      </ListGroup>
+      <DocumentFormItem
+        title={value.title}
+        buttons={buttons}
+        onEmpty={this.emptyDocument}
+        onChange={this.showDocumentChooser}
+      />
     )
   }
 }

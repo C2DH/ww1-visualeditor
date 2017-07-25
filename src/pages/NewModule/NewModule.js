@@ -21,7 +21,7 @@ const getStory = wrapAuthApiCall(api.getStory)
 
 class NewModule extends PureComponent {
   state = {
-    moduleType: 'object',
+    moduleType: 'gallery',
   }
 
   chooseModule = moduleType => this.setState({ moduleType })

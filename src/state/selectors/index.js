@@ -1,5 +1,5 @@
 import { createSelector, defaultMemoize } from 'reselect'
-import { isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
+import { reduce, keys, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
 import { TAG_THEME, TAG_CHAPTER } from '../consts'
 
 // fp <3
@@ -63,6 +63,19 @@ export const [
   getDocumentsCount,
   getDocumentsLoading,
 ] = makePaginateListSelectors(state => state.widgets.chooseDocuments.list)
+
+export const getSelectedDocumentsById = state => state.widgets.chooseDocuments.selectedDocuments
+
+export const getSelectedDocuments = createSelector(
+  getSelectedDocumentsById,
+  state => state.widgets.chooseDocuments.list.data,
+  (byId, data) => reduce(byId, (r, v, id) => {
+    if (v) {
+      return r.concat(data[id])
+    }
+    return r
+  }, [])
+)
 
 // Themes
 

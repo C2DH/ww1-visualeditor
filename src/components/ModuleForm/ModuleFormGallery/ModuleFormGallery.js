@@ -1,11 +1,9 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, Field, formValueSelector, change } from 'redux-form'
+import { reduxForm, Field, FieldArray, formValueSelector, change } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
-
-import './ModuleFormObject.css'
 
 import VisualForm, {
   SideContainer,
@@ -14,7 +12,9 @@ import VisualForm, {
   PreviewContainer
 } from '../../VisualForm'
 
+import AddButton from '../../AddButton'
 import ChooseDocument from '../../Form/ChooseDocument'
+import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
@@ -23,20 +23,22 @@ import {
   getCurrentLanguage,
 } from '../../../state/selectors'
 
-class ModuleFormObject extends PureComponent {
+class ModuleFormGallery extends PureComponent {
+  state = {
+    newDocType: 'image',
+  }
+
   changeBackgroundType = (e) => {
     if (e.target.value === 'color') {
-      this.props.change('moduleObject', 'background.object', null)
+      this.props.change('moduleGallery', 'background.object', null)
     } else {
-      this.props.change('moduleObject', 'background.object', {})
-      this.props.change('moduleObject', 'background.color', null)
+      this.props.change('moduleGallery', 'background.object', {})
+      this.props.change('moduleGallery', 'background.color', null)
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.documentType !== nextProps.documentType) {
-      this.props.change('moduleObject', 'id', null)
-    }
+  changeNewDocType = (e) => {
+    this.setState({ newDocType: e.target.value })
   }
 
   render() {
@@ -51,40 +53,11 @@ class ModuleFormObject extends PureComponent {
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
-      documentType,
-      documentSize,
-      documentPosition,
       doc,
     } = this.props
+    const { newDocType } = this.state
 
     const backgroundType = backgroundObject ? 'image' : 'color'
-
-    let documentPreviewContainerStyle = {}
-    let documentPreviewStyle = {}
-    let overlayStyle = {}
-    if (doc && documentType === 'image') {
-      documentPreviewStyle.backgroundImage = `url(${doc.attachment})`
-      // Size
-      if (documentSize === 'small') {
-        documentPreviewContainerStyle.width = '50%'
-        documentPreviewContainerStyle.height = '50%'
-      } else if (documentSize === 'medium') {
-        documentPreviewContainerStyle.width = '70%'
-        documentPreviewContainerStyle.height = '70%'
-      } else if (documentSize === 'big') {
-        documentPreviewContainerStyle.width = '100%'
-        documentPreviewContainerStyle.height = '100%'
-        overlayStyle.padding = 0
-      }
-      // Position
-      if (documentPosition === 'left') {
-        overlayStyle.alignItems = 'flex-start'
-      } else if (documentPosition === 'right') {
-        overlayStyle.alignItems = 'flex-end'
-      } else if (documentPosition === 'center') {
-        overlayStyle.alignItems = 'center'
-      }
-    }
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
@@ -102,7 +75,7 @@ class ModuleFormObject extends PureComponent {
                   <Field
                     name="background.object.id"
                     component={ChooseDocument}
-                    onEmptyDocument={() => change('moduleObject', 'background.object', {})}
+                    onEmptyDocument={() => change('moduleGallery', 'background.object', {})}
                    />
                  </div>
                 <div>
@@ -131,48 +104,27 @@ class ModuleFormObject extends PureComponent {
             )}
             <div className="margin-bottom-15">
               <Field
-                label="Document Type"
-                name="type"
+                name="layout"
                 component={Select}
                >
-                 <option value="image">Image</option>
-                 <option value="audio">Audio</option>
-                 <option value="video">Video</option>
+                 <option value="grid">Grid</option>
+                 <option value="slideshow">Slideshow</option>
+                 <option value="masonry">Masonry</option>
                </Field>
             </div>
             <div className="margin-bottom-15">
-              <Field
-                documentType={documentType}
-                label="Choose Document"
-                name="id"
-                component={ChooseDocument}
-               />
+              <Input type="select" value={newDocType} onChange={this.changeNewDocType}>
+                <option value="image">Image</option>
+                <option value="audio">Audio</option>
+                <option value="video">Video</option>
+              </Input>
             </div>
             <div className="margin-bottom-15">
-              <FormGroup>
-                <Label>Size</Label>
-                <Field
-                  label="Size"
-                  name="size"
-                  component={Select}>
-                  <option value='small'>Small</option>
-                  <option value='medium'>Medium</option>
-                  <option value='big'>Big</option>
-                 </Field>
-               </FormGroup>
-            </div>
-            <div>
-              <FormGroup>
-                <Label>Position</Label>
-                <Field
-                  label="Position"
-                  name="position"
-                  component={Select}>
-                  <option value='left'>Left</option>
-                  <option value='center'>Center</option>
-                  <option value='right'>Right</option>
-                 </Field>
-               </FormGroup>
+              <FieldArray
+                name="objects"
+                documentType={newDocType}
+                component={ChooseDocuments}
+              />
             </div>
           </SideForm>
           <SideActions>
@@ -183,39 +135,28 @@ class ModuleFormObject extends PureComponent {
         <PreviewContainer
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
-          backgroundImage={backgroundImage}
-          overlayStyle={overlayStyle}
-          backgroundColorOverlay={backgroundColorOverlay}>
-
-          <div style={documentPreviewContainerStyle}>
-            <div style={documentPreviewStyle} className="ModuleFormObject__DocumentPreview"></div>
-            <div className="ModuleFormObject__DocumentPreview__Caption">
+          backgroundImage={backgroundImage}>
               <Field
-                name={`text.caption.${language.code}`}
+                name={`caption.${language.code}`}
                 className="invisible-input"
                 style={{ width: '100%' }}
                 component='input'
               />
               <Field
-                name={`text.caption`}
+                name={`caption`}
                 component={Translate}
               />
-            </div>
-          </div>
         </PreviewContainer>
       </VisualForm>
     )
   }
 }
 
-const selector = formValueSelector('moduleObject')
+const selector = formValueSelector('moduleGallery')
 
 const mapStateToProps = state => ({
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
-  documentType: selector(state, 'type'),
-  documentSize: selector(state, 'size'),
-  documentPosition: selector(state, 'position'),
   doc: selector(state, 'id'),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
@@ -224,7 +165,7 @@ const mapStateToProps = state => ({
 })
 
 export default reduxForm({
-  form: 'moduleObject',
+  form: 'moduleGallery',
 })(connect(mapStateToProps, {
   change,
-})(ModuleFormObject))
+})(ModuleFormGallery))

@@ -13,6 +13,9 @@ import {
   unloadChoseDocuments,
   chooseDocument,
   hideWidgetFullPage,
+  selectDocument,
+  unselectDocument,
+  selectionDone,
 } from '../../state/actions'
 
 import {
@@ -20,6 +23,7 @@ import {
   canLoadMoreDocuments,
   getDocumentsCount,
   getDocumentsLoading,
+  getSelectedDocumentsById,
 } from '../../state/selectors'
 
 class DocumentChooser extends PureComponent {
@@ -44,7 +48,14 @@ class DocumentChooser extends PureComponent {
   }
 
   render() {
-    const { documents } = this.props
+    const {
+      documents,
+      selectedDocuments,
+      multi,
+      selectDocument,
+      unselectDocument,
+      selectionDone,
+    } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <HeadingRow title="Select documents">
@@ -55,11 +66,24 @@ class DocumentChooser extends PureComponent {
           <Row>
             {documents.map(doc => (
               <Col md="3" key={doc.id}>
-                <DocumentCard
-                  onClick={() => this.chooseDocument(doc)}
-                  title={doc.title}
-                  cover={doc.attachment}
-                />
+                {multi ? (
+                  <DocumentCard
+                    checked={typeof selectedDocuments[doc.id] !== 'undefined'}
+                    onChange={() => {
+                      typeof selectedDocuments[doc.id] === 'undefined'
+                        ? selectDocument(doc.id)
+                        : unselectDocument(doc.id)
+                    }}
+                    title={doc.title}
+                    cover={doc.attachment}
+                  />
+                ) : (
+                  <DocumentCard
+                    onClick={() => this.chooseDocument(doc)}
+                    title={doc.title}
+                    cover={doc.attachment}
+                  />
+                )}
               </Col>
             ))}
           </Row>
@@ -68,7 +92,7 @@ class DocumentChooser extends PureComponent {
         <div className="Translate__confirm_container">
           <Row>
             <Col md="3">
-              <Button size="sm" block>Done</Button>
+              {multi && <Button size="sm" block onClick={selectionDone}>Done</Button>}
               <Button size="sm" block onClick={this.props.hideWidgetFullPage}>Exit</Button>
             </Col>
             <Col md="9" />
@@ -80,11 +104,13 @@ class DocumentChooser extends PureComponent {
 }
 
 DocumentChooser.defaultProps = {
-  documentType: 'audio',
+  // Is a multi select document or a pick one only?
+  multi: false,
 }
 
 const mapStateToProps = state => ({
   documents: getDocuments(state),
+  selectedDocuments: getSelectedDocumentsById(state),
   canLoadMore: canLoadMoreDocuments(state),
   count: getDocumentsCount(state),
   loading: getDocumentsLoading(state),
@@ -95,4 +121,7 @@ export default connect(mapStateToProps, {
   unloadChoseDocuments,
   chooseDocument,
   hideWidgetFullPage,
+  selectDocument,
+  unselectDocument,
+  selectionDone,
 })(DocumentChooser)
