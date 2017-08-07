@@ -148,3 +148,19 @@ export const makeGetModule = defaultMemoize(index => createSelector(
     return joinIds(chapter.documents.map(d => ({ ...d, id: d.document_id })), module)
   })
 ))
+
+// Static stories
+
+export const getStaticStories = createSelector(
+  state => state.staticStories.ids,
+  state => state.entities.staticStories,
+  (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
+)
+
+export const getStaticStory = createSelector(
+  state => state.staticStoryDetail.id,
+  state => state.entities.staticStories,
+  (id, data) => maybeNull(id)(id => data[id])
+)
+export const isStaticStorySaving = state => state.staticStoryDetail.saving
+export const isStaticStoryLoading = state => state.staticStoryDetail.loading

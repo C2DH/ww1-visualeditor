@@ -7,8 +7,10 @@ import * as api from '../../api'
 import {
   THEME,
   CHAPTER,
+  STATIC_STORY,
   GET_THEMES,
   GET_DOCUMENTS,
+  GET_STATIC_STORIES,
 } from '../actions'
 
 const { authFlow, authApiCall } = makeAuth({
@@ -28,4 +30,6 @@ export default function* rootSaga() {
   yield fork(makeCollection(GET_THEMES, api.getThemes))
   yield fork(makeStoryDetail(THEME))
   yield fork(makeStoryDetail(CHAPTER))
+  yield fork(makeCollection(GET_STATIC_STORIES, api.getStaticStories))
+  yield fork(makeStoryDetail(STATIC_STORY))
 }

@@ -1,15 +1,31 @@
 import React, { PureComponent } from 'react'
-import { Container, Row, Col } from 'reactstrap'
+import { connect } from 'react-redux'
+import { Container, Row, Col, Button } from 'reactstrap'
 import { Badge } from 'reactstrap';
 import AddButton from '../../components/AddButton'
 import { Link } from 'react-router-dom'
 import './Home.css'
+import {
+  loadStaticStories,
+  unloadStaticStories
+} from '../../state/actions'
+import {
+  getStaticStories,
+} from '../../state/selectors'
 
 
 class Home extends PureComponent {
 
-  render() {
+  componentDidMount() {
+    this.props.loadStaticStories()
+  }
 
+  componentWillUnmount() {
+    this.props.unloadStaticStories()
+  }
+
+  render() {
+    const { staticStories } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <Row>
@@ -45,6 +61,9 @@ class Home extends PureComponent {
               <Badge className="Home__titlebadge">All</Badge>
             </div>
             <div>
+              {staticStories && staticStories.map(story => (
+                <Button tag={Link} to={`/static/${story.id}`} key={story.id} block>{story.slug}</Button>
+              ))}
             </div>
           </Col>
         </Row>
@@ -53,4 +72,11 @@ class Home extends PureComponent {
   }
 }
 
-export default Home
+const mapStateToProps = state => ({
+  staticStories: getStaticStories(state),
+})
+
+export default connect(mapStateToProps, {
+  loadStaticStories,
+  unloadStaticStories,
+})(Home)

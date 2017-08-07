@@ -109,7 +109,25 @@ export const getThemes = token => () =>
     }),
   })
 
+export const getStaticStories = token => () =>
+  getStories(token)({
+    filters: JSON.stringify({
+      'tags__slug': 'static',
+    }),
+  })
+
 export const updateStory = token => story => {
+  return withToken(
+    token,
+    request.patch(`/api/story/${story.id}/`)
+      .send({
+        data: story.data,
+      })
+  )
+  .then(extractBody)
+}
+
+export const updateStaticStory = token => story => {
   const storyToUpdate = prepareStory(story)
   return withToken(
     token,

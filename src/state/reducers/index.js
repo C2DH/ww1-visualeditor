@@ -6,6 +6,8 @@ import widgets from './widgets'
 import settings from './settings'
 import entities from './entities'
 import themes from './themes'
+import staticStories from './staticStories'
+import staticStoryDetail from './staticStoryDetail'
 import themeDetail from './themeDetail'
 import chapterDetail from './chapterDetail'
 import ui from './ui'
@@ -19,6 +21,8 @@ export default combineReducers({
   languages,
   entities,
   themes,
+  staticStories,
+  staticStoryDetail,
   themeDetail,
   chapterDetail,
 })

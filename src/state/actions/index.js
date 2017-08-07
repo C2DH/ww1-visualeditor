@@ -1,5 +1,6 @@
 export * from './auth'
 export * from './themes'
+export * from './staticStories'
 export * from './chapters'
 export * from './settings'
 export * from './ui'

@@ -5,6 +5,10 @@ import {
   GET_THEME_SUCCESS,
   THEME,
   CHAPTER,
+  STATIC_STORY,
+  GET_STATIC_STORIES_SUCCESS,
+  GET_STATIC_STORY_SUCCESS,
+  STATIC_STORY_UPDATED,
   GET_CHAPTER_SUCCESS,
   CHAPTER_UPDATED,
   THEME_UPDATED,
@@ -84,7 +88,25 @@ const chapters = (prevState = {}, action) => {
   }
 }
 
+const staticStoriesEntityReducer = makeStoryEntityReducer(STATIC_STORY)
+const staticStories = (prevState = {}, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case GET_STATIC_STORY_SUCCESS:
+    case STATIC_STORY_UPDATED:
+      return {
+        ...prevState,
+        [payload.id]: payload,
+      }
+    case GET_STATIC_STORIES_SUCCESS:
+      return mergeList(prevState, payload.results)
+    default:
+      return staticStoriesEntityReducer(prevState, action)
+  }
+}
+
 export default combineReducers({
   themes,
   chapters,
+  staticStories,
 })
