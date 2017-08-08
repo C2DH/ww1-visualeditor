@@ -6,6 +6,7 @@ import TopSearchInput from '../TopSearchInput'
 import AddButton from '../AddButton'
 import ThemeCard from '../cards/ThemeCard'
 import DocumentCard from '../cards/DocumentCard'
+import './DocumentChooser.css'
 
 import {
   loadDocuments,
@@ -36,22 +37,29 @@ class DocumentChooser extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.props.unloadChoseDocuments({
-      filters: {
-        data__type: this.props.documentType,
-      }
-    })
+    this.props.unloadChoseDocuments()
   }
 
   chooseDocument = (doc) => {
     this.props.chooseDocument(doc)
   }
 
+  loadMore = () => {
+    this.props.loadMoreDocuments({
+      filters: {
+        data__type: this.props.documentType,
+      }
+    })
+  }
+
   render() {
     const {
       documents,
+      canLoadMore,
       selectedDocuments,
       multi,
+      count,
+      loading,
       selectDocument,
       unselectDocument,
       selectionDone,
@@ -89,6 +97,9 @@ class DocumentChooser extends PureComponent {
           </Row>
         )}
 
+        {canLoadMore && count > 0 && !loading && <div className="DocumentChooser__LoadMoreBtn">
+          <Button onClick={this.loadMore}>Load more</Button></div>}
+
         <div className="Translate__confirm_container">
           <Row>
             <Col md="3">
@@ -118,6 +129,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   loadDocuments,
+  loadMoreDocuments,
   unloadChoseDocuments,
   chooseDocument,
   hideWidgetFullPage,

@@ -24,10 +24,6 @@ import {
 } from '../../../state/selectors'
 
 class ModuleFormGallery extends PureComponent {
-  state = {
-    newDocType: 'image',
-  }
-
   changeBackgroundType = (e) => {
     if (e.target.value === 'color') {
       this.props.change('moduleGallery', 'background.object', null)
@@ -35,10 +31,6 @@ class ModuleFormGallery extends PureComponent {
       this.props.change('moduleGallery', 'background.object', {})
       this.props.change('moduleGallery', 'background.color', null)
     }
-  }
-
-  changeNewDocType = (e) => {
-    this.setState({ newDocType: e.target.value })
   }
 
   render() {
@@ -55,7 +47,6 @@ class ModuleFormGallery extends PureComponent {
       backgroundColor,
       doc,
     } = this.props
-    const { newDocType } = this.state
 
     const backgroundType = backgroundObject ? 'image' : 'color'
 
@@ -113,16 +104,9 @@ class ModuleFormGallery extends PureComponent {
                </Field>
             </div>
             <div className="margin-bottom-15">
-              <Input type="select" value={newDocType} onChange={this.changeNewDocType}>
-                <option value="image">Image</option>
-                <option value="audio">Audio</option>
-                <option value="video">Video</option>
-              </Input>
-            </div>
-            <div className="margin-bottom-15">
               <FieldArray
                 name="objects"
-                documentType={newDocType}
+                documentType="image"
                 component={ChooseDocuments}
               />
             </div>

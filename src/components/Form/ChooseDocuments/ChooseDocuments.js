@@ -61,6 +61,7 @@ class ChooseDocuments extends PureComponent {
 
   showDocumentChooser = () => {
     this.props.showWidgetFullPage('documentChooser', {
+      documentType: this.props.documentType,
       multi: true,
     }, this.props.fields.name)
     // Chekka

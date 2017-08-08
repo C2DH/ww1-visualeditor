@@ -26,7 +26,11 @@ const makeStoryDetail = createMakeStoryDetail(authApiCall)
 
 export default function* rootSaga() {
   yield fork(authFlow)
-  yield fork(makePaginateCollection(GET_DOCUMENTS, api.getDocuments))
+  yield fork(makePaginateCollection(
+    GET_DOCUMENTS,
+    api.getDocuments,
+    state => state.widgets.chooseDocuments.list,
+  ))
   yield fork(makeCollection(GET_THEMES, api.getThemes))
   yield fork(makeStoryDetail(THEME))
   yield fork(makeStoryDetail(CHAPTER))

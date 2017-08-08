@@ -71,7 +71,12 @@ export const getSelectedDocuments = createSelector(
   state => state.widgets.chooseDocuments.list.data,
   (byId, data) => reduce(byId, (r, v, id) => {
     if (v) {
-      return r.concat(data[id])
+      if (data[id]) {
+        return r.concat(data[id])
+      } else {
+        // Buggy the clown
+        return r.concat({ id: +id })
+      }
     }
     return r
   }, [])
