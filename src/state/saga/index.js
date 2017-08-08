@@ -1,4 +1,4 @@
-import { fork } from 'redux-saga/effects'
+import { fork, takeEvery, put } from 'redux-saga/effects'
 import makeAuth from './auth'
 import createMakeCollection from './hos/collection'
 import createMakePaginateCollection from './hos/paginateCollection'
@@ -11,6 +11,11 @@ import {
   GET_THEMES,
   GET_DOCUMENTS,
   GET_STATIC_STORIES,
+  DELETE_MODULE_CHAPTER,
+  DELETE_MODULE_CHAPTER_LOADING,
+  DELETE_MODULE_CHAPTER_FAILURE,
+  DELETE_MODULE_CHAPTER_SUCCESS,
+  chapterUpdated,
 } from '../actions'
 
 const { authFlow, authApiCall } = makeAuth({
@@ -24,6 +29,20 @@ const makeCollection = createMakeCollection(authApiCall)
 const makePaginateCollection = createMakePaginateCollection(authApiCall)
 const makeStoryDetail = createMakeStoryDetail(authApiCall)
 
+function *handleDeleteModuleChapter({ payload }) {
+  const { chapter, moduleIndex } = payload
+  yield put({ type: DELETE_MODULE_CHAPTER_LOADING, payload })
+  try {
+    yield authApiCall(api.deleteModuleChapter, chapter, moduleIndex)
+    yield authApiCall(api.createChapterCaptions, chapter.id)
+    const updatedChapter = yield authApiCall(api.getStory, chapter.id)
+    yield put({ type: DELETE_MODULE_CHAPTER_SUCCESS, payload })
+    yield put(chapterUpdated(updatedChapter))
+  } catch (error) {
+    yield put({ type: DELETE_MODULE_CHAPTER_FAILURE, error, payload })
+  }
+}
+
 export default function* rootSaga() {
   yield fork(authFlow)
   yield fork(makePaginateCollection(
@@ -36,4 +55,5 @@ export default function* rootSaga() {
   yield fork(makeStoryDetail(CHAPTER))
   yield fork(makeCollection(GET_STATIC_STORIES, api.getStaticStories))
   yield fork(makeStoryDetail(STATIC_STORY))
+  yield takeEvery(DELETE_MODULE_CHAPTER, handleDeleteModuleChapter)
 }

@@ -32,3 +32,13 @@ export const chapterUpdated = (chapter) => ({
   type: CHAPTER_UPDATED,
   payload: chapter,
 })
+
+export const DELETE_MODULE_CHAPTER = 'DELETE_MODULE_CHAPTER'
+export const DELETE_MODULE_CHAPTER_LOADING = 'DELETE_MODULE_CHAPTER_LOADING'
+export const DELETE_MODULE_CHAPTER_FAILURE = 'DELETE_MODULE_CHAPTER_FAILURE'
+export const DELETE_MODULE_CHAPTER_SUCCESS = 'DELETE_MODULE_CHAPTER_SUCCESS'
+
+export const deleteModuleChapter = (chapter, moduleIndex) => ({
+  type: DELETE_MODULE_CHAPTER,
+  payload: { chapter, moduleIndex }
+})

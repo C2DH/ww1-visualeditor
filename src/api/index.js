@@ -209,6 +209,16 @@ export const createModuleChapter = token => (chapter, module) =>
   }))
   .then(extractBody)
 
+export const deleteModuleChapter = token => (chapter, moduleIndex) =>
+  withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    contents: JSON.stringify({
+      modules: get(chapter, 'contents.modules', []).filter((m, i) =>
+        i !== moduleIndex
+      )
+    })
+  }))
+  .then(extractBody)
+
 export const updateModuleChapter = token => (chapter, module, index) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
     contents: JSON.stringify({

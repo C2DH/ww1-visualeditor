@@ -115,12 +115,18 @@ export const newChapter = createSelector(
   languages => createBasicStory(languages, TAG_CHAPTER)
 )
 export const getChapter = createSelector(
-  state => state.chapterDetail.id,
+  state => state.chapterDetail.chapter.id,
   state => state.entities.chapters,
   (id, data) => maybeNull(id)(id => data[id])
 )
-export const isChapterSaving = state => state.chapterDetail.saving
-export const isChapterLoading = state => state.chapterDetail.loading
+export const isChapterSaving = state => state.chapterDetail.chapter.saving
+export const isChapterLoading = state => state.chapterDetail.chapter.loading
+
+export const getDeletingChapterModules = state =>
+  state.chapterDetail.deletingModules
+
+export const getChapterDeleting = state =>
+  Object.values(state.chapterDetail.deletingModules).filter(v => v).length > 0
 
 const joinIds = (source, obj) => {
   const sourceById = keyBy(source, 'id')

@@ -7,16 +7,20 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'reactstrap'
 import ModuleCard from '../../components/cards/ModuleCard'
 import AddButton from '../../components/AddButton'
+import Spinner from '../../components/Spinner'
 import './ChapterDetail.css'
 import {
   publishChapter,
   unpublishChapter,
+  deleteModuleChapter,
 } from '../../state/actions'
 import {
   getChapter,
+  getChapterDeleting,
   getTheme,
   isChapterSaving,
   makeTranslator,
+  getDeletingChapterModules,
 } from '../../state/selectors'
 
 class ChapterDetail extends PureComponent {
@@ -40,7 +44,7 @@ class ChapterDetail extends PureComponent {
   }
 
   render () {
-    const { trans, chapter, theme, saving } = this.props
+    const { trans, chapter, theme, saving, deletingModules, deleting } = this.props
     const modules = get(chapter, 'contents.modules', [])
 
     return (
@@ -80,9 +84,12 @@ class ChapterDetail extends PureComponent {
               <Col md="9" style={{overflow: 'auto'}}>
                 <div className="Chapter__module_scroll_container">
                   {modules.map((mod, i) => (
-                    <div key={i} className="ChapterDetail__module_card">
+                    <div key={i}
+                      className="ChapterDetail__module_card"
+                      style={typeof deletingModules[i] !== 'undefined' ? { opacity: 0.5 } : undefined}>
                       <ModuleCard
                         module={mod}
+                        onDeleteClick={() => this.props.deleteModuleChapter(chapter, i)}
                         onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
                       />
                     </div>
@@ -91,6 +98,7 @@ class ChapterDetail extends PureComponent {
               </Col>
             </div>
           </Row> : null}
+          {deleting && <Spinner fullpage />}
         </Container>
       )
   }
@@ -101,9 +109,12 @@ const mapStateToProps = state => ({
   theme: getTheme(state),
   chapter: getChapter(state),
   saving: isChapterSaving(state),
+  deletingModules: getDeletingChapterModules(state),
+  deleting: getChapterDeleting(state),
 })
 
 export default connect(mapStateToProps, {
   publishChapter,
+  deleteModuleChapter,
   unpublishChapter,
 })(ChapterDetail)
