@@ -28,12 +28,19 @@ import {
 } from '../../state/selectors'
 
 class DocumentChooser extends PureComponent {
-  componentDidMount() {
-    this.props.loadDocuments({
+  makeParams = () => {
+    if (this.props.params) {
+      return this.props.params
+    }
+    return {
       filters: {
         data__type: this.props.documentType,
       }
-    })
+    }
+  }
+
+  componentDidMount() {
+    this.props.loadDocuments(this.makeParams())
   }
 
   componentWillUnmount() {
@@ -45,11 +52,7 @@ class DocumentChooser extends PureComponent {
   }
 
   loadMore = () => {
-    this.props.loadMoreDocuments({
-      filters: {
-        data__type: this.props.documentType,
-      }
-    })
+    this.props.loadMoreDocuments(this.makeParams())
   }
 
   render() {

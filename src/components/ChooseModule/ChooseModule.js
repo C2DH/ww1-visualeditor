@@ -30,6 +30,10 @@ const ChooseModule = ({ onChooseModule }) => (
             <button onClick={() => onChooseModule('gallery')}>gallery</button>
             {/* <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" /> */}
           </Col>
+          <Col md="4">
+            <button onClick={() => onChooseModule('map')}>map</button>
+            {/* <ThemeCard title="module type 1" cover="http://via.placeholder.com/350x150" /> */}
+          </Col>
         </Row>
       </Col>
     </Row>

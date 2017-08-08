@@ -22,6 +22,7 @@ class ChooseDocument extends PureComponent {
   showDocumentChooser = () => {
     this.props.showWidgetFullPage('documentChooser', {
       documentType: this.props.documentType,
+      params: this.props.params,
     }, this.props.input.name)
   }
 

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import ModuleFormText from './ModuleFormText'
 import ModuleFormObject from './ModuleFormObject'
 import ModuleFormGallery from './ModuleFormGallery'
+import ModuleFormMap from './ModuleFormMap'
 
 const getModuleFormComponent = moduleType => {
   switch (moduleType) {
@@ -11,6 +12,8 @@ const getModuleFormComponent = moduleType => {
       return ModuleFormObject
     case 'gallery':
       return ModuleFormGallery
+    case 'map':
+      return ModuleFormMap
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }
