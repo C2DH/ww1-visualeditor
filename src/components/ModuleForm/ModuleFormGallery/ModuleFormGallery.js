@@ -100,7 +100,6 @@ class ModuleFormGallery extends PureComponent {
                >
                  <option value="grid">Grid</option>
                  <option value="slideshow">Slideshow</option>
-                 <option value="masonry">Masonry</option>
                </Field>
             </div>
             <div className="margin-bottom-15">
