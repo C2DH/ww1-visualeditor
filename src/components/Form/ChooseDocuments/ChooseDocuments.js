@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 // import { get } from 'lodash'
 import { Field } from 'redux-form'
+import { Button } from 'reactstrap'
 import AddButton from '../../AddButton'
 import DocumentFormItem from '../DocumentFormItem'
 
@@ -80,6 +81,14 @@ class ChooseDocuments extends PureComponent {
              <Field
                name={`${field}.id`}
                component={renderDoc}
+               buttons={
+                 <span>
+                   {index !== 0 && <Button className="tiny-btn" onClick={() => fields.move(index, index - 1)}><i className="fa fa-arrow-up" /></Button>}
+                   <span>&nbsp;</span>
+                   {index !== fields.length - 1 && <Button onClick={() => fields.move(index, index + 1)} className="tiny-btn"><i className="fa fa-arrow-down" /></Button>}
+                   <span>&nbsp;</span>
+                 </span>
+               }
                onEmpty={() => fields.remove(index)}
               />
            </div>
