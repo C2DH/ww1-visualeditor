@@ -128,8 +128,8 @@ class ModuleFormTextGallery extends PureComponent {
                   name="layout"
                   component={Select}
                  >
-                   <option value="text-object">Text Object</option>
-                   <option value="object-text">Object Text</option>
+                   <option value="text-gallery">Text Gallery</option>
+                   <option value="gallery-text">Gallery Text</option>
                  </Field>
                </FormGroup>
             </div>
