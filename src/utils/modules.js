@@ -8,6 +8,8 @@ export const createEmptyModule = (moduleType, languages) => {
       return createEmptyModuleGallery(languages)
     case 'map':
       return createEmptyModuleMap(languages)
+    case 'text_object':
+      return createEmptyModuleTextObject(languages)
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }
@@ -58,4 +60,21 @@ const createEmptyModuleMap = languages => ({
   },
   objects: [],
   caption: createEmptyMultilangObj(languages, 'Hello I am module map!'),
+})
+
+const createEmptyModuleTextObject = languages => ({
+  module: 'text_object',
+  background: {
+    object: {},
+  },
+  text: {
+    color: '#000',
+    content: createEmptyMultilangObj(languages, 'Hello I am module text object! Cekka'),
+  },
+  object: {
+    type: 'image',
+    size: 'medium',
+    caption: createEmptyMultilangObj(languages, 'Caption!'),
+  },
+  layout: 'text-object'
 })
