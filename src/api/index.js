@@ -116,7 +116,7 @@ export const getStaticStories = token => () =>
     }),
   })
 
-export const updateStory = token => story => {
+export const updateStaticStory = token => story => {
   return withToken(
     token,
     request.patch(`/api/story/${story.id}/`)
@@ -127,7 +127,7 @@ export const updateStory = token => story => {
   .then(extractBody)
 }
 
-export const updateStaticStory = token => story => {
+export const updateStory = token => story => {
   const storyToUpdate = prepareStory(story)
   return withToken(
     token,
