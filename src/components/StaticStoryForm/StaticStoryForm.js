@@ -6,6 +6,7 @@ import { Button, FormGroup, Label, Container, Row, Col } from 'reactstrap'
 import Textarea from '../Form/Textarea'
 import HeadingRow from '../HeadingRow'
 import Spinner from '../Spinner'
+import './StaticStoryForm.css'
 
 import {
   getLanguages,
@@ -16,9 +17,9 @@ class StaticStoryForm extends PureComponent {
     const { handleSubmit, languages, title, submitting } = this.props
     return (
       <form onSubmit={handleSubmit}>
-        <Container fluid className="margin-r-l-20">
+        <Container fluid className="margin-r-l-20 StaticStoryForm__container">
           <HeadingRow title={title} />
-          <Row>
+          <Row className="StaticStoryForm__text_container_row">
             {languages.map(lang => (
               <Col md={4} key={lang.code}>
                 <FormGroup>
@@ -26,12 +27,13 @@ class StaticStoryForm extends PureComponent {
                   <Field
                     name={`data.content.${lang.code}`}
                     component={Textarea}
+                    className="StaticStoryForm__textarea"
                   />
                 </FormGroup>
               </Col>
             ))}
           </Row>
-          <div>
+          <div className="StaticStoryForm__confirm_container">
             <Row>
               <Col md="3">
                 <Button size="sm" block type='submit'>Done</Button>
