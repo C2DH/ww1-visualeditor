@@ -9,6 +9,13 @@ const PublishedThemeLabel = () => (
   </div>
 )
 
+const SelectedModuleLabel = () => (
+  <div style={{ padding:3 }}>
+    <Badge color="success">Selected</Badge>
+  </div>
+)
+
+
 const GenericCard = ({
   title,
   backgroundType = 'image',
@@ -16,11 +23,16 @@ const GenericCard = ({
   backgroundColor,
   backgroundColorOverlay,
   pubblished,
+  selected,
+  cardClick = null,
   footerButton = null,
   editButtons = null,
 }) => (
   <div>
-    <Card className="GenericCard__card">
+    <Card
+      className="GenericCard__card"
+      onClick={cardClick}
+      >
       <BackgroundPreview
         containerClassName="GenericCard__div_img"
         overlayClassName="GenericCard__div_img_overlay"
@@ -29,6 +41,7 @@ const GenericCard = ({
         backgroundColorOverlay={backgroundColorOverlay}
         backgroundType={backgroundType}>
         {pubblished && <PublishedThemeLabel />}
+        {selected && <SelectedModuleLabel />}
       </BackgroundPreview>
       <div className="GenericCard__editButtons_container">
         {editButtons}
