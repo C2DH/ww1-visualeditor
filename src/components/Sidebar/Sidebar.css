@@ -30,3 +30,28 @@
   position: absolute;
   bottom: 20px;
 }
+
+/* CSS transition styles */
+.sidebar-enter {
+  /*transition: transform 500ms;
+  transform: translateX(-90%);*/
+  opacity: 0.01;
+}
+
+.sidebar-enter.sidebar-enter-active {
+  /*transform: translateX(0%);*/
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.sidebar-leave {
+  /*transition: transform 500ms;
+  transform: translateX(0%);*/
+  opacity: 1;
+}
+
+.sidebar-leave.sidebar-leave-active {
+  /*transform: translateX(-90%);*/
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

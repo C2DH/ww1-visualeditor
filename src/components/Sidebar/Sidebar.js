@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'reactstrap'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import OpenSidebar from '../OpenSidebar'
 import './Sidebar.css'
 import {
@@ -21,13 +22,18 @@ class Sidebar extends PureComponent {
   render() {
     const { language } = this.props
     return (
-      <div className="Sidebar__container">
-        {this.state.open ? <OpenSidebar setLang={this.setLang} closeMenu={this.toggleMenu} key="opensidebar"/> : null}
-        <Button className="Sidebar__menuBtn" onClick={this.toggleMenu} key="button">
-          {this.state.open ? <i className="icon-close Sidebar__menuBtn__icon" /> : <i className="icon-dehaze Sidebar__menuBtn__icon" />}
-        </Button>
-        <Button className="Sidebar__menuBtn Sidebar__languageBtn">{language.label}</Button>
-      </div>
+        <div className="Sidebar__container">
+          <CSSTransitionGroup 
+          transitionName="sidebar"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}>
+          {this.state.open ? <OpenSidebar setLang={this.setLang} closeMenu={this.toggleMenu} key="open"/> : null}
+          <Button className="Sidebar__menuBtn" onClick={this.toggleMenu} key="button">
+            {this.state.open ? <i className="icon-close Sidebar__menuBtn__icon" /> : <i className="icon-dehaze Sidebar__menuBtn__icon" />}
+          </Button>
+          <Button className="Sidebar__menuBtn Sidebar__languageBtn">{language.label}</Button>
+        </CSSTransitionGroup>
+        </div>
     )
   }
 }
