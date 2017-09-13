@@ -12,6 +12,7 @@ import {
   GET_CHAPTER_SUCCESS,
   CHAPTER_UPDATED,
   THEME_UPDATED,
+  CHAPTER_CREATED,
 } from '../actions'
 
 const mergeList = (prevState, list) => ({
@@ -53,6 +54,14 @@ const themeEntityReducer = makeStoryEntityReducer(THEME)
 const themes = (prevState = {}, action) => {
   const { type, payload } = action
   switch (type) {
+    case CHAPTER_CREATED:
+      return {
+        ...prevState,
+        [payload.theme.id]: {
+          ...prevState[payload.theme.id],
+          stories: [payload.chapter.id].concat(prevState[payload.theme.id].stories),
+        }
+      }
     case THEME_UPDATED:
     case GET_THEME_SUCCESS:
       return {
@@ -78,6 +87,11 @@ const chapters = (prevState = {}, action) => {
       return {
         ...prevState,
         ...keyBy(payload.stories, 'id'),
+      }
+    case CHAPTER_CREATED:
+      return {
+        ...prevState,
+        [payload.chapter.id]: payload.chapter,
       }
     case GET_CHAPTER_SUCCESS:
     case CHAPTER_UPDATED:

@@ -33,6 +33,12 @@ export const chapterUpdated = (chapter) => ({
   payload: chapter,
 })
 
+export const CHAPTER_CREATED = 'CHAPTER_CREATED'
+export const chapterCreated = (chapter, theme) => ({
+  type: CHAPTER_CREATED,
+  payload: { chapter, theme },
+})
+
 export const DELETE_MODULE_CHAPTER = 'DELETE_MODULE_CHAPTER'
 export const DELETE_MODULE_CHAPTER_LOADING = 'DELETE_MODULE_CHAPTER_LOADING'
 export const DELETE_MODULE_CHAPTER_FAILURE = 'DELETE_MODULE_CHAPTER_FAILURE'

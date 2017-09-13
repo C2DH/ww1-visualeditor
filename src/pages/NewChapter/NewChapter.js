@@ -6,6 +6,9 @@ import {
   newChapter,
   getLanguages,
 } from '../../state/selectors'
+import {
+  chapterCreated,
+} from '../../state/actions'
 import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 
@@ -24,8 +27,9 @@ class NewChapter extends PureComponent {
   }
 
   redirectToCreatedChapter = (newChapter) => {
-    console.log('Here new chapter!', newChapter)
-    // this.props.history.replace(`/themes/${newTheme.id}/edit`)
+    const { theme } = this.props
+    this.props.chapterCreated(newChapter, theme)
+    this.props.history.replace(`/themes/${theme.id}/chapters/${newChapter.id}/edit`)
   }
 
   render() {
@@ -48,4 +52,6 @@ const mapStateToProps = state => ({
   chapter: newChapter(state,)
 })
 
-export default connect(mapStateToProps)(NewChapter)
+export default connect(mapStateToProps, {
+  chapterCreated,
+})(NewChapter)
