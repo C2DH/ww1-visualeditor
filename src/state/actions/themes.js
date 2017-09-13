@@ -44,6 +44,15 @@ export const unpublishTheme = (id) => ({
   payload: id,
 })
 
+export const DELETE_THEME = 'DELETE_THEME'
+export const DELETE_THEME_SUCCESS = 'DELETE_THEME_SUCCESS'
+export const DELETE_THEME_FAILURE = 'DELETE_THEME_FAILURE'
+export const DELETE_THEME_LOADING = 'DELETE_THEME_LOADING'
+export const deleteTheme = (id) => ({
+  type: DELETE_THEME,
+  payload: id,
+})
+
 export const THEME_UPDATED = 'THEME_UPDATED'
 export const themeUpdated = theme => ({
   type: THEME_UPDATED,

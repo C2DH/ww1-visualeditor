@@ -10,7 +10,7 @@ import {
   makeTranslator,
 } from '../../../state/selectors'
 
-const ThemeCard = pure(({ theme, trans }) => (
+const ThemeCard = pure(({ theme, trans, onDeleteClick }) => (
   <GenericCard
     className="ThemeCard__card"
     title={trans(theme, 'data.title')}
@@ -19,7 +19,7 @@ const ThemeCard = pure(({ theme, trans }) => (
     backgroundColorOverlay={get(theme, 'data.background.overlay')}
     backgroundColor={get(theme, 'data.background.backgroundColor')}
     pubblished={get(theme, 'status') === 'public'}
-    footerButton={<Button><i className="fa fa-trash-o" aria-hidden="true"></i></Button>}
+    footerButton={<Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>}
   />
 ))
 

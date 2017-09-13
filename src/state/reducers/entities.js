@@ -1,4 +1,4 @@
-import { keyBy, map } from 'lodash'
+import { keyBy, map, omit } from 'lodash'
 import { combineReducers } from 'redux'
 import {
   GET_THEMES_SUCCESS,
@@ -31,6 +31,8 @@ const makeStoryEntityReducer = storyType => {
             status: 'draft',
           }
         }
+      case `DELETE_${storyType}_SUCCESS`:
+        return omit(prevState, payload)
       case `PUBLISH_${storyType}_SUCCESS`:
         return {
           ...prevState,

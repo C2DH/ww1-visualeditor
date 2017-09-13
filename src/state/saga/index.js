@@ -11,6 +11,10 @@ import {
   GET_THEMES,
   GET_DOCUMENTS,
   GET_STATIC_STORIES,
+  DELETE_THEME,
+  DELETE_THEME_LOADING,
+  DELETE_THEME_FAILURE,
+  DELETE_THEME_SUCCESS,
   DELETE_MODULE_CHAPTER,
   DELETE_MODULE_CHAPTER_LOADING,
   DELETE_MODULE_CHAPTER_FAILURE,
@@ -43,6 +47,17 @@ function *handleDeleteModuleChapter({ payload }) {
   }
 }
 
+function *handleDeleteTheme({ payload }) {
+  const themeId = payload
+  yield put({ type: DELETE_THEME_LOADING, payload: themeId })
+  try {
+    yield authApiCall(api.deleteTheme, themeId)
+    yield put({ type: DELETE_THEME_SUCCESS, payload: themeId })
+  } catch (error) {
+    yield put({ type: DELETE_THEME_FAILURE, error, payload: themeId })
+  }
+}
+
 export default function* rootSaga() {
   yield fork(authFlow)
   yield fork(makePaginateCollection(
@@ -56,4 +71,5 @@ export default function* rootSaga() {
   yield fork(makeCollection(GET_STATIC_STORIES, api.getStaticStories))
   yield fork(makeStoryDetail(STATIC_STORY))
   yield takeEvery(DELETE_MODULE_CHAPTER, handleDeleteModuleChapter)
+  yield takeEvery(DELETE_THEME, handleDeleteTheme)
 }

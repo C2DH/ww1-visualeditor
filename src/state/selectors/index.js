@@ -90,11 +90,11 @@ export const newTheme = createSelector(
 )
 
 export const getThemes = createSelector(
-  state => state.themes.ids,
+  state => state.themes.list.ids,
   state => state.entities.themes,
   (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
 )
-export const areThemesLoading = state => state.themes.loading
+export const areThemesLoading = state => state.themes.list.loading
 
 export const getTheme = createSelector(
   state => state.themeDetail.id,

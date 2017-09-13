@@ -1,30 +1,46 @@
+import { combineReducers } from 'redux'
 import collection from './hor/collection'
 import resetOn from './hor/resetOn'
-import { GET_THEMES, GET_THEMES_UNLOAD } from '../actions'
+import composeReducers from './composeReducers'
+import {
+  GET_THEMES,
+  DELETE_THEME_LOADING,
+  DELETE_THEME_SUCCESS,
+  DELETE_THEME_FAILURE,
+  GET_THEMES_UNLOAD
+} from '../actions'
 
-export default resetOn(GET_THEMES_UNLOAD, collection(GET_THEMES))
+const deleting = (prevState = {}, { type, payload }) => {
+  switch (type) {
+    case DELETE_THEME_LOADING:
+      return {
+        [payload]: true,
+      }
+    case DELETE_THEME_SUCCESS:
+    case DELETE_THEME_FAILURE:
+      return {
+        [payload]: undefined,
+      }
+    default:
+      return prevState
+  }
+}
 
-// TODO:
-// import collection from './hor/collection'
-// import resetOn from './hor/resetOn'
-// import { GET_THEMES, GET_THEMES_UNLOAD } from '../actions'
-//
-// const deleteList = (prevState, { type, payload }) => {
-//   switch (type) {
-//     case DELETE_THEME_SUCCESS:
-//       return {
-//         ...prevState,
-//         ids: ids.filter(id => id !== payload.id),
-//       }
-//     default:
-//       return prevState
-//   }
-// }
-//
-// const reducer = combineReducers({
-//   // search,
-//   // deleting,
-//   list: list(GET_THEMES, composeReducers(deleteList, moveList)),
-// })
-//
-// export default resetOn(GET_THEMES_UNLOAD, reducer)
+const deleteList = (prevState, { type, payload }) => {
+  switch (type) {
+    case DELETE_THEME_SUCCESS:
+      return {
+        ...prevState,
+        ids: prevState.ids.filter(id => id !== payload),
+      }
+    default:
+      return prevState
+  }
+}
+
+const reducer = combineReducers({
+  deleting,
+  list: composeReducers(collection(GET_THEMES), deleteList),
+})
+
+export default resetOn(GET_THEMES_UNLOAD, reducer)
