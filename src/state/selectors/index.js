@@ -97,7 +97,7 @@ export const getThemes = createSelector(
 export const areThemesLoading = state => state.themes.list.loading
 
 export const getTheme = createSelector(
-  state => state.themeDetail.id,
+  state => state.themeDetail.theme.id,
   state => state.entities.themes,
   state => state.entities.chapters,
   (id, data, dataChapters) => maybeNull(id)(id => ({
@@ -105,8 +105,8 @@ export const getTheme = createSelector(
     stories: data[id].stories.map(id => dataChapters[id])
   }))
 )
-export const isThemeSaving = state => state.themeDetail.saving
-export const isThemeLoading = state => state.themeDetail.loading
+export const isThemeSaving = state => state.themeDetail.theme.saving
+export const isThemeLoading = state => state.themeDetail.theme.loading
 
 // Chapters
 

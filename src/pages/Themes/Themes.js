@@ -75,7 +75,7 @@ class Themes extends PureComponent {
           ))}
         </Row>
         <Modal isOpen={!isNull(this.state.themeToDelete)} toggle={this.clearDeleteThemeModal}>
-          <ModalHeader>Delete Theme</ModalHeader>
+          <ModalHeader>Delete theme</ModalHeader>
           <ModalBody>
             Delete theme {trans(this.state.themeToDelete, 'data.title')}?
           </ModalBody>

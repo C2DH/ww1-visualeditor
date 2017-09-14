@@ -3,6 +3,7 @@ import makeAuth from './auth'
 import createMakeCollection from './hos/collection'
 import createMakePaginateCollection from './hos/paginateCollection'
 import createMakeStoryDetail from './hos/storyDetail'
+import createMakeDeleteStory from './hos/deleteStory'
 import * as api from '../../api'
 import {
   THEME,
@@ -11,10 +12,6 @@ import {
   GET_THEMES,
   GET_DOCUMENTS,
   GET_STATIC_STORIES,
-  DELETE_THEME,
-  DELETE_THEME_LOADING,
-  DELETE_THEME_FAILURE,
-  DELETE_THEME_SUCCESS,
   DELETE_MODULE_CHAPTER,
   DELETE_MODULE_CHAPTER_LOADING,
   DELETE_MODULE_CHAPTER_FAILURE,
@@ -32,6 +29,7 @@ const { authFlow, authApiCall } = makeAuth({
 const makeCollection = createMakeCollection(authApiCall)
 const makePaginateCollection = createMakePaginateCollection(authApiCall)
 const makeStoryDetail = createMakeStoryDetail(authApiCall)
+const makeDeleteStory = createMakeDeleteStory(authApiCall)
 
 function *handleDeleteModuleChapter({ payload }) {
   const { chapter, moduleIndex } = payload
@@ -44,17 +42,6 @@ function *handleDeleteModuleChapter({ payload }) {
     yield put(chapterUpdated(updatedChapter))
   } catch (error) {
     yield put({ type: DELETE_MODULE_CHAPTER_FAILURE, error, payload })
-  }
-}
-
-function *handleDeleteTheme({ payload }) {
-  const themeId = payload
-  yield put({ type: DELETE_THEME_LOADING, payload: themeId })
-  try {
-    yield authApiCall(api.deleteTheme, themeId)
-    yield put({ type: DELETE_THEME_SUCCESS, payload: themeId })
-  } catch (error) {
-    yield put({ type: DELETE_THEME_FAILURE, error, payload: themeId })
   }
 }
 
@@ -71,5 +58,8 @@ export default function* rootSaga() {
   yield fork(makeCollection(GET_STATIC_STORIES, api.getStaticStories))
   yield fork(makeStoryDetail(STATIC_STORY))
   yield takeEvery(DELETE_MODULE_CHAPTER, handleDeleteModuleChapter)
-  yield takeEvery(DELETE_THEME, handleDeleteTheme)
+  yield fork(makeDeleteStory(THEME))
+  yield fork(makeDeleteStory(CHAPTER, token => ({ id, themeId }) =>
+    api.deleteStory(token)(id)
+  ))
 }

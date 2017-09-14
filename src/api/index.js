@@ -116,7 +116,7 @@ export const getStaticStories = token => () =>
     }),
   })
 
-export const deleteTheme = token => id =>
+export const deleteStory = token => id =>
   withToken(token, request.del(`/api/story/${id}/`))
     .then(extractBody)
 

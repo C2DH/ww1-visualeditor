@@ -10,7 +10,7 @@ import {
   makeTranslator,
 } from '../../../state/selectors'
 
-const ChapterCard = pure(({ chapter, trans }) => (
+const ChapterCard = pure(({ chapter, trans, onUpClick, onDownClick, onEditClick, onDeleteClick }) => (
   <GenericCard
     className="ChapterCard__card"
     title={trans(chapter, 'data.title')}
@@ -20,10 +20,10 @@ const ChapterCard = pure(({ chapter, trans }) => (
     backgroundColor={get(chapter, 'data.background.backgroundColor')}
     editButtons={
       <div className="w-100 flex">
-        <Button className="ChapterCard__btn_margin"><i className="fa fa-arrow-up" aria-hidden="true"></i></Button>
-        <Button><i className="fa fa-arrow-down" aria-hidden="true"></i></Button>
-        <Button className="ChapterCard__btn_margin flex-right"><i className="fa fa-pencil" aria-hidden="true"></i></Button>
-        <Button><i className="fa fa-trash-o" aria-hidden="true"></i></Button>
+        <Button onClick={onUpClick} className="ChapterCard__btn_margin"><i className="fa fa-arrow-up" aria-hidden="true"></i></Button>
+        <Button onClick={onDownClick}><i className="fa fa-arrow-down" aria-hidden="true"></i></Button>
+        <Button onClick={onEditClick} className="ChapterCard__btn_margin flex-right"><i className="fa fa-pencil" aria-hidden="true"></i></Button>
+        <Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>
       </div>
     }
   />

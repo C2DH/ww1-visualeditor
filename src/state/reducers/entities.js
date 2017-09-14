@@ -1,4 +1,4 @@
-import { keyBy, map, omit } from 'lodash'
+import { keyBy, map, omit, without } from 'lodash'
 import { combineReducers } from 'redux'
 import {
   GET_THEMES_SUCCESS,
@@ -13,6 +13,8 @@ import {
   CHAPTER_UPDATED,
   THEME_UPDATED,
   CHAPTER_CREATED,
+  DELETE_CHAPTER_SUCCESS,
+  DELETE_THEME_SUCCESS,
 } from '../actions'
 
 const mergeList = (prevState, list) => ({
@@ -32,8 +34,6 @@ const makeStoryEntityReducer = storyType => {
             status: 'draft',
           }
         }
-      case `DELETE_${storyType}_SUCCESS`:
-        return omit(prevState, payload)
       case `PUBLISH_${storyType}_SUCCESS`:
         return {
           ...prevState,
@@ -60,6 +60,16 @@ const themes = (prevState = {}, action) => {
         [payload.theme.id]: {
           ...prevState[payload.theme.id],
           stories: [payload.chapter.id].concat(prevState[payload.theme.id].stories),
+        }
+      }
+    case DELETE_THEME_SUCCESS:
+      return omit(prevState, payload)
+    case DELETE_CHAPTER_SUCCESS:
+      return {
+        ...prevState,
+        [payload.themeId]: {
+          ...prevState[payload.themeId],
+          stories: without(prevState[payload.themeId].stories, payload.id),
         }
       }
     case THEME_UPDATED:
@@ -93,6 +103,8 @@ const chapters = (prevState = {}, action) => {
         ...prevState,
         [payload.chapter.id]: payload.chapter,
       }
+    case DELETE_CHAPTER_SUCCESS:
+      return omit(prevState, payload.id)
     case GET_CHAPTER_SUCCESS:
     case CHAPTER_UPDATED:
       return {

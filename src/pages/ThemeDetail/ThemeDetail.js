@@ -1,13 +1,22 @@
 import React, { PureComponent } from 'react'
-import { get } from 'lodash'
+import { get, isNull } from 'lodash'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Container, Row, Col } from 'reactstrap'
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Breadcrumb,
+  BreadcrumbItem,
+} from 'reactstrap'
 import AddButton from '../../components/AddButton'
 import ChapterCard from '../../components/cards/ChapterCard'
 import BackgroundPreview from '../../components/BackgroundPreview'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { Button } from 'reactstrap'
 import './ThemeDetail.css'
 
 import {
@@ -19,9 +28,14 @@ import {
 import {
   publishTheme,
   unpublishTheme,
+  deleteChapter,
 } from '../../state/actions'
 
 class ThemeDetail extends PureComponent {
+  state = {
+    chapterToDelete: null,
+  }
+
   toggledPublished = () => {
     const { theme } = this.props
     if (theme.status === 'draft') {
@@ -31,8 +45,17 @@ class ThemeDetail extends PureComponent {
     }
   }
 
+  askDeleteChapter = chapter => this.setState({ chapterToDelete: chapter })
+
+  clearDeleteChapterModal = () => this.setState({ chapterToDelete: null })
+
+  deleteChapter = () => {
+    this.props.deleteChapter(this.state.chapterToDelete.id, this.props.theme.id)
+    this.setState({ chapterToDelete: null })
+  }
+
   render() {
-    const { theme, saving, trans } = this.props
+    const { theme, saving, trans, deleting } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <Row className="ThemeDetail__topRow">
@@ -70,17 +93,40 @@ class ThemeDetail extends PureComponent {
               label="Add Chapter"
               style={{marginBottom: 5}}
              />
-             <div className="ThemeDetail__Chapters_col">
+            <div className="ThemeDetail__Chapters_col">
                {theme.stories.map(chapter => (
-                 <Link to={`/themes/${theme.id}/chapters/${chapter.id}`} key={chapter.id}>
-                   <ChapterCard
-                     chapter={chapter}
-                   />
+                  <Link
+                    style={deleting[chapter.id] ? { pointerEvents: 'none' } : undefined}
+                    to={`/themes/${theme.id}/chapters/${chapter.id}`}
+                    key={chapter.id}>
+                  <div style={deleting[chapter.id] ? { opacity: 0.5 } : undefined}>
+                     <ChapterCard
+                      onDeleteClick={e => {
+                        e.preventDefault()
+                        this.askDeleteChapter(chapter)
+                       }}
+                      onEditClick={e   => {
+                         e.preventDefault()
+                         this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/edit`)
+                       }}
+                       chapter={chapter}
+                     />
+                   </div>
                  </Link>
                ))}
              </div>
           </Col>
         </Row>
+        <Modal isOpen={!isNull(this.state.chapterToDelete)} toggle={this.clearDeleteChapterModal}>
+          <ModalHeader>Delete chapter</ModalHeader>
+          <ModalBody>
+            Delete chapter {trans(this.state.chapterToDelete, 'data.title')}?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.clearDeleteChapterModal}>Undo</Button>
+            <Button color="danger" onClick={this.deleteChapter}>Delete</Button>{' '}
+          </ModalFooter>
+        </Modal>
       </Container>
     )
   }
@@ -90,9 +136,11 @@ const mapStateToProps = state => ({
   trans: makeTranslator(state),
   theme: getTheme(state),
   saving: isThemeSaving(state),
+  deleting: state.themeDetail.deletingChapters,
 })
 
 export default connect(mapStateToProps, {
   publishTheme,
   unpublishTheme,
+  deleteChapter,
 })(ThemeDetail)
