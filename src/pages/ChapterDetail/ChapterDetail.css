@@ -1,15 +1,5 @@
-.Chapter__main_container {
-  position: relative;
-  min-height: 500px;
-  width: 100%;
-  background-color: #ccc;
-}
-
-.Chapter__main_container_open {
-  position: relative;
-  min-height: 260px;
-  width: 100%;
-  background-color: #ccc;
+.Chapter__preview_open {
+  height: 260px;
 }
 
 .Chapter__show_modules_button_container {

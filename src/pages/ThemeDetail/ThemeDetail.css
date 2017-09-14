@@ -27,21 +27,6 @@
   height: 50px;
 }
 
-.ThemeDetail__title_edit_container {
-  width: 100%;
-  height: 500px;
-  display: flex;
-  background-color: #ddd;
-  background-size: cover;
-}
-
-.ThemeDetail__title_edit_overlay {
-  padding: 10px;
-  justify-content: flex-end;
-  display: flex;
-  flex: 1;
-}
-
 .ThemeDetail__Chapters_col {
   height: calc(100vh - 185px);
   overflow-y: scroll;

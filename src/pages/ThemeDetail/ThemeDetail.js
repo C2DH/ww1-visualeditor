@@ -16,7 +16,7 @@ import {
 } from 'reactstrap'
 import AddButton from '../../components/AddButton'
 import ChapterCard from '../../components/cards/ChapterCard'
-import BackgroundPreview from '../../components/BackgroundPreview'
+import StoryPreview from '../../components/StoryPreview'
 import './ThemeDetail.css'
 
 import {
@@ -71,20 +71,14 @@ class ThemeDetail extends PureComponent {
         </Row>
         <Row>
           <Col md="9" className="no-padding-left">
-            <BackgroundPreview
-              containerClassName="ThemeDetail__title_edit_container"
-              overlayClassName="ThemeDetail__title_edit_overlay"
-              backgroundType={get(theme, 'covers', []).length > 0 ? 'image' : 'color'}
-              backgroundImage={get(theme, 'covers[0].attachment')}
-              backgroundColorOverlay={get(theme, 'data.background.overlay')}
-              backgroundColor={get(theme, 'data.background.backgroundColor')}
-            >
-                <div>
-                  <Button tag={Link} to={`/themes/${theme.id}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i></Button>
-                  <h1>{trans(theme, 'data.title')}</h1>
-                  <h2>{trans(theme, 'data.abstract')}</h2>
-                </div>
-            </BackgroundPreview>
+            <StoryPreview
+              story={theme}
+              rightContent={
+                <Button tag={Link} to={`/themes/${theme.id}/edit`}>
+                  <i className="fa fa-pencil" aria-hidden="true"></i>
+                </Button>
+              }
+            />
           </Col>
           <Col md="3">
             <AddButton

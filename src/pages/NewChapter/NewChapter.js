@@ -14,6 +14,7 @@ import { wrapAuthApiCall } from '../../state'
 
 const createChapter = wrapAuthApiCall(api.createStory)
 const mentionStory = wrapAuthApiCall(api.mentionStory)
+const getStory = wrapAuthApiCall(api.getStory)
 
 class NewChapter extends PureComponent {
   createChapter = (chapter) => {
@@ -22,7 +23,8 @@ class NewChapter extends PureComponent {
         return mentionStory(this.props.theme.id, {
           slug: newChapter.slug
         })
-        .then(() => newChapter)
+        // Fuck off shitty API, street school workaround since sixteen
+        .then(() => getStory(newChapter.id))
       })
   }
 

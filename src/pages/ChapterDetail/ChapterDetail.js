@@ -17,6 +17,7 @@ import {
 import ModuleCard from '../../components/cards/ModuleCard'
 import AddButton from '../../components/AddButton'
 import Spinner from '../../components/Spinner'
+import StoryPreview from '../../components/StoryPreview'
 import './ChapterDetail.css'
 import {
   publishChapter,
@@ -83,14 +84,20 @@ class ChapterDetail extends PureComponent {
           </div>
         </Row>
         <Row>
-          <div className={this.state.open ? "Chapter__main_container_open" : "Chapter__main_container"}>
-            <div className="Chapter__edit_button_container">
-              <Button tag={Link} to={`/themes/${theme.id}/chapters/${chapter.id}/edit`}><i className="fa fa-pencil" /></Button>
-            </div>
-            <div className="Chapter__show_modules_button_container">
-              <Button onClick={this.toggleModule}><i className="fa fa-cog" /> {this.state.open ? "Hide modules" : "Show modules"}</Button>
-            </div>
-          </div>
+          <StoryPreview
+            story={chapter}
+            className={this.state.open ? 'Chapter__preview_open' : ''}
+            rightContent={
+              <Button tag={Link} to={`/themes/${theme.id}/chapters/${chapter.id}/edit`}>
+                <i className="fa fa-pencil" />
+              </Button>
+            }
+            bottomContent={
+              <Button onClick={this.toggleModule}>
+                <i className="fa fa-cog" /> {this.state.open ? "Hide modules" : "Show modules"}
+              </Button>
+            }
+          />
         </Row>
         {this.state.open ?
           <Row>

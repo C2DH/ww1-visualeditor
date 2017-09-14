@@ -12,13 +12,19 @@ import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 
 const updateChapter = wrapAuthApiCall(api.updateStory)
+const getStory = wrapAuthApiCall(api.getStory)
 
 class ChapterEdit extends PureComponent {
+  updateChapter = (chapter) => {
+    return updateChapter(chapter)
+      .then(newChapter => getStory(newChapter.id))
+  }
+
   render () {
     const { theme, chapter } = this.props
     return (
       <ChapterForm
-        onSubmit={updateChapter}
+        onSubmit={this.updateChapter}
         onSubmitSuccess={this.props.chapterUpdated}
         exitLink={`/themes/${theme.id}/chapters/${chapter.id}`}
         theme={theme}
