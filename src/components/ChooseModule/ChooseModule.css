@@ -5,6 +5,7 @@
 }
 
 .ChooseModule__ChooseModuleCard {
+  cursor: pointer;
   margin-top: 20px;
 }
 

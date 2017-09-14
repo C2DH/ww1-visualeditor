@@ -125,8 +125,15 @@ export const isChapterLoading = state => state.chapterDetail.chapter.loading
 export const getDeletingChapterModules = state =>
   state.chapterDetail.deletingModules
 
-export const getChapterDeleting = state =>
-  Object.values(state.chapterDetail.deletingModules).filter(v => v).length > 0
+export const getChapterDeleting = createSelector(
+  state => state.chapterDetail.deletingModules,
+  deleting => Object.values(deleting).filter(v => v).length > 0
+)
+
+export const getChapterMoving =  createSelector(
+  state => state.chapterDetail.movingModules,
+  moving => Object.values(moving).filter(v => v).length > 0
+)
 
 const joinIds = (source, obj) => {
   const sourceById = keyBy(source, 'id')

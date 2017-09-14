@@ -16,6 +16,10 @@ import {
   DELETE_MODULE_CHAPTER_LOADING,
   DELETE_MODULE_CHAPTER_FAILURE,
   DELETE_MODULE_CHAPTER_SUCCESS,
+  MOVE_MODULE_CHAPTER,
+  MOVE_MODULE_CHAPTER_LOADING,
+  MOVE_MODULE_CHAPTER_FAILURE,
+  MOVE_MODULE_CHAPTER_SUCCESS,
   chapterUpdated,
 } from '../actions'
 
@@ -45,6 +49,25 @@ function *handleDeleteModuleChapter({ payload }) {
   }
 }
 
+function *handleMoveModuleChapter({ payload }) {
+  const { chapter, moduleIndex, direction } = payload
+  yield put({ type: MOVE_MODULE_CHAPTER_LOADING, payload })
+  try {
+    if (direction === 'ahead') {
+      yield authApiCall(api.moveModuleChapterAhead, chapter, moduleIndex)
+    } else if (direction === 'back') {
+      yield authApiCall(api.moveModuleChapterBack, chapter, moduleIndex)
+    } else {
+      throw new Error(`Move module chapter unxcepted value for direction got: ${direction}`)
+    }
+    const updatedChapter = yield authApiCall(api.getStory, chapter.id)
+    yield put({ type: MOVE_MODULE_CHAPTER_SUCCESS, payload })
+    yield put(chapterUpdated(updatedChapter))
+  } catch (error) {
+    yield put({ type: MOVE_MODULE_CHAPTER_FAILURE, error, payload })
+  }
+}
+
 export default function* rootSaga() {
   yield fork(authFlow)
   yield fork(makePaginateCollection(
@@ -58,6 +81,7 @@ export default function* rootSaga() {
   yield fork(makeCollection(GET_STATIC_STORIES, api.getStaticStories))
   yield fork(makeStoryDetail(STATIC_STORY))
   yield takeEvery(DELETE_MODULE_CHAPTER, handleDeleteModuleChapter)
+  yield takeEvery(MOVE_MODULE_CHAPTER, handleMoveModuleChapter)
   yield fork(makeDeleteStory(THEME))
   yield fork(makeDeleteStory(CHAPTER, token => ({ id, themeId }) =>
     api.deleteStory(token)(id)

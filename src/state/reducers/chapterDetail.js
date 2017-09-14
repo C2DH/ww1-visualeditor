@@ -5,6 +5,9 @@ import {
   DELETE_MODULE_CHAPTER_LOADING,
   DELETE_MODULE_CHAPTER_FAILURE,
   DELETE_MODULE_CHAPTER_SUCCESS,
+  MOVE_MODULE_CHAPTER_LOADING,
+  MOVE_MODULE_CHAPTER_FAILURE,
+  MOVE_MODULE_CHAPTER_SUCCESS,
 } from '../actions'
 import makeStoryDetail from './hor/storyDetail'
 
@@ -26,7 +29,26 @@ const deletingModules = (prevState = {}, { type, payload }) => {
   }
 }
 
+const movingModules = (prevState = {}, { type, payload }) => {
+  switch (type) {
+    case MOVE_MODULE_CHAPTER_LOADING:
+      return {
+        [payload.moduleIndex]: true,
+      }
+    case MOVE_MODULE_CHAPTER_SUCCESS:
+    case MOVE_MODULE_CHAPTER_FAILURE:
+      return {
+        [payload.moduleIndex]: undefined,
+      }
+    case GET_CHAPTER_UNLOAD:
+      return {}
+    default:
+      return prevState
+  }
+}
+
 export default combineReducers({
   deletingModules,
+  movingModules,
   chapter: makeStoryDetail(CHAPTER),
 })

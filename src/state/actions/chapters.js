@@ -57,3 +57,18 @@ export const deleteModuleChapter = (chapter, moduleIndex) => ({
   type: DELETE_MODULE_CHAPTER,
   payload: { chapter, moduleIndex }
 })
+
+export const MOVE_MODULE_CHAPTER = 'MOVE_MODULE_CHAPTER'
+export const MOVE_MODULE_CHAPTER_LOADING = 'MOVE_MODULE_CHAPTER_LOADING'
+export const MOVE_MODULE_CHAPTER_FAILURE = 'MOVE_MODULE_CHAPTER_FAILURE'
+export const MOVE_MODULE_CHAPTER_SUCCESS = 'MOVE_MODULE_CHAPTER_SUCCESS'
+
+export const moveModuleChapterAhead = (chapter, moduleIndex) => ({
+  type: MOVE_MODULE_CHAPTER,
+  payload: { chapter, moduleIndex, direction: 'ahead' }
+})
+
+export const moveModuleChapterBack = (chapter, moduleIndex) => ({
+  type: MOVE_MODULE_CHAPTER,
+  payload: { chapter, moduleIndex, direction: 'back' }
+})

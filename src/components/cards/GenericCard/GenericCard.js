@@ -27,10 +27,11 @@ const GenericCard = ({
   cardClick = null,
   footerButton = null,
   editButtons = null,
+  className = 'GenericCard__card'
 }) => (
   <div>
     <Card
-      className="GenericCard__card"
+      className={className}
       onClick={cardClick}
       >
       <BackgroundPreview

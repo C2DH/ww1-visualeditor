@@ -43,4 +43,10 @@ export const makeContainerStyles = (
   return [ themeContainerStyle, overlayStyle ]
 }
 
+export const moveArrayAhead = (v, i) =>
+  [ ...v.slice(0, i), v[i + 1], v[i] , ...v.slice(i + 2) ]
+
+export const moveArrayBack = (v, i) =>
+  [ ...v.slice(0, i - 1), v[i], v[i - 1], ...v.slice(i + 1)]
+
 export * from './modules'

@@ -23,10 +23,13 @@ import {
   publishChapter,
   unpublishChapter,
   deleteModuleChapter,
+  moveModuleChapterAhead,
+  moveModuleChapterBack,
 } from '../../state/actions'
 import {
   getChapter,
   getChapterDeleting,
+  getChapterMoving,
   getTheme,
   isChapterSaving,
   makeTranslator,
@@ -64,7 +67,7 @@ class ChapterDetail extends PureComponent {
   }
 
   render () {
-    const { trans, chapter, theme, saving, deletingModules, deleting } = this.props
+    const { trans, chapter, theme, saving, deletingModules, deleting, moving } = this.props
     const modules = get(chapter, 'contents.modules', [])
 
     return (
@@ -114,6 +117,10 @@ class ChapterDetail extends PureComponent {
                       className="ChapterDetail__module_card"
                       style={typeof deletingModules[i] !== 'undefined' ? { opacity: 0.5 } : undefined}>
                       <ModuleCard
+                        showLeftButton={i !== 0}
+                        showRightButton={i !== modules.length - 1}
+                        onMoveLeftClick={() => this.props.moveModuleChapterBack(chapter, i)}
+                        onMoveRightClick={() => this.props.moveModuleChapterAhead(chapter, i)}
                         module={mod}
                         onDeleteClick={() => this.askDeleteModule(i)}
                         onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
@@ -125,6 +132,7 @@ class ChapterDetail extends PureComponent {
             </div>
           </Row> : null}
           {deleting && <Spinner fullpage />}
+          {moving && <Spinner fullpage />}
           <Modal isOpen={!isNull(this.state.moduleToDelete)} toggle={this.clearDeleteChapterModal}>
             <ModalHeader>Delete module</ModalHeader>
             <ModalBody>
@@ -147,10 +155,13 @@ const mapStateToProps = state => ({
   saving: isChapterSaving(state),
   deletingModules: getDeletingChapterModules(state),
   deleting: getChapterDeleting(state),
+  moving: getChapterMoving(state),
 })
 
 export default connect(mapStateToProps, {
   publishChapter,
   deleteModuleChapter,
   unpublishChapter,
+  moveModuleChapterAhead,
+  moveModuleChapterBack,
 })(ChapterDetail)

@@ -1,4 +1,5 @@
 import request from 'superagent'
+import { moveArrayBack, moveArrayAhead } from '../utils'
 import { findKey, get, mapValues, isArray, isPlainObject } from 'lodash'
 
 // Hight value for pagination that means no limit maaan
@@ -219,6 +220,22 @@ export const deleteModuleChapter = token => (chapter, moduleIndex) =>
       modules: get(chapter, 'contents.modules', []).filter((m, i) =>
         i !== moduleIndex
       )
+    })
+  }))
+  .then(extractBody)
+
+export const moveModuleChapterAhead = token => (chapter, moduleIndex) =>
+  withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    contents: JSON.stringify({
+      modules: moveArrayAhead(get(chapter, 'contents.modules', []), moduleIndex)
+    })
+  }))
+  .then(extractBody)
+
+export const moveModuleChapterBack = token => (chapter, moduleIndex) =>
+  withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    contents: JSON.stringify({
+      modules: moveArrayBack(get(chapter, 'contents.modules', []), moduleIndex)
     })
   }))
   .then(extractBody)
