@@ -1,10 +1,19 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import { get, isNull } from 'lodash'
 import { Link } from 'react-router-dom'
-import { Container, Row, Col } from 'reactstrap'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { Button } from 'reactstrap'
+import {
+  Container,
+  Row,
+  Col ,
+  Breadcrumb,
+  BreadcrumbItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from 'reactstrap';
 import ModuleCard from '../../components/cards/ModuleCard'
 import AddButton from '../../components/AddButton'
 import Spinner from '../../components/Spinner'
@@ -25,7 +34,8 @@ import {
 
 class ChapterDetail extends PureComponent {
   state = {
-    open:false
+    open:false,
+    moduleToDelete: null,
   }
 
   toggleModule = () => {
@@ -41,6 +51,15 @@ class ChapterDetail extends PureComponent {
     } else {
       this.props.unpublishChapter(chapter.id)
     }
+  }
+
+  askDeleteModule = m => this.setState({ moduleToDelete: m })
+
+  clearDeleteModuleModal = () => this.setState({ moduleToDelete: null })
+
+  deleteModule = () => {
+    this.props.deleteModuleChapter(this.props.chapter, this.state.moduleToDelete)
+    this.setState({ moduleToDelete: null })
   }
 
   render () {
@@ -89,7 +108,7 @@ class ChapterDetail extends PureComponent {
                       style={typeof deletingModules[i] !== 'undefined' ? { opacity: 0.5 } : undefined}>
                       <ModuleCard
                         module={mod}
-                        onDeleteClick={() => this.props.deleteModuleChapter(chapter, i)}
+                        onDeleteClick={() => this.askDeleteModule(i)}
                         onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
                       />
                     </div>
@@ -99,6 +118,16 @@ class ChapterDetail extends PureComponent {
             </div>
           </Row> : null}
           {deleting && <Spinner fullpage />}
+          <Modal isOpen={!isNull(this.state.moduleToDelete)} toggle={this.clearDeleteChapterModal}>
+            <ModalHeader>Delete module</ModalHeader>
+            <ModalBody>
+              Delete module ?
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.clearDeleteModuleModal}>Undo</Button>
+              <Button color="danger" onClick={this.deleteModule}>Delete</Button>{' '}
+            </ModalFooter>
+          </Modal>
         </Container>
       )
   }
