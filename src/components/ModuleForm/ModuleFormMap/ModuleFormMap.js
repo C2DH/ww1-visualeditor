@@ -180,7 +180,7 @@ class ModuleFormMap extends PureComponent {
             <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
           </SideActions>
         </SideContainer>
-        <GenericPreviewContainer>
+        <GenericPreviewContainer className='MapPreviewContainer'>
           <Map
             zoom={zoom}
             center={center}
@@ -221,7 +221,9 @@ class ModuleFormMap extends PureComponent {
                 </Popup>
               )}
             </Map>
-              {/* <Field
+
+          <div className="MapPreviewCaption">
+              <Field
                 name={`caption.${language.code}`}
                 className="invisible-input"
                 style={{ width: '100%' }}
@@ -230,7 +232,8 @@ class ModuleFormMap extends PureComponent {
               <Field
                 name={`caption`}
                 component={Translate}
-              /> */}
+              />
+          </div>
         </GenericPreviewContainer>
       </VisualForm>
     )

@@ -37,9 +37,9 @@ export const PreviewContainer = pure((props) => (
   </Col>
 ))
 
-export const GenericPreviewContainer = pure((props) => (
+export const GenericPreviewContainer = pure(({ className, ...props }) => (
   <Col md={9}>
-    <div className="VisualForm__GenericPreviewContainer" {...props} />
+    <div className={`VisualForm__GenericPreviewContainer ${className ? className : ''}`} {...props} />
   </Col>
 ))
 
