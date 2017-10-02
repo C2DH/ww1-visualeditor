@@ -29,6 +29,13 @@
   display: flex;
 }
 
+.VisualForm__GenericPreviewContainer {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  height: 90vh;
+  width: 100%;
+}
+
 .VisualForm__PreviewContainer__Background-overlay {
   display: flex;
   flex: 1;

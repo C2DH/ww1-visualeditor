@@ -1,0 +1,23 @@
+.MapMarker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:#F56350;
+  font-size: 2rem;
+  cursor:pointer;
+}
+
+.MapClusterMarker {
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #F56350;
+  border: 2px solid white;
+  font-weight: 500;
+}

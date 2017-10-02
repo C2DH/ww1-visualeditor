@@ -1,15 +1,21 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field, FieldArray, formValueSelector, change } from 'redux-form'
+import { get } from 'lodash'
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
+import { scaleLinear } from 'd3-scale'
+import ReactMapboxGl, { Popup, Marker, Layer, Feature, Cluster, ZoomControl, GeoJSONLayer, Source } from 'react-mapbox-gl'
+import './ModuleFormMap.css'
+import { getPlaceTypeIcon } from '../../../utils'
 
 import VisualForm, {
   SideContainer,
   SideForm,
   SideActions,
-  PreviewContainer
+  PreviewContainer,
+  GenericPreviewContainer,
 } from '../../VisualForm'
 
 import AddButton from '../../AddButton'
@@ -28,7 +34,17 @@ const mapParams = {
   },
 }
 
+const Map = ReactMapboxGl({
+  accessToken: "pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw"
+})
+
+const circleScale = scaleLinear().range([30, 100]).domain([1, 150])
+
 class ModuleFormMap extends PureComponent {
+  state = {
+    selectedDocument: null,
+  }
+
   changeBackgroundType = (e) => {
     if (e.target.value === 'color') {
       this.props.change('moduleMap', 'background.object', null)
@@ -36,6 +52,16 @@ class ModuleFormMap extends PureComponent {
       this.props.change('moduleMap', 'background.object', {})
       this.props.change('moduleMap', 'background.color', null)
     }
+  }
+
+  clusterMarker = (coordinates, pointCount) => {
+    const r = circleScale(pointCount)
+    return <Marker className='MapClusterMarker' coordinates={coordinates} key={coordinates.toString()} style={{
+      width: r,
+      height: r,
+    }}>
+      {pointCount}
+    </Marker>
   }
 
   render() {
@@ -51,7 +77,18 @@ class ModuleFormMap extends PureComponent {
       backgroundColorOverlay,
       backgroundColor,
       doc,
+      objects,
     } = this.props
+
+    const documents = objects.map(o => ({
+      ...o.id,
+      coordinates: get(o, 'id.data.coordinates.geometry.coordinates', [])
+        .slice(0, 2)
+        // For same position problem....
+        // .map(x => Number(x) + Math.random() / 1000)
+        .map(x => Number(x))
+        .reverse()
+    }))
 
     const backgroundType = backgroundObject ? 'image' : 'color'
 
@@ -111,11 +148,33 @@ class ModuleFormMap extends PureComponent {
             <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
           </SideActions>
         </SideContainer>
-        <PreviewContainer
-          backgroundType={backgroundType}
-          backgroundColor={backgroundColor}
-          backgroundImage={backgroundImage}>
-              <Field
+        <GenericPreviewContainer>
+          <Map
+            zoom={[8]}
+            center={[6.087, 49.667]}
+            dragRotate={false}
+            touchZoomRotate={false}
+            style="mapbox://styles/eischteweltkrich/cj5cizaj205vv2qlegw01hubm"
+            containerStyle={{
+              width:'100%',
+              height: '100%',
+            }}>
+            <ZoomControl position="topLeft" className="Map__ZoomControl"/>
+            {documents &&
+              <Cluster ClusterMarkerFactory={this.clusterMarker} clusterThreshold={2} radius={60}>
+                {documents.map(doc => {
+                  const icon = getPlaceTypeIcon(doc.data.place_type)
+                  return <Marker
+                    key={doc.id}
+                    className='MapMarker'
+                    // onClick={() => this.onMarkerClick(doc)}
+                    coordinates={doc.coordinates}>
+                    <span className={icon.class}>{icon.content}</span>
+                  </Marker>
+                })}
+              </Cluster>}
+            </Map>
+              {/* <Field
                 name={`caption.${language.code}`}
                 className="invisible-input"
                 style={{ width: '100%' }}
@@ -124,8 +183,8 @@ class ModuleFormMap extends PureComponent {
               <Field
                 name={`caption`}
                 component={Translate}
-              />
-        </PreviewContainer>
+              /> */}
+        </GenericPreviewContainer>
       </VisualForm>
     )
   }
@@ -137,6 +196,7 @@ const mapStateToProps = state => ({
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
   doc: selector(state, 'id'),
+  objects: selector(state, 'objects'),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),

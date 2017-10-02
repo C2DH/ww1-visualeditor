@@ -49,4 +49,54 @@ export const moveArrayAhead = (v, i) =>
 export const moveArrayBack = (v, i) =>
   [ ...v.slice(0, i - 1), v[i], v[i - 1], ...v.slice(i + 1)]
 
+const PLACE_TYPE_ICONS = {
+  bombing: {
+    class: 'iconmap-bombing',
+    content: ''
+  },
+  hospital: {
+    class: 'iconmap-hospital',
+    content: ''
+  },
+  shelter: {
+    class: 'iconmap-shelter',
+    content: ''
+  },
+  'steel-plant': {
+    class: 'iconmap-steel-plant',
+    content: ''
+  },
+  cemetery: {
+    class: 'iconmap-cemetery',
+    content: ''
+  },
+  memorial: {
+    class: 'iconmap-memorial',
+    content: ''
+  },
+  'railway-station': {
+    class: 'iconmap-railway-station',
+    content: ''
+  },
+  'administrative-building': {
+    class: 'iconmap-administrative-building',
+    content: ''
+  },
+  'army-camp': {
+    class: 'iconmap-army-camp',
+    content: ''
+  }
+}
+
+export const getPlaceTypeIcon = placeType => {
+  const icon = PLACE_TYPE_ICONS[placeType]
+  if (typeof icon === 'undefined') {
+    return {
+      class: 'iconmap-others',
+      content: ''
+    }
+  }
+  return icon
+}
+
 export * from './modules'

@@ -31,9 +31,15 @@ export const SideActions = pure(({ children }) => (
   </div>
 ))
 
-export const PreviewContainer = pure(({ ...props }) => (
+export const PreviewContainer = pure((props) => (
   <Col md={9}>
     <BackgroundPreview {...props} />
+  </Col>
+))
+
+export const GenericPreviewContainer = pure((props) => (
+  <Col md={9}>
+    <div className="VisualForm__GenericPreviewContainer" {...props} />
   </Col>
 ))
 
