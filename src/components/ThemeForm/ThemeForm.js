@@ -22,7 +22,32 @@ import {
   getCurrentLanguage,
 } from '../../state/selectors'
 
+import 'medium-editor/dist/css/medium-editor.css'
+import 'medium-editor/dist/css/themes/default.css'
+import toMarkdown from 'to-markdown'
+import { markdown } from 'markdown'
+
+import Editor from 'react-medium-editor'
+
+class CoolEditor extends PureComponent {
+  render() {
+    const { input: { value, onChange } } = this.props
+    return (
+      <Editor
+        style={{ outline: 'none' }}
+        text={markdown.toHTML(value)}
+        onChange={(text, medium) => onChange(toMarkdown(text))}
+      />
+    )
+  }
+}
+
 class ThemeForm extends PureComponent {
+  state = {
+    text: '',
+  }
+
+
   render() {
     const {
       handleSubmit,
@@ -111,7 +136,7 @@ class ThemeForm extends PureComponent {
             name={`data.title.${language.code}`}
             className="invisible-input ThemeForm__Preview-title-input"
             autoComplete="off"
-            component='input'
+            component={CoolEditor}
             style={{ color }}
            />
            <Field
