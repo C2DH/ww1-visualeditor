@@ -9,6 +9,7 @@ import { scaleLinear } from 'd3-scale'
 import ReactMapboxGl, { Popup, Marker, Layer, Feature, Cluster, ZoomControl, GeoJSONLayer, Source } from 'react-mapbox-gl'
 import './ModuleFormMap.css'
 import { getPlaceTypeIcon } from '../../../utils'
+import { makeTranslator } from '../../../state/selectors'
 
 import VisualForm, {
   SideContainer,
@@ -40,9 +41,25 @@ const Map = ReactMapboxGl({
 
 const circleScale = scaleLinear().range([30, 100]).domain([1, 150])
 
+const MapToolTip = ({ snapshot, title, text }) => (
+  <div className="MapToolTip">
+    {snapshot && <div className="MapToolTip__img" style={{background: `url(${snapshot})`}}/>}
+    <h5 className="MapToolTip__title">{title}</h5>
+    <p className="MapToolTip__text">{text}</p>
+  </div>
+)
+
 class ModuleFormMap extends PureComponent {
   state = {
     selectedDocument: null,
+    center: [6.087, 49.667],
+    zoom: [8],
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.objects !== nextProps.objects) {
+      this.closePopup()
+    }
   }
 
   changeBackgroundType = (e) => {
@@ -64,6 +81,19 @@ class ModuleFormMap extends PureComponent {
     </Marker>
   }
 
+  onMarkerClick = (doc) => {
+    this.setState({
+      selectedDocument: doc,
+      center: doc.coordinates,
+    })
+  }
+
+  closePopup = () => {
+    this.setState({
+      selectedDocument: null,
+    })
+  }
+
   render() {
     const {
       handleSubmit,
@@ -78,7 +108,9 @@ class ModuleFormMap extends PureComponent {
       backgroundColor,
       doc,
       objects,
+      trans,
     } = this.props
+    const { selectedDocument, center, zoom } = this.state
 
     const documents = objects.map(o => ({
       ...o.id,
@@ -150,8 +182,9 @@ class ModuleFormMap extends PureComponent {
         </SideContainer>
         <GenericPreviewContainer>
           <Map
-            zoom={[8]}
-            center={[6.087, 49.667]}
+            zoom={zoom}
+            center={center}
+            onDrag={this.closePopup}
             dragRotate={false}
             touchZoomRotate={false}
             style="mapbox://styles/eischteweltkrich/cj5cizaj205vv2qlegw01hubm"
@@ -167,12 +200,26 @@ class ModuleFormMap extends PureComponent {
                   return <Marker
                     key={doc.id}
                     className='MapMarker'
-                    // onClick={() => this.onMarkerClick(doc)}
+                    onClick={() => this.onMarkerClick(doc)}
                     coordinates={doc.coordinates}>
                     <span className={icon.class}>{icon.content}</span>
                   </Marker>
                 })}
               </Cluster>}
+              {selectedDocument && (
+                <Popup
+                  coordinates={selectedDocument.coordinates}
+                  anchor='bottom'
+                  offset={[0, -15]}>
+                  <i className="fa fa-times pointer float-right" onClick={this.closePopup} />
+                  <MapToolTip
+                    className="clearfix"
+                    snapshot={selectedDocument.snapshot}
+                    title={selectedDocument.title}
+                    text={trans(selectedDocument, 'data.description')}
+                  />
+                </Popup>
+              )}
             </Map>
               {/* <Field
                 name={`caption.${language.code}`}
@@ -201,6 +248,7 @@ const mapStateToProps = state => ({
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
   backgroundColor: selector(state, 'background.color'),
+  trans: makeTranslator(state),
 })
 
 export default reduxForm({
