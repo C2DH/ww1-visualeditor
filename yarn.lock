@@ -4305,13 +4305,19 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
+medium-button@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/medium-button/-/medium-button-1.1.4.tgz#83c3a56de5660a7afc6b73addda6dd6776d1b1e9"
+  dependencies:
+    medium-editor "^5.0.0"
+
 medium-editor-markdown@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/medium-editor-markdown/-/medium-editor-markdown-2.6.0.tgz#da27fc8d5fe2184aa0e5c9b7cd613221d6437e22"
   dependencies:
     to-markdown "^3.0.1"
 
-medium-editor@^5.10.0:
+medium-editor@^5.0.0, medium-editor@^5.10.0:
   version "5.23.2"
   resolved "https://registry.yarnpkg.com/medium-editor/-/medium-editor-5.23.2.tgz#736c681f3e4b175f9c2ee4e48f9543f9f889e066"
 

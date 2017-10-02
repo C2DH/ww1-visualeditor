@@ -28,15 +28,29 @@ import toMarkdown from 'to-markdown'
 import { markdown } from 'markdown'
 
 import Editor from 'react-medium-editor'
+import MediumButton from 'medium-button'
 
 class CoolEditor extends PureComponent {
   render() {
     const { input: { value, onChange } } = this.props
+    const btn = new MediumButton({
+      label: 'Doc',
+      action: (html, mark, parent) => {
+        console.log(html, mark, parent)
+        return html + ' lol'
+      }
+    })
     return (
       <Editor
         style={{ outline: 'none' }}
         text={markdown.toHTML(value)}
         onChange={(text, medium) => onChange(toMarkdown(text))}
+        options={{
+          extensions: { btn },
+          toolbar: {
+            buttons: ['bold', 'italic', 'h2', 'h1', 'anchor', 'btn']
+          }
+        }}
       />
     )
   }
