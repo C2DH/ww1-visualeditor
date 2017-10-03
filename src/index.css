@@ -72,3 +72,7 @@ textarea.invisible-input {
 button.tiny-btn {
   padding: 0.2rem 0.35rem;
 }
+
+.linked-object {
+  color: deepskyblue !important;
+}

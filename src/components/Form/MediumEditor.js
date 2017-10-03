@@ -1,7 +1,8 @@
+import ReactDOM from 'react-dom'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import toMarkdown from 'to-markdown'
-import { markdown } from 'markdown'
+import showdown from 'showdown'
 
 import Editor from 'react-medium-editor'
 import MediumButton from 'medium-button'
@@ -23,7 +24,7 @@ class MediumEditor extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.choosedDocument !== nextProps.choosedDocument && nextProps.choosedDocument) {
-      this.props.input.onChange(this.props.input.value.replace('___DOC___', nextProps.choosedDocument.id))
+      this.props.input.onChange(this.props.input.value.replace(/___DOC___/g, nextProps.choosedDocument.id))
       this.props.hideWidgetFullPage()
     }
   }
@@ -40,27 +41,32 @@ class MediumEditor extends PureComponent {
     label: 'Document Picker',
     action: (html, mark, parent) => {
       this.showDocumentChooser()
-      // console.log(this.editor)
-      return '<object id="___DOC___">' + html + '</object>'
+      ReactDOM.findDOMNode(this.editor).click()
+      return '<object id="___DOC___">(___DOC___)' + html + '</object>'
       // console.log(html, mark, parent)
+      // return html
+
+      // console.log(this.editor)
       // return '<object>' + html + '</object>'
       // return html
-      // if (html.indexOf('<object') === 0) {
-      //   return unwrap(html)
+      // if (parent.tagName.toLowerCase() === 'object') {
+      //   // return unwrap(html)
       // } else {
-      //   return '<object id="[___DOC___]">' + html + '</object>'
+      //   // return '<object id="[___DOC___]">' + html + '</object>'
+      //   return '<object id="___DOC___">' + html + '</object>'
       // }
     }
   })
 
   render() {
-    const { input: { value, onChange }, ...passProps } = this.props
-    // style={{ outline: 'none' }}
+    const { input: { value, onChange }, style, className } = this.props
+    const converter = new showdown.Converter()
     return (
       <Editor
         ref={r => this.editor = r}
-        {...passProps}
-        text={markdown.toHTML(value)}
+        style={{ outline: 'none', ...style }}
+        className={className}
+        text={converter.makeHtml(value)}
         onChange={(text, medium) => onChange(toMarkdown(text))}
         options={{
           extensions: { doc: this.documentPicker },
