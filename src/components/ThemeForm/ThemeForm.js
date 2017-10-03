@@ -9,6 +9,7 @@ import Bbox from '../Form/Bbox'
 import Translate from '../Form/Translate'
 import ColorSelection, { isValidHex } from '../Form/ColorSelection'
 import Select from '../Form/Select'
+import MediumEditor from '../Form/MediumEditor'
 
 import './ThemeForm.css'
 import VisualForm, {
@@ -21,40 +22,6 @@ import VisualForm, {
 import {
   getCurrentLanguage,
 } from '../../state/selectors'
-
-import 'medium-editor/dist/css/medium-editor.css'
-import 'medium-editor/dist/css/themes/default.css'
-import toMarkdown from 'to-markdown'
-import { markdown } from 'markdown'
-
-import Editor from 'react-medium-editor'
-import MediumButton from 'medium-button'
-
-class CoolEditor extends PureComponent {
-  render() {
-    const { input: { value, onChange } } = this.props
-    const btn = new MediumButton({
-      label: 'Doc',
-      action: (html, mark, parent) => {
-        console.log(html, mark, parent)
-        return html + ' lol'
-      }
-    })
-    return (
-      <Editor
-        style={{ outline: 'none' }}
-        text={markdown.toHTML(value)}
-        onChange={(text, medium) => onChange(toMarkdown(text))}
-        options={{
-          extensions: { btn },
-          toolbar: {
-            buttons: ['bold', 'italic', 'h2', 'h1', 'anchor', 'btn']
-          }
-        }}
-      />
-    )
-  }
-}
 
 class ThemeForm extends PureComponent {
   state = {
@@ -150,7 +117,7 @@ class ThemeForm extends PureComponent {
             name={`data.title.${language.code}`}
             className="invisible-input ThemeForm__Preview-title-input"
             autoComplete="off"
-            component={CoolEditor}
+            component={MediumEditor}
             style={{ color }}
            />
            <Field
@@ -162,7 +129,7 @@ class ThemeForm extends PureComponent {
             className="invisible-input ThemeForm__Preview-description-input"
             rows={10}
             autoComplete="off"
-            component='textarea'
+            component={MediumEditor}
             style={{ color }}
            />
            <Field
