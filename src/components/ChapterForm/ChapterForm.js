@@ -114,6 +114,7 @@ class ChapterForm extends PureComponent {
             className="invisible-input ChapterForm__Preview-description-input"
             autoComplete="off"
             component='input'
+            placeholder="Insert chapter title"
             style={{ color }}
            />
            <Field
@@ -126,6 +127,7 @@ class ChapterForm extends PureComponent {
             rows={10}
             autoComplete="off"
             component='textarea'
+            placeholder="Insert chapter description"
             style={{ color }}
            />
            <Field
