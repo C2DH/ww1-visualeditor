@@ -9,6 +9,7 @@ import Bbox from '../Form/Bbox'
 import Translate from '../Form/Translate'
 import ColorSelection, { isValidHex } from '../Form/ColorSelection'
 import Select from '../Form/Select'
+import { requiredAtLeastOne } from '../Form/validate'
 
 import './ChapterForm.css'
 import VisualForm, {
@@ -104,8 +105,9 @@ class ChapterForm extends PureComponent {
              />
           </SideForm>
           <SideActions>
-            <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
-            <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
+            {invalid && <p>Insert title to save</p>}
+            <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
+            <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
         </SideContainer>
         <PreviewContainer {...bgPreviewProps}>
@@ -119,6 +121,7 @@ class ChapterForm extends PureComponent {
            />
            <Field
              name={`data.title`}
+             validate={requiredAtLeastOne}
              component={Translate}
            />
           <Field

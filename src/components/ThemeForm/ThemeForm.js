@@ -9,7 +9,7 @@ import Bbox from '../Form/Bbox'
 import Translate from '../Form/Translate'
 import ColorSelection, { isValidHex } from '../Form/ColorSelection'
 import Select from '../Form/Select'
-import MediumEditor from '../Form/MediumEditor'
+import { requiredAtLeastOne } from '../Form/validate'
 
 import './ThemeForm.css'
 import VisualForm, {
@@ -108,8 +108,9 @@ class ThemeForm extends PureComponent {
              />
           </SideForm>
           <SideActions>
-            <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
-            <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
+            {invalid && <p>Insert title to save</p>}
+            <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
+            <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
         </SideContainer>
         <PreviewContainer {...bgPreviewProps}>
@@ -117,11 +118,13 @@ class ThemeForm extends PureComponent {
             name={`data.title.${language.code}`}
             className="invisible-input ThemeForm__Preview-title-input"
             autoComplete="off"
-            component={MediumEditor}
+            component={'input'}
+            placeholder="Insert theme title"
             style={{ color }}
            />
            <Field
              name={`data.title`}
+             validate={requiredAtLeastOne}
              component={Translate}
            />
           <Field
@@ -129,7 +132,8 @@ class ThemeForm extends PureComponent {
             className="invisible-input ThemeForm__Preview-description-input"
             rows={10}
             autoComplete="off"
-            component={MediumEditor}
+            placeholder="Insert theme description"
+            component={'textarea'}
             style={{ color }}
            />
            <Field
