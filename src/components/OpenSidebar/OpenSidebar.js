@@ -11,12 +11,11 @@ const OpenSidebar = ({ closeMenu, logout, languages, setLanguage }) => (
     <ul className="OpenSidebar__toplist">
       <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Home</Button></Link></li>
       <li><Link to="/themes" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Themes</Button></Link></li>
-      <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Static Pages</Button></Link></li>
       <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Education</Button></Link></li>
     </ul>
     <ul className="OpenSidebar__bottomlist">
-      <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Help</Button></Link></li>
-      <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Report a bug</Button></Link></li>
+      <li><a href="https://github.com/C2DH/ww1-visualeditor/wiki" rel="noopener noreferrer" target="_blank" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Help</Button></a></li>
+      <li><a href="https://github.com/C2DH/ww1-visualeditor/issues" rel="noopener noreferrer" target="_blank" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Report a bug</Button></a></li>
       <li><Button onClick={logout} className="OpenSidebar__btn" outline color="primary">Logout</Button></li>
     </ul>
     <div className="OpenSidebar__Language__container">
