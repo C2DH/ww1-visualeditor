@@ -3,8 +3,8 @@ import { Card, CardTitle, Badge } from 'reactstrap'
 import BackgroundPreview from '../../BackgroundPreview'
 import './GenericCard.css'
 
-const PublishedThemeLabel = () => (
-  <div style={{ padding:3 }}>
+const PublishedThemeLabel = ({ pos }) => (
+  <div style={pos === 'top' ? { padding:3 } : { position: 'absolute', bottom: 65, left: 5 }}>
     <Badge>Published</Badge>
   </div>
 )
@@ -41,7 +41,7 @@ const GenericCard = ({
         backgroundColor={backgroundColor}
         backgroundColorOverlay={backgroundColorOverlay}
         backgroundType={backgroundType}>
-        {pubblished && <PublishedThemeLabel />}
+        {pubblished && <PublishedThemeLabel pos={editButtons ? 'bottom' : 'top'}  />}
         {selected && <SelectedModuleLabel />}
       </BackgroundPreview>
       <div className="GenericCard__editButtons_container">

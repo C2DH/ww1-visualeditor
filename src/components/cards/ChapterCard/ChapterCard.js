@@ -18,6 +18,7 @@ const ChapterCard = pure(({ chapter, trans, onUpClick, onDownClick, onEditClick,
     backgroundImage={get(chapter, 'covers[0].attachment')}
     backgroundColorOverlay={get(chapter, 'data.background.overlay')}
     backgroundColor={get(chapter, 'data.background.backgroundColor')}
+    pubblished={get(chapter, 'status') === 'public'}
     editButtons={
       <div className="w-100 flex">
         <Button onClick={onUpClick} className="ChapterCard__btn_margin"><i className="fa fa-arrow-up" aria-hidden="true"></i></Button>
