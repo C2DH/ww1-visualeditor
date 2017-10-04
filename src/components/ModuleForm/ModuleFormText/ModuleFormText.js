@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector, change } from 'redux-form'
 import { Link } from 'react-router-dom'
-import { Button, Input } from 'reactstrap'
+import { Button, Input, Label } from 'reactstrap'
 
 import ChooseDocument from '../../Form/ChooseDocument'
 import TextAlignSelection from '../../Form/TextAlignSelection'
@@ -10,6 +10,8 @@ import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
+import MediumEditor from '../../Form/MediumEditor'
+import { requiredAtLeastOne } from '../../Form/validate'
 
 import './ModuleFormText.css'
 
@@ -75,7 +77,13 @@ class ModuleFormText extends PureComponent {
         <SideContainer>
           <SideForm>
             <div className="margin-bottom-15">
-              <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+              <Label for="backgroundType">Background</Label>
+              <Input
+                type="select"
+                value={backgroundType}
+                onChange={this.changeBackgroundType}
+                name="backgroundType"
+              >
                 <option value="color">Color</option>
                 <option value="image">Image</option>
               </Input>
@@ -89,6 +97,7 @@ class ModuleFormText extends PureComponent {
                     onEmptyDocument={() => change('moduleText', 'background.object', {})}
                    />
                  </div>
+                <hr />
                 <div>
                   <Field
                     label="Background Overlay"
@@ -113,6 +122,7 @@ class ModuleFormText extends PureComponent {
                  </div>
               </div>
             )}
+            <hr />
             <Field
               label="Text color"
               colors={['#fff', '#000']}
@@ -128,8 +138,9 @@ class ModuleFormText extends PureComponent {
              />
           </SideForm>
           <SideActions>
-            <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
-            <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
+            {invalid && <p>Insert text to save</p>}
+            <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
+            <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
         </SideContainer>
         <PreviewContainer
@@ -141,14 +152,14 @@ class ModuleFormText extends PureComponent {
           <Field
             name={`text.content.${language.code}`}
             className="invisible-input ModuleFormText__Preview-content-input"
-            rows={10}
-            autoComplete="off"
-            component='textarea'
+            component={MediumEditor}
+            placeholder="Insert text"
             style={{ color: textColor }}
            />
            <Field
              name={`text.content`}
              component={Translate}
+             validate={requiredAtLeastOne}
            />
         </PreviewContainer>
       </VisualForm>

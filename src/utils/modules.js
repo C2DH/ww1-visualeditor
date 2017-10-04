@@ -32,7 +32,7 @@ const createEmptyModuleText = languages => ({
   text: {
     color: '#000',
     position: 'center',
-    content: createEmptyMultilangObj(languages, 'Hello I am module text!'),
+    content: createEmptyMultilangObj(languages, ''),
   }
 })
 

@@ -56,9 +56,9 @@ class ThemeForm extends PureComponent {
         <SideContainer>
           <SideForm>
             <FormGroup className="margin-bottom-15">
-              <Label for="exampleSelect">Background</Label>
+              <Label for="backgroundType">Background</Label>
 
-              <Field name="backgroundType" component={Select}>
+              <Field name="backgroundType" component={Select} name="backgroundType">
                 <option value='color'>Color</option>
                 <option value='image'>Image</option>
               </Field>

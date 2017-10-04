@@ -43,23 +43,11 @@ class MediumEditor extends PureComponent {
       this.showDocumentChooser()
       ReactDOM.findDOMNode(this.editor).click()
       return '<a href="object://___DOC___">' + html + '</a>'
-      // console.log(html, mark, parent)
-      // return html
-
-      // console.log(this.editor)
-      // return '<object>' + html + '</object>'
-      // return html
-      // if (parent.tagName.toLowerCase() === 'object') {
-      //   // return unwrap(html)
-      // } else {
-      //   // return '<object id="[___DOC___]">' + html + '</object>'
-      //   return '<object id="___DOC___">' + html + '</object>'
-      // }
     }
   })
 
   render() {
-    const { input: { value, onChange }, style, className } = this.props
+    const { input: { value, onChange }, style, className, placeholder } = this.props
     const converter = new showdown.Converter()
     return (
       <Editor
@@ -72,7 +60,8 @@ class MediumEditor extends PureComponent {
           extensions: { doc: this.documentPicker },
           toolbar: {
             buttons: ['bold', 'italic', 'h2', 'h1', 'anchor', 'doc']
-          }
+          },
+          placeholder: placeholder ? { text: placeholder } : false
         }}
       />
     )
