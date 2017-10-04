@@ -42,7 +42,7 @@ class MediumEditor extends PureComponent {
     action: (html, mark, parent) => {
       this.showDocumentChooser()
       ReactDOM.findDOMNode(this.editor).click()
-      return '<object id="___DOC___">(___DOC___)' + html + '</object>'
+      return '<a href="object://___DOC___">' + html + '</a>'
       // console.log(html, mark, parent)
       // return html
 
