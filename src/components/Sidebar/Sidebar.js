@@ -23,7 +23,7 @@ class Sidebar extends PureComponent {
     const { language } = this.props
     return (
         <div className="Sidebar__container">
-          <CSSTransitionGroup 
+          <CSSTransitionGroup
           transitionName="sidebar"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}>
@@ -31,7 +31,7 @@ class Sidebar extends PureComponent {
           <Button className="Sidebar__menuBtn" onClick={this.toggleMenu} key="button">
             {this.state.open ? <i className="icon-close Sidebar__menuBtn__icon" /> : <i className="icon-dehaze Sidebar__menuBtn__icon" />}
           </Button>
-          <Button className="Sidebar__menuBtn Sidebar__languageBtn">{language.label}</Button>
+          <Button onClick={this.toggleMenu} className="Sidebar__menuBtn Sidebar__languageBtn">{language.label}</Button>
         </CSSTransitionGroup>
         </div>
     )
