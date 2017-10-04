@@ -36,7 +36,7 @@ class Home extends PureComponent {
     return (
       <Container fluid className="margin-r-l-20">
         <Row>
-          <Col md="3">
+          <Col md={4}>
             <div className="Home__Col-title-container">
               <h4>Last Themes</h4>
               <Badge className="Home__titlebadge">All</Badge>
@@ -52,7 +52,7 @@ class Home extends PureComponent {
               ))}
             </div>
           </Col>
-          <Col md="3">
+          <Col md={4}>
             <div className="Home__Col-title-container">
               <h4>Last Educational</h4>
               <Badge className="Home__titlebadge">All</Badge>
@@ -61,15 +61,7 @@ class Home extends PureComponent {
               <AddButton label="Add Educational"/>
             </div>
           </Col>
-          <Col md="3">
-            <div className="Home__Col-title-container">
-              <h4>Last Chapters</h4>
-              <Badge className="Home__titlebadge">All</Badge>
-            </div>
-            <div>
-            </div>
-          </Col>
-          <Col md="3">
+          <Col md={4}>
             <div className="Home__Col-title-container">
               <h4>Static Pages</h4>
               <Badge className="Home__titlebadge">All</Badge>
