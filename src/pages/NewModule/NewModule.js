@@ -26,6 +26,11 @@ class NewModule extends PureComponent {
 
   chooseModule = moduleType => this.setState({ moduleType })
 
+  backToChapter = () => {
+    const { theme, chapter } = this.props
+    this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}`)
+  }
+
   submit = (module) => {
     return createModuleChapter(this.props.chapter, module)
       .then(chapterUpdated =>
@@ -45,7 +50,10 @@ class NewModule extends PureComponent {
     const { theme, chapter, languages } = this.props
 
     if (!this.state.moduleType) {
-      return <ChooseModule onChooseModule={this.chooseModule} />
+      return <ChooseModule
+        onChooseModule={this.chooseModule}
+        onBack={this.backToChapter}
+      />
     }
 
     return <ModuleForm

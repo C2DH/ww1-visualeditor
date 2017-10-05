@@ -27,7 +27,7 @@ const ChooseModuleCard = pure(({ title, cover, cardClick }) => (
 class ChooseModule extends PureComponent {
 
   render() {
-    const { onChooseModule } = this.props
+    const { onChooseModule, onBack } = this.props
 
     return (
       <Container fluid className="margin-r-l-20">
@@ -37,8 +37,7 @@ class ChooseModule extends PureComponent {
               <Label for="exampleSelect">Chose a module</Label>
               <div className="Module__action_bottom_btn_container">
                 <hr />
-                <Button size="sm" block>Next</Button>
-                <Button size="sm" block>Exit</Button>
+                <Button size="sm" block onClick={onBack}>Back</Button>
              </div>
            </div>
           </Col>
