@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { debounce, merge } from 'lodash'
+import { debounce } from 'lodash'
 import { Container, Row, Col, Button } from 'reactstrap'
 import HeadingRow from '../HeadingRow'
 import TopSearchInput from '../TopSearchInput'
@@ -29,6 +29,15 @@ import {
   getSelectedDocumentsById,
 } from '../../state/selectors'
 
+const mergeParams = (s1, s2) => ({
+  ...s1,
+  ...s2,
+  filters: {
+    ...s1.filters,
+    ...s2.filters,
+  }
+})
+
 class DocumentChooser extends PureComponent {
   state = {
     searchString: '',
@@ -36,9 +45,9 @@ class DocumentChooser extends PureComponent {
 
   makeParams = (params = {}) => {
     if (this.props.params) {
-      return merge(this.props.params, params)
+      return mergeParams(this.props.params, params)
     }
-    return merge({
+    return mergeParams({
       filters: {
         data__type: this.props.documentType,
       }
@@ -64,9 +73,10 @@ class DocumentChooser extends PureComponent {
   }
 
   searchDocuments = debounce(searchString => {
+    console.log('Debouncer!')
     this.props.loadDocuments(this.makeParams({
       filters: {
-        data__title__icontains: searchString,
+        title__icontains: searchString,
       }
     }))
   }, 200)

@@ -129,7 +129,13 @@ class ModuleFormMap extends PureComponent {
         <SideContainer>
           <SideForm>
             <div className="margin-bottom-15">
-              <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+              <Label for="backgroundType">Background</Label>
+              <Input
+                type="select"
+                value={backgroundType}
+                onChange={this.changeBackgroundType}
+                name="backgroundType"
+              >
                 <option value="color">Color</option>
                 <option value="image">Image</option>
               </Input>
@@ -142,7 +148,8 @@ class ModuleFormMap extends PureComponent {
                     component={ChooseDocument}
                     onEmptyDocument={() => change('moduleMap', 'background.object', {})}
                    />
-                 </div>
+                </div>
+                <hr />
                 <div>
                   <Field
                     label="Background Overlay"
@@ -167,6 +174,7 @@ class ModuleFormMap extends PureComponent {
                  </div>
               </div>
             )}
+            <hr />
             <div className="margin-bottom-15">
               <FieldArray
                 name="objects"
