@@ -55,7 +55,9 @@ class ThemeDetail extends PureComponent {
   }
 
   render() {
-    const { theme, saving, trans, deleting } = this.props
+    const { theme, saving, trans, deleting, authToken } = this.props
+    const baseUrl = process.env.REACT_APP_FRONTEND_URL
+    const previewUrl = `${baseUrl}/themes/${theme.slug}?_t=${authToken}`
     return (
       <Container fluid className="margin-r-l-20">
         <Row className="ThemeDetail__topRow">
@@ -66,7 +68,8 @@ class ThemeDetail extends PureComponent {
             <Button disabled={saving} className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
               {theme.status === 'draft' ? 'Publish' : 'Unpublish'}
             </Button>
-            <Button className="ThemeDetail__topRow_btn">Preview</Button>
+            {/* TODO: Fix style */}
+            <Button tag={'a'} href={previewUrl} target="_blank" className="ThemeDetail__topRow_btn">Preview</Button>
           </div>
         </Row>
         <Row>
@@ -127,6 +130,7 @@ class ThemeDetail extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  authToken: state.auth.accessToken,
   trans: makeTranslator(state),
   theme: getTheme(state),
   saving: isThemeSaving(state),

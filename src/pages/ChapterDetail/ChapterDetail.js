@@ -67,8 +67,10 @@ class ChapterDetail extends PureComponent {
   }
 
   render () {
-    const { trans, chapter, theme, saving, deletingModules, deleting, moving } = this.props
+    const { trans, chapter, theme, saving, deletingModules, deleting, moving, authToken } = this.props
     const modules = get(chapter, 'contents.modules', [])
+    const baseUrl = process.env.REACT_APP_FRONTEND_URL
+    const previewUrl = `${baseUrl}/themes/${theme.slug}/chapters/${chapter.slug}?_t=${authToken}`
 
     return (
       <Container fluid className="margin-r-l-20">
@@ -83,7 +85,7 @@ class ChapterDetail extends PureComponent {
             <Button disabled={saving} className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
               {chapter.status === 'draft' ? 'Publish' : 'Unpublish'}
             </Button>
-            <Button className="ThemeDetail__topRow_btn">Preview</Button>
+            <Button tag={'a'} href={previewUrl} target="_blank" className="ThemeDetail__topRow_btn">Preview</Button>
           </div>
         </Row>
         <Row>
@@ -149,6 +151,7 @@ class ChapterDetail extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  authToken: state.auth.accessToken,
   trans: makeTranslator(state),
   theme: getTheme(state),
   chapter: getChapter(state),
