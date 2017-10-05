@@ -8,6 +8,10 @@ button:focus {
   outline:0;
 }
 
+a.button-link {
+  line-height: 2em;
+}
+
 .pointer {
   cursor: pointer !important;
 }

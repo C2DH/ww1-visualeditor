@@ -78,7 +78,7 @@ class ChapterDetail extends PureComponent {
             <Button disabled={saving} className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
               {chapter.status === 'draft' ? 'Publish' : 'Unpublish'}
             </Button>
-            <Button tag={'a'} href={previewUrl} target="_blank" className="ThemeDetail__topRow_btn">Preview</Button>
+            <Button tag={'a'} href={previewUrl} target="_blank" className="ThemeDetail__topRow_btn button-link">Preview</Button>
           </div>
         </Row>
         <Row>

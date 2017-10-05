@@ -68,8 +68,7 @@ class ThemeDetail extends PureComponent {
             <Button disabled={saving} className="ThemeDetail__topRow_btn" onClick={this.toggledPublished}>
               {theme.status === 'draft' ? 'Publish' : 'Unpublish'}
             </Button>
-            {/* TODO: Fix style */}
-            <Button tag={'a'} href={previewUrl} target="_blank" className="ThemeDetail__topRow_btn">Preview</Button>
+            <Button tag={'a'} href={previewUrl} target="_blank" className="ThemeDetail__topRow_btn button-link">Preview</Button>
           </div>
         </Row>
         <Row>
