@@ -2,3 +2,27 @@
   padding: 20px;
   text-align: center;
 }
+
+.DocumentChooser__StickyHeader {
+  position: fixed;
+  width: calc(100% - 100px);
+  background-color: #fff;
+  top: 0;
+  z-index: 99;
+}
+
+.DocumentChooser__List {
+  padding-top: 90px;
+  padding-bottom: 70px;
+}
+
+.DocumentChooser__BottomContent {
+  position: fixed;
+  width: calc(100% - 100px);
+  bottom: 0;
+  background-color: #fff;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-top: 1px solid;
+  z-index: 99;
+}

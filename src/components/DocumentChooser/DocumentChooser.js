@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { debounce, merge } from 'lodash'
 import { Container, Row, Col, Button } from 'reactstrap'
 import HeadingRow from '../HeadingRow'
 import TopSearchInput from '../TopSearchInput'
 import AddButton from '../AddButton'
 import ThemeCard from '../cards/ThemeCard'
 import DocumentCard from '../cards/DocumentCard'
+import Spinner from '../Spinner'
 import './DocumentChooser.css'
 
 import {
@@ -28,15 +30,19 @@ import {
 } from '../../state/selectors'
 
 class DocumentChooser extends PureComponent {
-  makeParams = () => {
+  state = {
+    searchString: '',
+  }
+
+  makeParams = (params = {}) => {
     if (this.props.params) {
-      return this.props.params
+      return merge(this.props.params, params)
     }
-    return {
+    return merge({
       filters: {
         data__type: this.props.documentType,
       }
-    }
+    }, params)
   }
 
   componentDidMount() {
@@ -50,6 +56,20 @@ class DocumentChooser extends PureComponent {
   chooseDocument = (doc) => {
     this.props.chooseDocument(doc)
   }
+
+  handleSearchChange = e => {
+    const searchString = e.target.value
+    this.setState({ searchString })
+    this.searchDocuments(searchString)
+  }
+
+  searchDocuments = debounce(searchString => {
+    this.props.loadDocuments(this.makeParams({
+      filters: {
+        data__title__icontains: searchString,
+      }
+    }))
+  }, 200)
 
   loadMore = () => {
     this.props.loadMoreDocuments(this.makeParams())
@@ -69,41 +89,48 @@ class DocumentChooser extends PureComponent {
     } = this.props
     return (
       <Container fluid className="margin-r-l-20">
-        <HeadingRow title="Select documents">
-          <TopSearchInput />
+        <HeadingRow title="Select documents" className="DocumentChooser__StickyHeader">
+          {loading && <Spinner noPadding x={2} />}
+          <TopSearchInput
+            value={this.state.searchString}
+            onChange={this.handleSearchChange}
+          />
         </HeadingRow>
 
-        {documents && (
-          <Row>
-            {documents.map(doc => (
-              <Col md="3" key={doc.id}>
-                {multi ? (
-                  <DocumentCard
-                    checked={typeof selectedDocuments[doc.id] !== 'undefined'}
-                    onChange={() => {
-                      typeof selectedDocuments[doc.id] === 'undefined'
-                        ? selectDocument(doc.id)
-                        : unselectDocument(doc.id)
-                    }}
-                    title={doc.title}
-                    cover={doc.attachment}
-                  />
-                ) : (
-                  <DocumentCard
-                    onClick={() => this.chooseDocument(doc)}
-                    title={doc.title}
-                    cover={doc.attachment}
-                  />
-                )}
-              </Col>
-            ))}
-          </Row>
-        )}
+        <div className="DocumentChooser__List">
+          {documents && (
+            <Row>
+              {documents.map(doc => (
+                <Col md="3" key={doc.id}>
+                  {multi ? (
+                    <DocumentCard
+                      checked={typeof selectedDocuments[doc.id] !== 'undefined'}
+                      onChange={() => {
+                        typeof selectedDocuments[doc.id] === 'undefined'
+                          ? selectDocument(doc.id)
+                          : unselectDocument(doc.id)
+                      }}
+                      title={doc.title}
+                      cover={doc.attachment}
+                    />
+                  ) : (
+                    <DocumentCard
+                      onClick={() => this.chooseDocument(doc)}
+                      title={doc.title}
+                      cover={doc.attachment}
+                    />
+                  )}
+                </Col>
+              ))}
+            </Row>
+          )}
 
-        {canLoadMore && count > 0 && !loading && <div className="DocumentChooser__LoadMoreBtn">
-          <Button onClick={this.loadMore}>Load more</Button></div>}
+          {canLoadMore && count > 0 && !loading && <div className="DocumentChooser__LoadMoreBtn">
+            <Button onClick={this.loadMore}>Load more</Button></div>}
 
-        <div className="Translate__confirm_container">
+        </div>
+
+        <div className="DocumentChooser__BottomContent">
           <Row>
             <Col md="3">
               {multi && <Button size="sm" block onClick={selectionDone}>Done</Button>}

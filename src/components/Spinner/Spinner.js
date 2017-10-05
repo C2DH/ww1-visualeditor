@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Spinner = ({ fullpage = false }) => {
+const Spinner = ({ fullpage = false, noPadding = false, x = 3 }) => {
   return fullpage ? (
     <div style={{
       height: '100%',
@@ -19,8 +19,8 @@ const Spinner = ({ fullpage = false }) => {
       </div>
     </div>
   ) : (
-    <div style={{ paddingTop: 50, textAlign: 'center' }}>
-      <i className="fa fa-cog fa-spin fa-3x fa-fw" />
+    <div style={ noPadding ? undefined : { paddingTop: 50, textAlign: 'center' }}>
+      <i className={`fa fa-cog fa-spin fa-${x}x fa-fw`} />
     </div>
   )
 }

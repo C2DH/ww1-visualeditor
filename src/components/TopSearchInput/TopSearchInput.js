@@ -2,9 +2,9 @@ import React from 'react'
 import { Input } from 'reactstrap';
 import './TopSearchInput.css'
 
-const TopSearchInput = () => (
+const TopSearchInput = (props) => (
   <div className="TopSearchInput__container">
-      <Input placeholder="Search" />
+      <Input placeholder="Search" {...props} />
   </div>
 )
 

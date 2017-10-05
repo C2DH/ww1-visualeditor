@@ -5,6 +5,7 @@
   "proxy": "http://miller.inmagik.com",
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
+    "classnames": "^2.2.5",
     "d3-scale": "^1.0.6",
     "lodash": "^4.17.4",
     "mapbox-gl": "^0.40.1",
