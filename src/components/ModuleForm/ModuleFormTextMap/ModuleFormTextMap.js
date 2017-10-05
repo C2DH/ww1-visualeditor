@@ -129,8 +129,8 @@ class ModuleFormTextMap extends PureComponent {
             </div>
           </SideForm>
           <SideActions>
-            <Button size="sm" type='submit' block disabled={invalid}>Done</Button>
-            <Button size="sm" block tag={Link} to={exitLink}>Exit</Button>
+            <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
+            <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
         </SideContainer>
         <PreviewContainer
