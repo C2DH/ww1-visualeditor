@@ -47,7 +47,7 @@ class MediumEditor extends PureComponent {
   })
 
   render() {
-    const { input: { value, onChange }, style, className, placeholder } = this.props
+    const { input: { value, onChange }, style, className, placeholder, options } = this.props
     const converter = new showdown.Converter()
     return (
       <Editor
@@ -61,7 +61,8 @@ class MediumEditor extends PureComponent {
           toolbar: {
             buttons: ['bold', 'italic', 'h2', 'h1', 'anchor', 'doc']
           },
-          placeholder: placeholder ? { text: placeholder } : false
+          placeholder: placeholder ? { text: placeholder } : false,
+          ...options,
         }}
       />
     )

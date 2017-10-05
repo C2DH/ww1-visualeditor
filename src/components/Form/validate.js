@@ -7,3 +7,10 @@ export const requiredAtLeastOne = value => {
   }
   return 'At least one translaton is required'
 }
+
+export const notAnEmptyList = value => {
+  if (value && value.length > 0) {
+    return undefined
+  }
+  return 'Insert at least one item'
+}

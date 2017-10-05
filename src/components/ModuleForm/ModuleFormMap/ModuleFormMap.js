@@ -23,7 +23,9 @@ import AddButton from '../../AddButton'
 import ChooseDocument from '../../Form/ChooseDocument'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
+import MediumEditor from '../../Form/MediumEditor'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
+import { notAnEmptyList } from '../../Form/validate'
 
 import {
   getCurrentLanguage,
@@ -180,10 +182,12 @@ class ModuleFormMap extends PureComponent {
                 name="objects"
                 params={mapParams}
                 component={ChooseDocuments}
+                validate={notAnEmptyList}
               />
             </div>
           </SideForm>
           <SideActions>
+            {invalid && <p>Insert at least one document to save</p>}
             <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
@@ -235,7 +239,11 @@ class ModuleFormMap extends PureComponent {
                 name={`caption.${language.code}`}
                 className="invisible-input"
                 style={{ width: '100%' }}
-                component='input'
+                options={{
+                  disableReturn: true,
+                }}
+                placeholder='Insert caption'
+                component={MediumEditor}
               />
               <Field
                 name={`caption`}

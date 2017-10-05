@@ -44,7 +44,7 @@ const createEmptyModuleObject = languages => ({
   type: 'image',
   position: 'center',
   size: 'medium',
-  caption: createEmptyMultilangObj(languages, 'Hello I am module object!'),
+  caption: createEmptyMultilangObj(languages, ''),
 })
 
 const createEmptyModuleGallery = languages => ({
@@ -54,7 +54,7 @@ const createEmptyModuleGallery = languages => ({
   },
   objects: [],
   layout: 'grid',
-  caption: createEmptyMultilangObj(languages, 'Hello I am module gallery!'),
+  caption: createEmptyMultilangObj(languages, ''),
 })
 
 const createEmptyModuleMap = languages => ({
@@ -63,7 +63,7 @@ const createEmptyModuleMap = languages => ({
     object: {},
   },
   objects: [],
-  caption: createEmptyMultilangObj(languages, 'Hello I am module map!'),
+  caption: createEmptyMultilangObj(languages, ''),
 })
 
 const createEmptyModuleTextObject = languages => ({
@@ -73,12 +73,12 @@ const createEmptyModuleTextObject = languages => ({
   },
   text: {
     color: '#000',
-    content: createEmptyMultilangObj(languages, 'Hello I am module text object! Cekka'),
+    content: createEmptyMultilangObj(languages, ''),
   },
   object: {
     type: 'image',
     size: 'medium',
-    caption: createEmptyMultilangObj(languages, 'Caption!'),
+    caption: createEmptyMultilangObj(languages, ''),
   },
   layout: 'text-object'
 })
@@ -90,11 +90,11 @@ const createEmptyModuleTextGallery = languages => ({
   },
   text: {
     color: '#000',
-    content: createEmptyMultilangObj(languages, 'Hello I am module text gallery! Yo'),
+    content: createEmptyMultilangObj(languages, ''),
   },
   gallery: {
     objects: [],
-    caption: createEmptyMultilangObj(languages, 'Caption for gallery'),
+    caption: createEmptyMultilangObj(languages, ''),
   },
   layout: 'text-gallery'
 })
@@ -106,7 +106,7 @@ const createEmptyModuleTextMap = languages => ({
   },
   text: {
     color: '#000',
-    content: createEmptyMultilangObj(languages, 'Hello I am module text map! Mic Cekka'),
+    content: createEmptyMultilangObj(languages, ''),
   },
   map: {
     objects: [],
