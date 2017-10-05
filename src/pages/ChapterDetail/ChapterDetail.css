@@ -1,40 +1,15 @@
-.Chapter__preview_open {
-  height: 260px;
-}
-
-.Chapter__show_modules_button_container {
-  position: absolute;
-  bottom: 10px;
-  padding-left: 10px;
-}
-
-.Chapter__edit_button_container {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.Chapter__module_container {
-  display: inline-flex;
-  align-items: center;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  width: 100%;
-}
-
-.Chapters__AddButton_container {
+/*.Chapters__AddButton_container {
   margin-left: 20px;
   padding: 15px;
   margin-right: 20px;
-}
+}*/
 
-.Chapter__module_scroll_container {
-  display: inline-flex;
-  overflow-y: auto;
-}
-
-.ChapterDetail__module_card {
+/*.ChapterDetail__module_card {
   min-width: 250px;
   margin: 5px;
   margin-top: 0px;
+}*/
+.ChapterDetial__Modules_col {
+  height: calc(100vh - 185px);
+  overflow-y: scroll;
 }

@@ -38,14 +38,7 @@ import {
 
 class ChapterDetail extends PureComponent {
   state = {
-    open:false,
     moduleToDelete: null,
-  }
-
-  toggleModule = () => {
-    this.setState({
-      open: !this.state.open
-    })
   }
 
   toggledPublished = () => {
@@ -89,22 +82,42 @@ class ChapterDetail extends PureComponent {
           </div>
         </Row>
         <Row>
-          <StoryPreview
-            story={chapter}
-            className={this.state.open ? 'Chapter__preview_open' : ''}
-            rightContent={
-              <Button tag={Link} to={`/themes/${theme.id}/chapters/${chapter.id}/edit`}>
-                <i className="fa fa-pencil" />
-              </Button>
-            }
-            bottomContent={
-              <Button onClick={this.toggleModule}>
-                <i className="fa fa-cog" /> {this.state.open ? "Hide modules" : "Show modules"}
-              </Button>
-            }
-          />
+          <Col md="9" className="no-padding-left">
+            <StoryPreview
+              story={chapter}
+              rightContent={
+                <Button tag={Link} to={`/themes/${theme.id}/chapters/${chapter.id}/edit`}>
+                  <i className="fa fa-pencil" />
+                </Button>
+              }
+            />
+          </Col>
+          <Col md="3">
+            <AddButton
+              tag={Link}
+              to={`/themes/${theme.id}/chapters/${chapter.id}/modules/new`}
+              label="Add Module"
+              style={{marginBottom: 5}}
+             />
+            <div className="ChapterDetial__Modules_col">
+              {modules.map((mod, i) => (
+                <div key={i}
+                  style={typeof deletingModules[i] !== 'undefined' ? { opacity: 0.5 } : undefined}>
+                  <ModuleCard
+                    showLeftButton={i !== 0}
+                    showRightButton={i !== modules.length - 1}
+                    onMoveLeftClick={() => this.props.moveModuleChapterBack(chapter, i)}
+                    onMoveRightClick={() => this.props.moveModuleChapterAhead(chapter, i)}
+                    module={mod}
+                    onDeleteClick={() => this.askDeleteModule(i)}
+                    onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
+                  />
+                </div>
+              ))}
+            </div>
+          </Col>
         </Row>
-        {this.state.open ?
+        {/* {this.state.open ?
           <Row>
             <div className="Chapter__module_container">
               <Col md="3">
@@ -132,7 +145,7 @@ class ChapterDetail extends PureComponent {
                 </div>
               </Col>
             </div>
-          </Row> : null}
+          </Row> : null} */}
           {deleting && <Spinner fullpage />}
           {moving && <Spinner fullpage />}
           <Modal isOpen={!isNull(this.state.moduleToDelete)} toggle={this.clearDeleteChapterModal}>
