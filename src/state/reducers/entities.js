@@ -1,5 +1,6 @@
-import { keyBy, map, omit, without } from 'lodash'
+import { keyBy, map, omit, without, get } from 'lodash'
 import { combineReducers } from 'redux'
+import { mergeOrdererList, moveArrayBack, moveArrayAhead } from '../../utils'
 import {
   GET_THEMES_SUCCESS,
   GET_THEME_SUCCESS,
@@ -15,6 +16,7 @@ import {
   CHAPTER_CREATED,
   DELETE_CHAPTER_SUCCESS,
   DELETE_THEME_SUCCESS,
+  MOVE_CHAPTER_THEME_SUCCESS,
 } from '../actions'
 
 const mergeList = (prevState, list) => ({
@@ -50,6 +52,40 @@ const makeStoryEntityReducer = storyType => {
   return reducer
 }
 
+// I can sleep quietly this literally fuking any inconsistency between
+// ordered chapters and all chapters
+const adjustChaptersOrderOfTheme = theme => {
+  const allChapters = map(theme.stories, 'id')
+  const orderedChapters = get(theme, 'data.chapters', [])
+  const adjustOrderedChapters = mergeOrdererList(orderedChapters, allChapters)
+  return {
+    ...theme,
+    data: {
+      ...theme.data,
+      chapters: adjustOrderedChapters,
+    },
+    stories: allChapters,
+  }
+}
+
+const moveChapterTheme = (theme, direction, chapterIndex) => {
+  let chapters
+  if (direction === 'ahead') {
+    chapters = moveArrayAhead(theme.data.chapters, chapterIndex)
+  } else if (direction === 'back') {
+    chapters = moveArrayBack(theme.data.chapters, chapterIndex)
+  } else {
+    throw new Error(`Move chapter theme unxcepted value for direction got: ${direction}`)
+  }
+  return {
+    ...theme,
+    data: {
+      ...theme.data,
+      chapters,
+    }
+  }
+}
+
 const themeEntityReducer = makeStoryEntityReducer(THEME)
 const themes = (prevState = {}, action) => {
   const { type, payload } = action
@@ -59,7 +95,11 @@ const themes = (prevState = {}, action) => {
         ...prevState,
         [payload.theme.id]: {
           ...prevState[payload.theme.id],
-          stories: [payload.chapter.id].concat(prevState[payload.theme.id].stories),
+          data: {
+            ...prevState[payload.theme.id].data,
+            chapters: prevState[payload.theme.id].data.chapters.concat(payload.chapter.id),
+          },
+          stories: prevState[payload.theme.id].stories.concat(payload.chapter.id),
         }
       }
     case DELETE_THEME_SUCCESS:
@@ -67,19 +107,29 @@ const themes = (prevState = {}, action) => {
     case DELETE_CHAPTER_SUCCESS:
       return {
         ...prevState,
-        [payload.themeId]: {
-          ...prevState[payload.themeId],
-          stories: without(prevState[payload.themeId].stories, payload.id),
+        [payload.theme.id]: {
+          ...prevState[payload.theme.id],
+          data: {
+            ...prevState[payload.theme.id].data,
+            chapters: without(prevState[payload.theme.id].data.chapters, payload.id),
+          },
+          stories: without(prevState[payload.theme.id].stories, payload.id),
         }
       }
     case THEME_UPDATED:
     case GET_THEME_SUCCESS:
       return {
         ...prevState,
-        [payload.id]: {
-          ...payload,
-          stories: map(payload.stories, 'id'),
-        },
+        [payload.id]: adjustChaptersOrderOfTheme(payload),
+      }
+    case MOVE_CHAPTER_THEME_SUCCESS:
+      return {
+        ...prevState,
+        [payload.theme.id]: moveChapterTheme(
+          prevState[payload.theme.id],
+          payload.direction,
+          payload.chapterIndex
+        ),
       }
     case GET_THEMES_SUCCESS:
       return mergeList(prevState, payload.results)

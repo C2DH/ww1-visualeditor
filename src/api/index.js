@@ -1,6 +1,6 @@
 import request from 'superagent'
 import { moveArrayBack, moveArrayAhead } from '../utils'
-import { findKey, get, mapValues, isArray, isPlainObject } from 'lodash'
+import { findKey, get, mapValues, isArray, isPlainObject, without } from 'lodash'
 
 // Hight value for pagination that means no limit maaan
 const NO_LIMIT = 1000
@@ -237,6 +237,42 @@ export const moveModuleChapterBack = token => (chapter, moduleIndex) =>
     contents: JSON.stringify({
       modules: moveArrayBack(get(chapter, 'contents.modules', []), moduleIndex)
     })
+  }))
+  .then(extractBody)
+
+export const moveChapterThemeAhead = token => (theme, chapterIndex) =>
+  withToken(token, request.patch(`/api/story/${theme.id}/`).send({
+    data: {
+      ...theme.data,
+      chapters: moveArrayAhead(theme.data.chapters, chapterIndex)
+    }
+  }))
+  .then(extractBody)
+
+export const moveChapterThemeBack = token => (theme, chapterIndex) =>
+  withToken(token, request.patch(`/api/story/${theme.id}/`).send({
+    data: {
+      ...theme.data,
+      chapters: moveArrayBack(theme.data.chapters, chapterIndex)
+    }
+  }))
+  .then(extractBody)
+
+export const addChapterToTheme = token => (theme, chapterId) =>
+  withToken(token, request.patch(`/api/story/${theme.id}/`).send({
+    data: {
+      ...theme.data,
+      chapters: theme.data.chapters.concat(chapterId)
+    }
+  }))
+  .then(extractBody)
+
+export const removeChapterFromTheme = token => (theme, chapterId) =>
+  withToken(token, request.patch(`/api/story/${theme.id}/`).send({
+    data: {
+      ...theme.data,
+      chapters: without(theme.data.chapters, chapterId),
+    }
   }))
   .then(extractBody)
 

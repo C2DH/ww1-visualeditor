@@ -15,14 +15,17 @@ import { wrapAuthApiCall } from '../../state'
 const createChapter = wrapAuthApiCall(api.createStory)
 const mentionStory = wrapAuthApiCall(api.mentionStory)
 const getStory = wrapAuthApiCall(api.getStory)
+const addChapterToTheme = wrapAuthApiCall(api.addChapterToTheme)
 
 class NewChapter extends PureComponent {
   createChapter = (chapter) => {
+    const { theme } = this.props
     return createChapter(chapter, this.props.languages)
       .then(newChapter => {
-        return mentionStory(this.props.theme.id, {
+        return mentionStory(theme.id, {
           slug: newChapter.slug
         })
+        .then(() => addChapterToTheme(theme, newChapter.id))
         // Fuck off shitty API, street school workaround since sixteen
         .then(() => getStory(newChapter.id))
       })

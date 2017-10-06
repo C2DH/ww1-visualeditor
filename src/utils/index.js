@@ -1,3 +1,5 @@
+import { reduce } from 'lodash'
+
 export const hexToRgb = (hexStr) => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
@@ -48,6 +50,19 @@ export const moveArrayAhead = (v, i) =>
 
 export const moveArrayBack = (v, i) =>
   [ ...v.slice(0, i - 1), v[i], v[i - 1], ...v.slice(i + 1)]
+
+// And now who are you?
+export const mergeOrdererList = (ordered, all) => {
+  const r = []
+  const by = all.reduce((r, v) => ({ ...r, [v]: true }), {})
+  ordered.forEach(o => {
+    if (by[o]) {
+       r.push(o)
+       by[o] = false
+    }
+  })
+  return r.concat(reduce(by, (r, v, k) => v ? r.concat(+k) : r, []))
+}
 
 const PLACE_TYPE_ICONS = {
   bombing: {

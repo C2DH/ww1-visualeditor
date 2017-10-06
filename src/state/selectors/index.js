@@ -102,11 +102,21 @@ export const getTheme = createSelector(
   state => state.entities.chapters,
   (id, data, dataChapters) => maybeNull(id)(id => ({
     ...data[id],
-    stories: data[id].stories.map(id => dataChapters[id])
+    stories: data[id].data.chapters.map(id => dataChapters[id])
   }))
 )
 export const isThemeSaving = state => state.themeDetail.theme.saving
 export const isThemeLoading = state => state.themeDetail.theme.loading
+
+export const getThemePerformingDeleting = createSelector(
+  state => state.themeDetail.deletingChapters,
+  deleting => Object.values(deleting).filter(v => v).length > 0
+)
+
+export const getThemePerformingMoving = createSelector(
+  state => state.themeDetail.movingChapters,
+  moving => Object.values(moving).filter(v => v).length > 0
+)
 
 // Chapters
 

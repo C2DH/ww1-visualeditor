@@ -20,6 +20,10 @@ import {
   MOVE_MODULE_CHAPTER_LOADING,
   MOVE_MODULE_CHAPTER_FAILURE,
   MOVE_MODULE_CHAPTER_SUCCESS,
+  MOVE_CHAPTER_THEME,
+  MOVE_CHAPTER_THEME_LOADING,
+  MOVE_CHAPTER_THEME_FAILURE,
+  MOVE_CHAPTER_THEME_SUCCESS,
   chapterUpdated,
 } from '../actions'
 
@@ -68,6 +72,23 @@ function *handleMoveModuleChapter({ payload }) {
   }
 }
 
+function *handleMoveChapterTheme({ payload }) {
+  const { theme, chapterIndex, direction } = payload
+  yield put({ type: MOVE_CHAPTER_THEME_LOADING, payload })
+  try {
+    if (direction === 'ahead') {
+      yield authApiCall(api.moveChapterThemeAhead, theme, chapterIndex)
+    } else if (direction === 'back') {
+      yield authApiCall(api.moveChapterThemeBack, theme, chapterIndex)
+    } else {
+      throw new Error(`Move chapter theme unxcepted value for direction got: ${direction}`)
+    }
+    yield put({ type: MOVE_CHAPTER_THEME_SUCCESS, payload })
+  } catch (error) {
+    yield put({ type: MOVE_CHAPTER_THEME_FAILURE, error, payload })
+  }
+}
+
 export default function* rootSaga() {
   yield fork(authFlow)
   yield fork(makePaginateCollection(
@@ -82,8 +103,13 @@ export default function* rootSaga() {
   yield fork(makeStoryDetail(STATIC_STORY))
   yield takeEvery(DELETE_MODULE_CHAPTER, handleDeleteModuleChapter)
   yield takeEvery(MOVE_MODULE_CHAPTER, handleMoveModuleChapter)
+  yield takeEvery(MOVE_CHAPTER_THEME, handleMoveChapterTheme)
   yield fork(makeDeleteStory(THEME))
-  yield fork(makeDeleteStory(CHAPTER, token => ({ id, themeId }) =>
-    api.deleteStory(token)(id)
+  yield fork(makeDeleteStory(CHAPTER, token => ({ id, theme }) =>
+    // Got dragon balls like my name was Vegeta
+    Promise.all([
+      api.deleteStory(token)(id),
+      api.removeChapterFromTheme(token)(theme, id),
+    ])
   ))
 }

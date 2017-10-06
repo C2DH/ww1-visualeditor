@@ -117,35 +117,6 @@ class ChapterDetail extends PureComponent {
             </div>
           </Col>
         </Row>
-        {/* {this.state.open ?
-          <Row>
-            <div className="Chapter__module_container">
-              <Col md="3">
-                <div className="Chapters__AddButton_container">
-                  <AddButton label="Add module" tag={Link} to={`/themes/${theme.id}/chapters/${chapter.id}/modules/new`} />
-                </div>
-              </Col>
-              <Col md="9" style={{overflow: 'auto'}}>
-                <div className="Chapter__module_scroll_container">
-                  {modules.map((mod, i) => (
-                    <div key={i}
-                      className="ChapterDetail__module_card"
-                      style={typeof deletingModules[i] !== 'undefined' ? { opacity: 0.5 } : undefined}>
-                      <ModuleCard
-                        showLeftButton={i !== 0}
-                        showRightButton={i !== modules.length - 1}
-                        onMoveLeftClick={() => this.props.moveModuleChapterBack(chapter, i)}
-                        onMoveRightClick={() => this.props.moveModuleChapterAhead(chapter, i)}
-                        module={mod}
-                        onDeleteClick={() => this.askDeleteModule(i)}
-                        onEditClick={() => this.props.history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </Col>
-            </div>
-          </Row> : null} */}
           {deleting && <Spinner fullpage />}
           {moving && <Spinner fullpage />}
           <Modal isOpen={!isNull(this.state.moduleToDelete)} toggle={this.clearDeleteChapterModal}>

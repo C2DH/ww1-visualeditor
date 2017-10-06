@@ -73,7 +73,6 @@ class DocumentChooser extends PureComponent {
   }
 
   searchDocuments = debounce(searchString => {
-    console.log('Debouncer!')
     this.props.loadDocuments(this.makeParams({
       filters: {
         title__icontains: searchString,

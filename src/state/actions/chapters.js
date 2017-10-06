@@ -43,9 +43,9 @@ export const DELETE_CHAPTER = 'DELETE_CHAPTER'
 export const DELETE_CHAPTER_LOADING = 'DELETE_CHAPTER_LOADING'
 export const DELETE_CHAPTER_FAILURE = 'DELETE_CHAPTER_FAILURE'
 export const DELETE_CHAPTER_SUCCESS = 'DELETE_CHAPTER_SUCCESS'
-export const deleteChapter = (id, themeId) => ({
+export const deleteChapter = (id, theme) => ({
   type: DELETE_CHAPTER,
-  payload: { id, themeId },
+  payload: { id, theme },
 })
 
 export const DELETE_MODULE_CHAPTER = 'DELETE_MODULE_CHAPTER'

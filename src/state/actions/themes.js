@@ -53,6 +53,21 @@ export const deleteTheme = (id) => ({
   payload: id,
 })
 
+export const MOVE_CHAPTER_THEME = 'MOVE_CHAPTER_THEME'
+export const MOVE_CHAPTER_THEME_LOADING = 'MOVE_CHAPTER_THEME_LOADING'
+export const MOVE_CHAPTER_THEME_FAILURE = 'MOVE_CHAPTER_THEME_FAILURE'
+export const MOVE_CHAPTER_THEME_SUCCESS = 'MOVE_CHAPTER_THEME_SUCCESS'
+
+export const moveChapterThemeAhead = (theme, chapterIndex, chapterId) => ({
+  type: MOVE_CHAPTER_THEME,
+  payload: { theme, chapterIndex, chapterId, direction: 'ahead' }
+})
+
+export const moveChapterThemeBack = (theme, chapterIndex, chapterId) => ({
+  type: MOVE_CHAPTER_THEME,
+  payload: { theme, chapterIndex, chapterId, direction: 'back' }
+})
+
 export const THEME_UPDATED = 'THEME_UPDATED'
 export const themeUpdated = theme => ({
   type: THEME_UPDATED,
