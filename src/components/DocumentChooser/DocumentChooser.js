@@ -141,11 +141,13 @@ class DocumentChooser extends PureComponent {
 
         <div className="DocumentChooser__BottomContent">
           <Row>
-            <Col md="3">
-              {multi && <Button size="sm" block onClick={selectionDone}>Done</Button>}
+            {multi && <Col md={3}>
+              <Button size="sm" block onClick={selectionDone}>Done</Button>
+            </Col>}
+            <Col md={3}>
               <Button size="sm" block onClick={this.props.hideWidgetFullPage}>Exit</Button>
             </Col>
-            <Col md="9" />
+            <Col md={multi ? 6 : 9} />
           </Row>
         </div>
       </Container>
