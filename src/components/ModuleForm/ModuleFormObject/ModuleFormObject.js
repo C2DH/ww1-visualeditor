@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector, change } from 'redux-form'
@@ -16,6 +17,7 @@ import VisualForm, {
 
 import ChooseDocument from '../../Form/ChooseDocument'
 import Translate from '../../Form/Translate'
+import MediumEditor from '../../Form/MediumEditor'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
 
@@ -23,7 +25,16 @@ import {
   getCurrentLanguage,
 } from '../../../state/selectors'
 
+import 'video-react/dist/video-react.css'
+import { Player, BigPlayButton } from 'video-react'
+
 class ModuleFormObject extends PureComponent {
+  state = {
+    playerWidth: 0,
+    playerHeight: 0,
+    playerState: null,
+  }
+
   changeBackgroundType = (e) => {
     if (e.target.value === 'color') {
       this.props.change('moduleObject', 'background.object', null)
@@ -36,6 +47,47 @@ class ModuleFormObject extends PureComponent {
   componentWillReceiveProps(nextProps) {
     if (this.props.documentType !== nextProps.documentType) {
       this.props.change('moduleObject', 'id', null)
+    }
+  }
+
+  componentDidUpdate() {
+    // We don't know when we have the stupid player
+    if (this.player) {
+      this.player.subscribeToStateChange(this.handlePlayerStateChange)
+      this.fitTheStupidPlayer()
+    }
+  }
+
+  handlePlayerStateChange = (state) => {
+    this.setState({ playerState: state })
+  }
+
+  fitTheStupidPlayer = () => {
+    const { playerState } = this.state
+    if (playerState && playerState.videoWidth && playerState.videoHeight && this.videoCont) {
+      const cont = ReactDOM.findDOMNode(this.videoCont)
+      const useHeight = cont.clientHeight - 50
+      const width = cont.clientWidth
+      const { videoHeight, videoWidth } = playerState
+
+      let playerHeight = 0
+      let playerWidth = 0
+
+      const videoMaxHeight = width * (videoHeight / videoWidth)
+      if (videoMaxHeight < useHeight) {
+        playerHeight = videoMaxHeight
+        playerWidth = width - 30
+      } else {
+        playerHeight = useHeight
+        playerWidth = useHeight * (videoWidth / videoHeight)
+      }
+
+      if (playerHeight !== this.state.playerHeight || playerWidth !== this.state.playerWidth) {
+        this.setState({
+          playerWidth,
+          playerHeight,
+        })
+      }
     }
   }
 
@@ -60,10 +112,8 @@ class ModuleFormObject extends PureComponent {
     const backgroundType = backgroundObject ? 'image' : 'color'
 
     let documentPreviewContainerStyle = {}
-    let documentPreviewStyle = {}
     let overlayStyle = {}
-    if (doc && documentType === 'image') {
-      documentPreviewStyle.backgroundImage = `url(${doc.attachment})`
+    if (doc) {
       // Size
       if (documentSize === 'small') {
         documentPreviewContainerStyle.width = '50%'
@@ -196,7 +246,68 @@ class ModuleFormObject extends PureComponent {
           overlayStyle={overlayStyle}
           backgroundColorOverlay={backgroundColorOverlay}>
 
-          <div style={documentPreviewContainerStyle}>
+          <div
+            style={documentPreviewContainerStyle}
+            ref={ref => this.videoCont = ref}>
+
+            {(doc && documentType === 'video') && (
+              <Player
+                ref={ref => this.player = ref}
+                width={this.state.playerWidth}
+                height={this.state.playerHeight}
+                playsInline
+                fluid={false}
+                src={doc.attachment}
+              >
+                <BigPlayButton position='center' />
+              </Player>
+            )}
+
+            {(doc && documentType === 'image') && (
+              <div style={{ backgroundImage: `url(${doc.attachment})` }} className="ModuleFormObject__DocumentPreview"></div>
+            )}
+
+            <div
+              className="ModuleFormObject__DocumentPreview__Caption"
+              style={documentType === 'video' ? {width: this.state.playerWidth} : undefined}>
+
+              <Field
+                name={`caption.${language.code}`}
+                className="invisible-input"
+                style={{ width: '100%' }}
+                placeholder='Insert caption'
+                component={MediumEditor}
+                options={{
+                  disableReturn: true,
+                }}
+              />
+              <Field
+                name={`caption`}
+                component={Translate}
+              />
+            </div>
+         </div>
+
+         {/* <div style={documentPreviewContainerStyle}>
+
+         {(doc && documentType === 'image') && (
+          <div style={{ backgroundImage: `url(${doc.attachment})` }} className="ModuleFormObject__DocumentPreview"></div>
+         )}
+            <div className="ModuleFormObject__DocumentPreview__Caption">
+              <Field
+                name={`caption.${language.code}`}
+                className="invisible-input"
+                style={{ width: '100%' }}
+                component='input'
+              />
+              <Field
+                name={`caption`}
+                component={Translate}
+              />
+            </div>
+       </div> */}
+
+          {/* <div style={documentPreviewContainerStyle}>
             <div style={documentPreviewStyle} className="ModuleFormObject__DocumentPreview"></div>
             <div className="ModuleFormObject__DocumentPreview__Caption">
               <Field
@@ -210,7 +321,7 @@ class ModuleFormObject extends PureComponent {
                 component={Translate}
               />
             </div>
-          </div>
+          </div> */}
         </PreviewContainer>
       </VisualForm>
     )

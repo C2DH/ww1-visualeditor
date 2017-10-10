@@ -1,7 +1,7 @@
 .ModuleFormObject__DocumentPreview {
   width: 100%;
   height: calc(100% - 50px);
-  background-size: cover;
+  /*background-size: cover;*/
 }
 
 .ModuleFormObject__DocumentPreview__Caption {
