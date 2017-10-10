@@ -1,5 +1,7 @@
 import { some } from 'lodash'
 
+export const required = value => value ? undefined : 'Required'
+
 // At least one lang must be filled...
 export const requiredAtLeastOne = value => {
   if (some(value)) {

@@ -20,6 +20,7 @@ import MediumEditor from '../../Form/MediumEditor'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
 import AudioPlayer from '../../AudioPlayer'
+import { required } from '../../Form/validate'
 
 import {
   getCurrentLanguage,
@@ -208,6 +209,7 @@ class ModuleFormObject extends PureComponent {
                 documentType={documentType}
                 label="Choose Document"
                 name="id"
+                validate={[required]}
                 component={ChooseDocument}
                />
             </div>
@@ -239,6 +241,7 @@ class ModuleFormObject extends PureComponent {
             </div>
           </SideForm>
           <SideActions>
+            {invalid && <p>Insert an object to save</p>}
             <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
