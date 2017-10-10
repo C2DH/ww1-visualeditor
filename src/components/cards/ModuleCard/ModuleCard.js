@@ -28,8 +28,8 @@ const ModuleCard = pure(({
     backgroundColorOverlay={get(module, 'background.object.overlay')}
     editButtons={
       <div className="w-100 flex">
-        {showLeftButton && <Button onClick={onMoveLeftClick} className="ModuleCard__btn_margin"><i className="fa fa-arrow-left" aria-hidden="true"></i></Button>}
-        {showRightButton && <Button onClick={onMoveRightClick}><i className="fa fa-arrow-right" aria-hidden="true"></i></Button>}
+        {showLeftButton && <Button onClick={onMoveLeftClick} className="ModuleCard__btn_margin"><i className="fa fa-arrow-up" aria-hidden="true"></i></Button>}
+        {showRightButton && <Button onClick={onMoveRightClick}><i className="fa fa-arrow-down" aria-hidden="true"></i></Button>}
         <Button onClick={onEditClick} className="ModuleCard__btn_margin flex-right"><i className="fa fa-pencil" aria-hidden="true"></i></Button>
         <Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>
       </div>
