@@ -91,7 +91,13 @@ class ModuleFormObject extends PureComponent {
         <SideContainer>
           <SideForm>
             <div className="margin-bottom-15">
-              <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+              <Label for="backgroundType">Background</Label>
+              <Input
+                type="select"
+                value={backgroundType}
+                onChange={this.changeBackgroundType}
+                name="backgroundType"
+              >
                 <option value="color">Color</option>
                 <option value="image">Image</option>
               </Input>
@@ -105,6 +111,7 @@ class ModuleFormObject extends PureComponent {
                     onEmptyDocument={() => change('moduleObject', 'background.object', {})}
                    />
                  </div>
+                <hr />
                 <div>
                   <Field
                     label="Background Overlay"
@@ -129,7 +136,9 @@ class ModuleFormObject extends PureComponent {
                  </div>
               </div>
             )}
+            <hr />
             <div className="margin-bottom-15">
+              <Label for="type">Object</Label>
               <Field
                 label="Document Type"
                 name="type"
