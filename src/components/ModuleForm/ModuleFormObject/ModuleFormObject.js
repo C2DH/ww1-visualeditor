@@ -5,7 +5,6 @@ import { reduxForm, Field, formValueSelector, change } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
-
 import './ModuleFormObject.css'
 
 import VisualForm, {
@@ -20,6 +19,7 @@ import Translate from '../../Form/Translate'
 import MediumEditor from '../../Form/MediumEditor'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
+import AudioPlayer from '../../AudioPlayer'
 
 import {
   getCurrentLanguage,
@@ -125,6 +125,10 @@ class ModuleFormObject extends PureComponent {
         documentPreviewContainerStyle.width = '100%'
         documentPreviewContainerStyle.height = '100%'
         overlayStyle.padding = 0
+      }
+      // When audio ignore container width
+      if (documentType === 'audio') {
+        documentPreviewContainerStyle.height = undefined
       }
       // Position
       if (documentPosition === 'left') {
@@ -249,6 +253,12 @@ class ModuleFormObject extends PureComponent {
           <div
             style={documentPreviewContainerStyle}
             ref={ref => this.videoCont = ref}>
+
+            {(doc && documentType === 'audio') && (
+              <AudioPlayer
+                src={doc.attachment}
+              />
+            )}
 
             {(doc && documentType === 'video') && (
               <Player
