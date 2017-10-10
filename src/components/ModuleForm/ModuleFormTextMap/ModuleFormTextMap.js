@@ -122,8 +122,8 @@ class ModuleFormTextMap extends PureComponent {
                   name="layout"
                   component={Select}
                  >
-                   <option value="text-gallery">Text Gallery</option>
-                   <option value="gallery-text">Gallery Text</option>
+                   <option value="text-map">Text Map</option>
+                   <option value="map-text">Map Text</option>
                  </Field>
                </FormGroup>
             </div>
