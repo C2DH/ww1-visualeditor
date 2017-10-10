@@ -151,13 +151,13 @@ class ModuleFormTextMap extends PureComponent {
              component={Translate}
            />
           <Field
-            name={`gallery.caption.${language.code}`}
+            name={`map.caption.${language.code}`}
             className="invisible-input"
             component='input'
             style={{ color: textColor }}
            />
            <Field
-             name={`gallery.caption`}
+             name={`map.caption`}
              component={Translate}
            />
         </PreviewContainer>
