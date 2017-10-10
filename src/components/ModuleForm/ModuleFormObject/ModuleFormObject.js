@@ -288,40 +288,6 @@ class ModuleFormObject extends PureComponent {
             </div>
          </div>
 
-         {/* <div style={documentPreviewContainerStyle}>
-
-         {(doc && documentType === 'image') && (
-          <div style={{ backgroundImage: `url(${doc.attachment})` }} className="ModuleFormObject__DocumentPreview"></div>
-         )}
-            <div className="ModuleFormObject__DocumentPreview__Caption">
-              <Field
-                name={`caption.${language.code}`}
-                className="invisible-input"
-                style={{ width: '100%' }}
-                component='input'
-              />
-              <Field
-                name={`caption`}
-                component={Translate}
-              />
-            </div>
-       </div> */}
-
-          {/* <div style={documentPreviewContainerStyle}>
-            <div style={documentPreviewStyle} className="ModuleFormObject__DocumentPreview"></div>
-            <div className="ModuleFormObject__DocumentPreview__Caption">
-              <Field
-                name={`caption.${language.code}`}
-                className="invisible-input"
-                style={{ width: '100%' }}
-                component='input'
-              />
-              <Field
-                name={`caption`}
-                component={Translate}
-              />
-            </div>
-          </div> */}
         </PreviewContainer>
       </VisualForm>
     )
