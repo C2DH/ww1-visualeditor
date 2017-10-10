@@ -11,6 +11,7 @@
 
 .VisualForm__SideContainer__SideForm {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .VisualForm__SideContainer__SideActions {
