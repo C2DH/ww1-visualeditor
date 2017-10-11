@@ -50,7 +50,6 @@ class ModuleFormGallery extends PureComponent {
       backgroundColorOverlay,
       backgroundColor,
       doc,
-      objects,
       layout,
       images,
     } = this.props
@@ -62,7 +61,12 @@ class ModuleFormGallery extends PureComponent {
         <SideContainer>
           <SideForm>
             <div className="margin-bottom-15">
-              <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+              <Label for="backgroundType">Background</Label>
+              <Input
+                type="select"
+                name='backgroundType'
+                value={backgroundType}
+                onChange={this.changeBackgroundType}>
                 <option value="color">Color</option>
                 <option value="image">Image</option>
               </Input>
@@ -76,6 +80,7 @@ class ModuleFormGallery extends PureComponent {
                     onEmptyDocument={() => change('moduleGallery', 'background.object', {})}
                    />
                  </div>
+                <hr />
                 <div>
                   <Field
                     label="Background Overlay"
@@ -100,7 +105,9 @@ class ModuleFormGallery extends PureComponent {
                  </div>
               </div>
             )}
+            <hr />
             <div className="margin-bottom-15">
+              <Label for='layout'>Gallery Layout</Label>
               <Field
                 name="layout"
                 component={Select}
@@ -164,7 +171,6 @@ const mapStateToProps = state => ({
   language: getCurrentLanguage(state),
   doc: selector(state, 'id'),
   layout: selector(state, 'layout'),
-  objects: selector(state, 'objects'),
   images: getImages(selector(state, 'objects')),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),

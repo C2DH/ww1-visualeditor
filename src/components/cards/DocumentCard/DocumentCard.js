@@ -13,8 +13,8 @@ const DocumentCard = ({ title = '', cover = null, checked, onClick, onChange }) 
       typeof onChange === 'undefined'
       ? <Button onClick={onClick}><i className="fa fa-crosshairs" aria-hidden="true"></i></Button>
       : (
-        <Label check onChange={onChange}>
-          <Input type="checkbox" checked={checked} />{' '}
+        <Label check>
+          <Input onChange={onChange} type="checkbox" checked={checked} />{' '}
         </Label>
       )
     }

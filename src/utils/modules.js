@@ -94,6 +94,7 @@ const createEmptyModuleTextGallery = languages => ({
   },
   gallery: {
     objects: [],
+    layout: 'grid',
     caption: createEmptyMultilangObj(languages, ''),
   },
   layout: 'text-gallery'

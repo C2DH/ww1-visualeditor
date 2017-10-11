@@ -3,13 +3,17 @@ import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector, change, FieldArray } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { FormGroup, Label, Button, Input } from 'reactstrap'
+import classNames from 'classnames'
+import { defaultMemoize } from 'reselect'
 
+import Gallery from '../../Gallery'
 import ChooseDocument from '../../Form/ChooseDocument'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
+import MediumEditor from '../../Form/MediumEditor'
 
 import './ModuleFormTextGallery.css'
 
@@ -47,6 +51,9 @@ class ModuleFormTextGallery extends PureComponent {
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
+      images,
+      layout,
+      galleryLayout,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
@@ -56,7 +63,12 @@ class ModuleFormTextGallery extends PureComponent {
         <SideContainer>
           <SideForm>
             <div className="margin-bottom-15">
-              <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+              <Label for="backgroundType">Background</Label>
+              <Input
+                name='backgroundType'
+                type="select"
+                value={backgroundType}
+                onChange={this.changeBackgroundType}>
                 <option value="color">Color</option>
                 <option value="image">Image</option>
               </Input>
@@ -70,6 +82,7 @@ class ModuleFormTextGallery extends PureComponent {
                     onEmptyDocument={() => change('moduleTextGallery', 'background.object', {})}
                    />
                  </div>
+                <hr />
                 <div>
                   <Field
                     label="Background Overlay"
@@ -94,6 +107,21 @@ class ModuleFormTextGallery extends PureComponent {
                  </div>
               </div>
             )}
+            <hr />
+            <div className="margin-bottom-15">
+              <FormGroup>
+                <Label for='layout'>Page Layout</Label>
+                <Field
+                  label="Layout"
+                  name="layout"
+                  component={Select}
+                 >
+                   <option value="text-gallery">Text Gallery</option>
+                   <option value="gallery-text">Gallery Text</option>
+                 </Field>
+               </FormGroup>
+            </div>
+            <hr />
             <Field
               label="Text color"
               colors={['#fff', '#000']}
@@ -120,19 +148,6 @@ class ModuleFormTextGallery extends PureComponent {
                 component={ChooseDocuments}
               />
             </div>
-            <div className="margin-bottom-15">
-              <FormGroup>
-                <Label>Page Layout</Label>
-                <Field
-                  label="Layout"
-                  name="layout"
-                  component={Select}
-                 >
-                   <option value="text-gallery">Text Gallery</option>
-                   <option value="gallery-text">Gallery Text</option>
-                 </Field>
-               </FormGroup>
-            </div>
           </SideForm>
           <SideActions>
             <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
@@ -140,32 +155,52 @@ class ModuleFormTextGallery extends PureComponent {
           </SideActions>
         </SideContainer>
         <PreviewContainer
+          overlayClassName={classNames(
+            'ModuleFormTextGallery__PreviewOverlay',
+            layout === 'gallery-text' ? 'reverse' : null
+          )}
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
           backgroundColorOverlay={backgroundColorOverlay}>
-          <Field
-            name={`text.content.${language.code}`}
-            className="invisible-input ModuleFormTextObject__Preview-content-input"
-            rows={10}
-            autoComplete="off"
-            component='textarea'
-            style={{ color: textColor }}
-           />
-           <Field
-             name={`text.content`}
-             component={Translate}
-           />
-          <Field
-            name={`gallery.caption.${language.code}`}
-            className="invisible-input"
-            component='input'
-            style={{ color: textColor }}
-           />
-           <Field
-             name={`gallery.caption`}
-             component={Translate}
-           />
+
+        <div className="ModuleFormTextGallery__DocumentPreview__TextContainer">
+            <Field
+              name={`text.content.${language.code}`}
+              className="invisible-input"
+              style={{ width: '100%', color: textColor }}
+              component={MediumEditor}
+              placeholder='Insert text'
+            />
+            <Field
+              name={`text.content`}
+              component={Translate}
+            />
+        </div>
+          <div className="ModuleFormTextGallery__GalleryContainer">
+            <Gallery
+              images={images}
+              layout={galleryLayout}
+              className='ModuleFormTextGallery__DocumentPreview__Gallery'
+            />
+            <div className="ModuleFormTextGallery__DocumentPreview__Caption">
+                <Field
+                  name={`caption.${language.code}`}
+                  className="invisible-input"
+                  style={{ width: '100%' }}
+                  component={MediumEditor}
+                  placeholder='Insert caption'
+                  options={{
+                    disableReturn: true,
+                  }}
+                />
+                <Field
+                  name={`caption`}
+                  component={Translate}
+                />
+            </div>
+        </div>
+
         </PreviewContainer>
       </VisualForm>
     )
@@ -173,11 +208,16 @@ class ModuleFormTextGallery extends PureComponent {
 }
 
 const selector = formValueSelector('moduleTextGallery')
+const getImages = defaultMemoize(objects => objects.map(o => o.id.attachment))
 
 const mapStateToProps = state => ({
   textColor: selector(state, 'text.color'),
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
+  objects: selector(state, 'gallery.objects'),
+  images: getImages(selector(state, 'gallery.objects')),
+  galleryLayout: selector(state, 'gallery.layout'),
+  layout: selector(state, 'layout'),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
