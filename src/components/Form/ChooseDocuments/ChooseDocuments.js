@@ -21,10 +21,6 @@ const renderDoc = ({ input: { value }, ...props }) => (
 )
 
 class ChooseDocuments extends PureComponent {
-  componentDidMount() {
-    console.log(this.props)
-  }
-
   componentWillUnmount() {
     this.props.hideWidgetFullPage()
   }

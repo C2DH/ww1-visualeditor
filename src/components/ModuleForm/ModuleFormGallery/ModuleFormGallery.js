@@ -4,6 +4,7 @@ import { reduxForm, Field, FieldArray, formValueSelector, change } from 'redux-f
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
+import { defaultMemoize } from 'reselect'
 
 import VisualForm, {
   SideContainer,
@@ -18,6 +19,7 @@ import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
+import SlideshowGallery from '../../SlideshowGallery'
 
 import {
   getCurrentLanguage,
@@ -46,9 +48,12 @@ class ModuleFormGallery extends PureComponent {
       backgroundColorOverlay,
       backgroundColor,
       doc,
+      objects,
+      images,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
+    console.log(images)
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
@@ -119,7 +124,10 @@ class ModuleFormGallery extends PureComponent {
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}>
-              <Field
+
+          <SlideshowGallery images={images} />
+
+              {/* <Field
                 name={`caption.${language.code}`}
                 className="invisible-input"
                 style={{ width: '100%' }}
@@ -128,7 +136,7 @@ class ModuleFormGallery extends PureComponent {
               <Field
                 name={`caption`}
                 component={Translate}
-              />
+              /> */}
         </PreviewContainer>
       </VisualForm>
     )
@@ -136,11 +144,14 @@ class ModuleFormGallery extends PureComponent {
 }
 
 const selector = formValueSelector('moduleGallery')
+const getImages = defaultMemoize(objects => objects.map(o => o.id.attachment))
 
 const mapStateToProps = state => ({
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
   doc: selector(state, 'id'),
+  objects: selector(state, 'objects'),
+  images: getImages(selector(state, 'objects')),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
