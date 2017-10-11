@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './state'
 import { AuthRoute, GuestRoute } from './authRoutes'
@@ -27,6 +27,7 @@ const App = () => (
             <AuthRoute path='/themes/new' exact component={NewTheme} />
             <AuthRoute path='/themes/:themeId' component={Theme} />
             <AuthRoute path='/static/:staticStoryId' component={StaticStory} />
+            <Redirect to='/' />
           </Switch>
         </FullPageWidgets>
       </Layout>
