@@ -14,8 +14,6 @@ import Themes from './pages/Themes'
 import NewTheme from './pages/NewTheme'
 import Theme from './pages/Theme'
 import StaticStory from './pages/StaticStory'
-import ChooseModule from './components/ChooseModule'
-
 
 const App = () => (
   <Provider store={store}>
@@ -29,7 +27,6 @@ const App = () => (
             <AuthRoute path='/themes/new' exact component={NewTheme} />
             <AuthRoute path='/themes/:themeId' component={Theme} />
             <AuthRoute path='/static/:staticStoryId' component={StaticStory} />
-            <AuthRoute path='/choose-module' component={ChooseModule} />
           </Switch>
         </FullPageWidgets>
       </Layout>
