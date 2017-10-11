@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 import { defaultMemoize } from 'reselect'
+import './ModuleFormGallery.css'
 
 import VisualForm, {
   SideContainer,
@@ -17,6 +18,7 @@ import AddButton from '../../AddButton'
 import ChooseDocument from '../../Form/ChooseDocument'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
+import MediumEditor from '../../Form/MediumEditor'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
 import SlideshowGallery from '../../SlideshowGallery'
@@ -125,18 +127,29 @@ class ModuleFormGallery extends PureComponent {
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}>
 
-          <SlideshowGallery images={images} />
+          {/* <div style={{ backgroundColor: 'crimson' }}> */}
 
-              {/* <Field
+            <SlideshowGallery images={images} className='ModuleFormGallery__DocumentPreview__Gallery' />
+          {/* </div> */}
+
+          <div className="ModuleFormGallery__DocumentPreview__Caption">
+
+              <Field
                 name={`caption.${language.code}`}
                 className="invisible-input"
                 style={{ width: '100%' }}
-                component='input'
+                component={MediumEditor}
+                placeholder='Insert caption'
+                options={{
+                  disableReturn: true,
+                }}
               />
               <Field
                 name={`caption`}
                 component={Translate}
-              /> */}
+              />
+          </div>
+
         </PreviewContainer>
       </VisualForm>
     )

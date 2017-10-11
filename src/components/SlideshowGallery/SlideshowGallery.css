@@ -1,21 +1,30 @@
+.SlideshowGallery {
+  display: flex;
+  justify-content: space-between;
+}
 .SlideshowGallery__CurrentImageContainer {
   display: flex;
-  height: 100%;
+  height: calc(100% - 20px);
   justify-content: center;
 }
+
 .SlideshowGallery__CurrentImage {
   max-width: 100%;
   max-height: 100%;
   height: auto;
+  margin: auto;
 }
 
 .SlideshowGallery__SideControls {
   display: flex;
+  width: 43px;
+  margin: 5px;
   justify-content: center;
   flex-direction: column;
 }
 
 .SlideshowGallery__BottomControls {
+  height: 20px;
   display: flex;
   justify-content: center;
   flex-direction: row;

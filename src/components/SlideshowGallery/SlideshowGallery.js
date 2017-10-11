@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Button, Row, Col } from 'reactstrap'
+import classNames from 'classnames'
 import './SlideshowGallery.css'
 
 class SlideshowGallery extends PureComponent {
@@ -34,22 +35,22 @@ class SlideshowGallery extends PureComponent {
     const hasPrev = currentIndex > 0
 
     return (
-      <Row>
-        <Col md={1} className="SlideshowGallery__SideControls">
+      <div style={this.props.style} className={classNames('SlideshowGallery', this.props.className)}>
+        <div className="SlideshowGallery__SideControls">
           {hasPrev && <Button onClick={this.goPrev}><i className="fa fa-arrow-left" /></Button>}
-        </Col>
-        <Col md={10}>
+        </div>
+        <div>
           <div className='SlideshowGallery__CurrentImageContainer'>
             {currentImage && <img className="SlideshowGallery__CurrentImage" src={currentImage} />}
           </div>
           {currentImage && (<div className='SlideshowGallery__BottomControls'>
             <div>{currentIndex + 1} {' / '} {images.length}</div>
           </div>)}
-        </Col>
-        <Col md={1} className="SlideshowGallery__SideControls">
+        </div>
+        <div className="SlideshowGallery__SideControls">
          {hasNext && <Button onClick={this.goNext}><i className="fa fa-arrow-right" /></Button>}
-        </Col>
-      </Row>
+       </div>
+      </div>
     )
   }
 }
