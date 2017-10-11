@@ -21,7 +21,7 @@ import Translate from '../../Form/Translate'
 import MediumEditor from '../../Form/MediumEditor'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
-import SlideshowGallery from '../../SlideshowGallery'
+import Gallery from '../../Gallery'
 
 import {
   getCurrentLanguage,
@@ -51,11 +51,11 @@ class ModuleFormGallery extends PureComponent {
       backgroundColor,
       doc,
       objects,
+      layout,
       images,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
-    console.log(images)
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
@@ -127,13 +127,13 @@ class ModuleFormGallery extends PureComponent {
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}>
 
-          {/* <div style={{ backgroundColor: 'crimson' }}> */}
-
-            <SlideshowGallery images={images} className='ModuleFormGallery__DocumentPreview__Gallery' />
-          {/* </div> */}
+          <Gallery
+            images={images}
+            layout={layout}
+            className='ModuleFormGallery__DocumentPreview__Gallery'
+          />
 
           <div className="ModuleFormGallery__DocumentPreview__Caption">
-
               <Field
                 name={`caption.${language.code}`}
                 className="invisible-input"
@@ -163,6 +163,7 @@ const mapStateToProps = state => ({
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
   doc: selector(state, 'id'),
+  layout: selector(state, 'layout'),
   objects: selector(state, 'objects'),
   images: getImages(selector(state, 'objects')),
   // Background

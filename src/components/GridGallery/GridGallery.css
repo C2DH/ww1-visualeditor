@@ -1,0 +1,14 @@
+.GridGallery {
+  overflow-y: scroll;
+}
+
+.GridGallery__Row {
+  padding-bottom: 10px;
+}
+
+.GridGallery__Image {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  margin: auto;
+}
