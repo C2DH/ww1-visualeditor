@@ -7,6 +7,7 @@ import settings from './settings'
 import entities from './entities'
 import themes from './themes'
 import staticStories from './staticStories'
+import educationals from './educationals'
 import staticStoryDetail from './staticStoryDetail'
 import themeDetail from './themeDetail'
 import chapterDetail from './chapterDetail'
@@ -22,6 +23,7 @@ export default combineReducers({
   entities,
   themes,
   staticStories,
+  educationals,
   staticStoryDetail,
   themeDetail,
   chapterDetail,

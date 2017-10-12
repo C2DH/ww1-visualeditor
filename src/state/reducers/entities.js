@@ -7,6 +7,10 @@ import {
   THEME,
   CHAPTER,
   STATIC_STORY,
+  EDUCATIONAL,
+  GET_EDUCATIONALS_SUCCESS,
+  GET_EDUCATIONAL_SUCCESS,
+  EDUCATIONAL_UPDATED,
   GET_STATIC_STORIES_SUCCESS,
   GET_STATIC_STORY_SUCCESS,
   STATIC_STORY_UPDATED,
@@ -16,6 +20,7 @@ import {
   CHAPTER_CREATED,
   DELETE_CHAPTER_SUCCESS,
   DELETE_THEME_SUCCESS,
+  DELETE_EDUCATIONAL_SUCCESS,
   MOVE_CHAPTER_THEME_SUCCESS,
 } from '../actions'
 
@@ -183,8 +188,28 @@ const staticStories = (prevState = {}, action) => {
   }
 }
 
+const educationalsEntityReducer = makeStoryEntityReducer(STATIC_STORY)
+const educationals = (prevState = {}, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case GET_EDUCATIONAL_SUCCESS:
+    case EDUCATIONAL_UPDATED:
+      return {
+        ...prevState,
+        [payload.id]: payload,
+      }
+    case DELETE_EDUCATIONAL_SUCCESS:
+      return omit(prevState, payload.id)
+    case GET_EDUCATIONALS_SUCCESS:
+      return mergeList(prevState, payload.results)
+    default:
+      return educationalsEntityReducer(prevState, action)
+  }
+}
+
 export default combineReducers({
   themes,
   chapters,
+  educationals,
   staticStories,
 })

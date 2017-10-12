@@ -14,6 +14,7 @@ import Themes from './pages/Themes'
 import NewTheme from './pages/NewTheme'
 import Theme from './pages/Theme'
 import StaticStory from './pages/StaticStory'
+import NewEducational from './pages/NewEducational'
 
 const App = () => (
   <Provider store={store}>
@@ -27,6 +28,7 @@ const App = () => (
             <AuthRoute path='/themes/new' exact component={NewTheme} />
             <AuthRoute path='/themes/:themeId' component={Theme} />
             <AuthRoute path='/static/:staticStoryId' component={StaticStory} />
+            <AuthRoute path='/educationals/new' component={NewEducational} />
             <Redirect to='/' />
           </Switch>
         </FullPageWidgets>

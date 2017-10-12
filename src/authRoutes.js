@@ -72,7 +72,6 @@ export const GuestRoute = connect(({ auth }) => ({ auth }))(({
     {...rest}
     render={props => {
       if (auth.user) {
-        console.log('Go back to copaning!')
         return (
           <Redirect
             to={{

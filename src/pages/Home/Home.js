@@ -6,6 +6,7 @@ import { Badge } from 'reactstrap';
 import AddButton from '../../components/AddButton'
 import { Link } from 'react-router-dom'
 import ThemeCard from '../../components/cards/ThemeCard'
+import EducationalCard from '../../components/cards/EducationalCard'
 import './Home.css'
 import {
   loadStaticStories,
@@ -13,29 +14,37 @@ import {
   loadThemes,
   unloadThemes,
   deleteTheme,
+  loadEducationals,
+  unloadEducationals,
+  deleteEducational,
 } from '../../state/actions'
 import {
   makeTranslator,
   getStaticStories,
   getThemes,
-  areThemesLoading,
+  getEducationals,
 } from '../../state/selectors'
 
 
 class Home extends PureComponent {
   state = {
     themeToDelete: null,
+    educationalToDelete: null,
   }
 
   componentDidMount() {
     this.props.loadStaticStories()
     this.props.loadThemes()
+    this.props.loadEducationals()
   }
 
   componentWillUnmount() {
     this.props.unloadStaticStories()
     this.props.unloadThemes()
+    this.props.unloadEducationals()
   }
+
+  // theme modal
 
   askDeleteTheme = theme => this.setState({ themeToDelete: theme })
 
@@ -46,8 +55,28 @@ class Home extends PureComponent {
     this.setState({ themeToDelete: null })
   }
 
+  // edu modal
+
+  askDeleteEducational = educational =>
+    this.setState({ educationalToDelete: educational })
+
+  clearDeleteEducationalModal = () =>
+    this.setState({ educationalToDelete: null })
+
+  deleteEducational = () => {
+    this.props.deleteEducational(this.state.educationalToDelete.id)
+    this.setState({ educationalToDelete: null })
+  }
+
   render() {
-    const { staticStories, themes, deleting, trans } = this.props
+    const {
+      staticStories,
+      themes,
+      educationals,
+      deletingThemes,
+      deletingEducationals,
+      trans
+    } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <Row>
@@ -61,8 +90,11 @@ class Home extends PureComponent {
             </div>
             <div className="Home__Col-card-container">
               {themes && themes.map((theme, i) => (
-                <Link key={i} to={`/themes/${theme.id}`} style={deleting[theme.id] ? { pointerEvents: 'none' } : undefined}>
-                  <div style={deleting[theme.id] ? { opacity: 0.5 } : undefined}>
+                <Link
+                  key={theme.id}
+                  to={`/themes/${theme.id}`}
+                  style={deletingThemes[theme.id] ? { pointerEvents: 'none' } : undefined}>
+                  <div style={deletingThemes[theme.id] ? { opacity: 0.5 } : undefined}>
                     <ThemeCard
                       theme={theme}
                       onDeleteClick={e => {
@@ -80,8 +112,26 @@ class Home extends PureComponent {
               <h4>Last Educational</h4>
               <Badge className="Home__titlebadge">All</Badge>
             </div>
-            <div>
-              <AddButton label="Add Educational"/>
+            <div className="Home__Addbtn_container">
+              <AddButton label="Add educational" tag={Link} to={'/educationals/new'}/>
+            </div>
+            <div className="Home__Col-card-container">
+              {educationals && educationals.map((educational, i) => (
+                <Link
+                  key={i}
+                  to={`/educationals/${educational.id}`}
+                  style={deletingEducationals[educational.id] ? { pointerEvents: 'none' } : undefined}>
+                  <div style={deletingEducationals[educational.id] ? { opacity: 0.5 } : undefined}>
+                    <EducationalCard
+                      educational={educational}
+                      onDeleteClick={e => {
+                        e.preventDefault()
+                        this.askDeleteEducational(educational)
+                      }}
+                    />
+                  </div>
+                 </Link>
+              ))}
             </div>
           </Col>
           <Col md={4}>
@@ -106,6 +156,16 @@ class Home extends PureComponent {
             <Button color="danger" onClick={this.deleteTheme}>Delete</Button>{' '}
           </ModalFooter>
         </Modal>
+        <Modal isOpen={!isNull(this.state.educationalToDelete)} toggle={this.clearDeleteEducationalModal}>
+          <ModalHeader>Delete educational</ModalHeader>
+          <ModalBody>
+            Delete educational {trans(this.state.educationalToDelete, 'data.title')}?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.clearDeleteEducationalModal}>Undo</Button>
+            <Button color="danger" onClick={this.deleteEducational}>Delete</Button>{' '}
+          </ModalFooter>
+        </Modal>
       </Container>
     )
   }
@@ -115,8 +175,9 @@ const mapStateToProps = state => ({
   trans: makeTranslator(state),
   staticStories: getStaticStories(state),
   themes: getThemes(state),
-  loading: areThemesLoading(state),
-  deleting: state.themes.deleting,
+  educationals: getEducationals(state),
+  deletingThemes: state.themes.deleting,
+  deletingEducationals: state.educationals.deleting,
 })
 
 export default connect(mapStateToProps, {
@@ -125,4 +186,7 @@ export default connect(mapStateToProps, {
   unloadStaticStories,
   loadThemes,
   unloadThemes,
+  loadEducationals,
+  unloadEducationals,
+  deleteEducational,
 })(Home)

@@ -12,6 +12,8 @@ import {
   GET_THEMES,
   GET_DOCUMENTS,
   GET_STATIC_STORIES,
+  GET_EDUCATIONALS,
+  EDUCATIONAL,
   DELETE_MODULE_CHAPTER,
   DELETE_MODULE_CHAPTER_LOADING,
   DELETE_MODULE_CHAPTER_FAILURE,
@@ -101,10 +103,13 @@ export default function* rootSaga() {
   yield fork(makeStoryDetail(CHAPTER))
   yield fork(makeCollection(GET_STATIC_STORIES, api.getStaticStories))
   yield fork(makeStoryDetail(STATIC_STORY))
+  yield fork(makeCollection(GET_EDUCATIONALS, api.getEducationals))
+  yield fork(makeStoryDetail(EDUCATIONAL))
   yield takeEvery(DELETE_MODULE_CHAPTER, handleDeleteModuleChapter)
   yield takeEvery(MOVE_MODULE_CHAPTER, handleMoveModuleChapter)
   yield takeEvery(MOVE_CHAPTER_THEME, handleMoveChapterTheme)
   yield fork(makeDeleteStory(THEME))
+  yield fork(makeDeleteStory(EDUCATIONAL))
   yield fork(makeDeleteStory(CHAPTER, token => ({ id, theme }) =>
     // Got dragon balls like my name was Vegeta
     Promise.all([

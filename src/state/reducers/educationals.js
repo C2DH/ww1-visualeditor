@@ -4,21 +4,21 @@ import removeFromCollection from './hor/removeFromCollection'
 import resetOn from './hor/resetOn'
 import composeReducers from './composeReducers'
 import {
-  GET_THEMES,
-  DELETE_THEME_LOADING,
-  DELETE_THEME_SUCCESS,
-  DELETE_THEME_FAILURE,
-  GET_THEMES_UNLOAD
+  GET_EDUCATIONALS,
+  DELETE_EDUCATIONAL_LOADING,
+  DELETE_EDUCATIONAL_SUCCESS,
+  DELETE_EDUCATIONAL_FAILURE,
+  GET_EDUCATIONALS_UNLOAD
 } from '../actions'
 
 const deleting = (prevState = {}, { type, payload }) => {
   switch (type) {
-    case DELETE_THEME_LOADING:
+    case DELETE_EDUCATIONAL_LOADING:
       return {
         [payload]: true,
       }
-    case DELETE_THEME_SUCCESS:
-    case DELETE_THEME_FAILURE:
+    case DELETE_EDUCATIONAL_SUCCESS:
+    case DELETE_EDUCATIONAL_FAILURE:
       return {
         [payload]: undefined,
       }
@@ -30,9 +30,9 @@ const deleting = (prevState = {}, { type, payload }) => {
 const reducer = combineReducers({
   deleting,
   list: composeReducers(
-    collection(GET_THEMES),
-    removeFromCollection(DELETE_THEME_SUCCESS)
+    collection(GET_EDUCATIONALS),
+    removeFromCollection(DELETE_EDUCATIONAL_SUCCESS)
   ),
 })
 
-export default resetOn(GET_THEMES_UNLOAD, reducer)
+export default resetOn(GET_EDUCATIONALS_UNLOAD, reducer)

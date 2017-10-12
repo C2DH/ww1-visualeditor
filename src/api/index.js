@@ -117,6 +117,13 @@ export const getStaticStories = token => () =>
     }),
   })
 
+export const getEducationals = token => () =>
+  getStories(token)({
+    filters: JSON.stringify({
+      'tags__slug': 'education',
+    }),
+  })
+
 export const deleteStory = token => id =>
   withToken(token, request.del(`/api/story/${id}/`))
     .then(extractBody)
@@ -199,18 +206,30 @@ const onlyId = module => mapValues(module, (v, k, o) => {
   return v
 })
 
-export const createChapterCaptions = token => chapterId =>
-  withToken(token, request.post(`/api/caption/extract-from-story/${chapterId}/`).send({
+export const createStoryCaptions = token => storyId =>
+  withToken(token, request.post(`/api/caption/extract-from-story/${storyId}/`).send({
     key: 'id',
     parser: 'json',
   }))
   .then(extractBody)
+
+export const createChapterCaptions = token => chapterId =>
+  createStoryCaptions(token)(chapterId)
 
 export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
     contents: JSON.stringify({
       modules: get(chapter, 'contents.modules', []).concat(onlyId(module))
     })
+  }))
+  .then(extractBody)
+
+export const createEducational = token => edu =>
+  withToken(token, request.post(`/api/story/`).send({
+    ...edu,
+    title: edu.data.title[findKey(edu.data.title)],
+    data: onlyId(edu.data),
+    covers: edu.covers.map(({ id }) => id),
   }))
   .then(extractBody)
 

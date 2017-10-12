@@ -1,6 +1,6 @@
 import { createSelector, defaultMemoize } from 'reselect'
 import { reduce, keys, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
-import { TAG_THEME, TAG_CHAPTER } from '../consts'
+import { TAG_THEME, TAG_CHAPTER, TAG_EDUCATION } from '../consts'
 
 // fp <3
 const maybeNull = a => fn => isNull(a) ? null : fn(a)
@@ -18,7 +18,7 @@ export const makeTranslator = createSelector(
   lang => (obj, path) => get(obj, `${path}.${lang}`)
 )
 
-const createEmptyMultilangObj = languages => languages.reduce((r, l) => ({
+export const createEmptyMultilangObj = languages => languages.reduce((r, l) => ({
   ...r,
   [l.code]: '',
 }), {})
@@ -192,3 +192,25 @@ export const getStaticStory = createSelector(
 )
 export const isStaticStorySaving = state => state.staticStoryDetail.saving
 export const isStaticStoryLoading = state => state.staticStoryDetail.loading
+
+// Educational
+
+export const getEducationals = createSelector(
+  state => state.educationals.list.ids,
+  state => state.entities.educationals,
+  (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
+)
+
+export const getNewEducational = createSelector(
+  getLanguages,
+  languages => ({
+    covers: [],
+    data: {
+      title: createEmptyMultilangObj(languages),
+      activity: createEmptyMultilangObj(languages),
+      requirements: [],
+      manual: {},
+    },
+    tags: [TAG_EDUCATION],
+  })
+)
