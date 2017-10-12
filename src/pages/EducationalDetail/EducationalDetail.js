@@ -7,11 +7,14 @@ import {
   getEducational,
   isEducationalLoading,
   makeTranslator,
+  isEducationalSaving,
 } from '../../state/selectors'
 import {
   loadEducational,
   unloadEducational,
   educationalUpdated,
+  publishEducational,
+  unpublishEducational,
 } from '../../state/actions'
 import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
@@ -31,6 +34,15 @@ class EducationalDetail extends PureComponent {
     this.props.unloadEducational()
   }
 
+  toggledPublished = () => {
+    const { educational } = this.props
+    if (educational.status === 'draft') {
+      this.props.publishEducational(educational.id)
+    } else {
+      this.props.unpublishEducational(educational.id)
+    }
+  }
+
   updateEducational = (educational) => {
     return updateEducational(educational)
       .then(updateEducational =>
@@ -44,7 +56,9 @@ class EducationalDetail extends PureComponent {
   }
 
   render() {
-    const { educational, loading, trans } = this.props
+    const { educational, loading, trans, saving } = this.props
+    // const baseUrl = process.env.REACT_APP_FRONTEND_URL
+    // const previewUrl = `${baseUrl}/themes/${theme.slug}?_t=${authToken}`
 
     if (loading && !educational) {
       return <Spinner />
@@ -52,31 +66,41 @@ class EducationalDetail extends PureComponent {
 
     return (
       <div>
-        <div className='EducationalDetail__Top'>
-          <div>{trans(educational, 'data.title')}</div>
+        {educational && (
           <div>
-            <Button>Bella</Button>
-            <Button>Socio</Button>
+            <div className='EducationalDetail__Top'>
+              <div className='EducationalDetail__TopTitle'>{trans(educational, 'data.title')}</div>
+              <div>
+                <Button disabled={saving} className='EducationalDetail__TopButton' onClick={this.toggledPublished}>
+                  {educational.status === 'draft' ? 'Publish' : 'Unpublish'}
+                </Button>
+                <Button tag={'a'} href={'/'} target="_blank" className="button-link">Preview</Button>
+              </div>
+            </div>
+            <EducationalForm
+              onSubmit={this.updateEducational}
+              onSubmitSuccess={this.educationalUpdated}
+              initialValues={educational}
+            />
           </div>
-        </div>
-        <EducationalForm
-          onSubmit={this.updateEducational}
-          onSubmitSuccess={this.educationalUpdated}
-          initialValues={educational}
-        />
+        )}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  authToken: state.auth.accessToken,
   trans: makeTranslator(state),
   educational: getEducational(state),
   loading: isEducationalLoading(state),
+  saving: isEducationalSaving(state),
 })
 
 export default connect(mapStateToProps, {
   loadEducational,
   unloadEducational,
   educationalUpdated,
+  publishEducational,
+  unpublishEducational,
 })(EducationalDetail)

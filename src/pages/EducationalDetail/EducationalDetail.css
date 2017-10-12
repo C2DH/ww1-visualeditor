@@ -6,4 +6,14 @@
   display: flex;
   justify-content: space-between;
   background-color: #eee;
+  align-items: center;
+}
+
+.EducationalDetail__TopTitle {
+  font-size: 18px;
+}
+
+.EducationalDetail__TopButton {
+  margin-right: 5px;
+  height: 50px;
 }

@@ -188,7 +188,7 @@ const staticStories = (prevState = {}, action) => {
   }
 }
 
-const educationalsEntityReducer = makeStoryEntityReducer(STATIC_STORY)
+const educationalsEntityReducer = makeStoryEntityReducer(EDUCATIONAL)
 const educationals = (prevState = {}, action) => {
   const { type, payload } = action
   switch (type) {
