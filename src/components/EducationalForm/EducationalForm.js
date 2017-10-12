@@ -160,7 +160,7 @@ class EducationalForm extends PureComponent {
               <Field
                 documentType='image'
                 label="Add Image"
-                name="contents.Object.id"
+                name="contents.object.id"
                 component={ChooseDocument}
                />
             </Col>
