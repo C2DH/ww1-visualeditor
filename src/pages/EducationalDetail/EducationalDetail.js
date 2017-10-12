@@ -69,7 +69,9 @@ class EducationalDetail extends PureComponent {
         {educational && (
           <div>
             <div className='EducationalDetail__Top'>
-              <div className='EducationalDetail__TopTitle'>{trans(educational, 'data.title')}</div>
+              <div className='EducationalDetail__TopTitle'>
+                {trans(educational, 'data.title')}{` (${educational.slug})`}
+              </div>
               <div>
                 <Button disabled={saving} className='EducationalDetail__TopButton' onClick={this.toggledPublished}>
                   {educational.status === 'draft' ? 'Publish' : 'Unpublish'}
