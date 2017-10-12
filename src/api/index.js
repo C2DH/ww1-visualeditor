@@ -228,8 +228,16 @@ export const createEducational = token => edu =>
   withToken(token, request.post(`/api/story/`).send({
     ...edu,
     title: edu.data.title[findKey(edu.data.title)],
-    data: onlyId(edu.data),
+    contents: JSON.stringify(onlyId(edu.contents)),
     covers: edu.covers.map(({ id }) => id),
+  }))
+  .then(extractBody)
+
+export const updateEducational = token => edu =>
+  withToken(token, request.patch(`/api/story/${edu.id}/`).send({
+    data: edu.data,
+    covers: edu.covers.map(({ id }) => id),
+    contents: JSON.stringify(onlyId(edu.contents)),
   }))
   .then(extractBody)
 

@@ -25,8 +25,8 @@ import {
 } from '../actions'
 
 const mergeList = (prevState, list) => ({
-  ...keyBy(list, 'id'),
   ...prevState,
+  ...keyBy(list, 'id'),
 })
 
 const makeStoryEntityReducer = storyType => {

@@ -4,6 +4,7 @@ import { isNull } from 'lodash'
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import { Badge } from 'reactstrap';
 import AddButton from '../../components/AddButton'
+import Spinner from '../../components/Spinner'
 import { Link } from 'react-router-dom'
 import ThemeCard from '../../components/cards/ThemeCard'
 import EducationalCard from '../../components/cards/EducationalCard'
@@ -23,6 +24,9 @@ import {
   getStaticStories,
   getThemes,
   getEducationals,
+  areEducationalsLoading,
+  areThemesLoading,
+  areStaticStoriesLoading,
 } from '../../state/selectors'
 
 
@@ -71,11 +75,14 @@ class Home extends PureComponent {
   render() {
     const {
       staticStories,
+      loadingStaticStories,
       themes,
       educationals,
       deletingThemes,
       deletingEducationals,
-      trans
+      trans,
+      loadingThemes,
+      loadingEducationals,
     } = this.props
     return (
       <Container fluid className="margin-r-l-20">
@@ -88,7 +95,9 @@ class Home extends PureComponent {
             <div className="Home__Addbtn_container">
               <AddButton label="Add theme" tag={Link} to={'/themes/new'}/>
             </div>
+
             <div className="Home__Col-card-container">
+              {(!themes && loadingThemes) && <Spinner />}
               {themes && themes.map((theme, i) => (
                 <Link
                   key={theme.id}
@@ -116,6 +125,7 @@ class Home extends PureComponent {
               <AddButton label="Add educational" tag={Link} to={'/educationals/new'}/>
             </div>
             <div className="Home__Col-card-container">
+              {(!educationals && loadingEducationals) && <Spinner />}
               {educationals && educationals.map((educational, i) => (
                 <Link
                   key={i}
@@ -139,6 +149,7 @@ class Home extends PureComponent {
               <h4>Static Pages</h4>
               <Badge className="Home__titlebadge">All</Badge>
             </div>
+            {(!staticStories && loadingStaticStories) && <Spinner />}
             <div>
               {staticStories && staticStories.map(story => (
                 <Button tag={Link} to={`/static/${story.id}`} key={story.id} block>{story.slug}</Button>
@@ -174,10 +185,13 @@ class Home extends PureComponent {
 const mapStateToProps = state => ({
   trans: makeTranslator(state),
   staticStories: getStaticStories(state),
+  loadingStaticStories: areStaticStoriesLoading(state),
   themes: getThemes(state),
-  educationals: getEducationals(state),
   deletingThemes: state.themes.deleting,
+  loadingThemes: areThemesLoading(state),
+  educationals: getEducationals(state),
   deletingEducationals: state.educationals.deleting,
+  loadingEducationals: areEducationalsLoading(state),
 })
 
 export default connect(mapStateToProps, {

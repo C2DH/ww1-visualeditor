@@ -12,19 +12,18 @@ class NewEducational extends PureComponent {
 
   createEducational = (educational) => {
     return createEducational(educational)
-      .then(createEducational =>
-        createEducationalCaptions(educational.id)
-          .then(() => createEducational)
+      .then(createdEducational =>
+        createEducationalCaptions(createdEducational.id)
+          .then(() => createdEducational)
       )
   }
 
   redirectToCreatedEducational = (createdEducational) => {
-    console.info('Got New EdU --->', createdEducational)
+    this.props.history.replace(`/educationals/${createdEducational.id}`)
   }
 
   render() {
     const { educational } = this.props
-    console.log(educational)
     return (
       <EducationalForm
         onSubmit={this.createEducational}

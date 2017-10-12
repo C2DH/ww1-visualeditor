@@ -15,6 +15,7 @@ import NewTheme from './pages/NewTheme'
 import Theme from './pages/Theme'
 import StaticStory from './pages/StaticStory'
 import NewEducational from './pages/NewEducational'
+import EducationalDetail from './pages/EducationalDetail'
 
 const App = () => (
   <Provider store={store}>
@@ -29,6 +30,7 @@ const App = () => (
             <AuthRoute path='/themes/:themeId' component={Theme} />
             <AuthRoute path='/static/:staticStoryId' component={StaticStory} />
             <AuthRoute path='/educationals/new' component={NewEducational} />
+            <AuthRoute path='/educationals/:educationalId' component={EducationalDetail} />
             <Redirect to='/' />
           </Switch>
         </FullPageWidgets>

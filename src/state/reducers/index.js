@@ -9,6 +9,7 @@ import themes from './themes'
 import staticStories from './staticStories'
 import educationals from './educationals'
 import staticStoryDetail from './staticStoryDetail'
+import educationalDetail from './educationalDetail'
 import themeDetail from './themeDetail'
 import chapterDetail from './chapterDetail'
 import ui from './ui'
@@ -24,6 +25,7 @@ export default combineReducers({
   themes,
   staticStories,
   educationals,
+  educationalDetail,
   staticStoryDetail,
   themeDetail,
   chapterDetail,

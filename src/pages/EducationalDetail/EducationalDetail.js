@@ -1,34 +1,50 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import EducationalForm from '../../components/EducationalForm'
-import { getNewEducational } from '../../state/selectors'
+import Spinner from '../../components/Spinner'
+import { getEducational, isEducationalLoading } from '../../state/selectors'
+import { loadEducational, unloadEducational } from '../../state/actions'
 import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 
-const createEducational = wrapAuthApiCall(api.createEducational)
+const updateEducational = wrapAuthApiCall(api.updateEducational)
 const createEducationalCaptions = wrapAuthApiCall(api.createStoryCaptions)
 
 class EducationalDetail extends PureComponent {
 
-  createEducational = (educational) => {
-    return createEducational(educational)
-      .then(createEducational =>
-        createEducationalCaptions(educational.id)
-          .then(() => createEducational)
+  componentDidMount() {
+    this.props.loadEducational(this.props.match.params.educationalId)
+  }
+
+  componentWillUnmount() {
+    this.props.unloadEducational()
+  }
+
+  updateEducational = (educational) => {
+    return updateEducational(educational)
+      .then(updateEducational =>
+        createEducationalCaptions(updateEducational.id)
+          .then(() => updateEducational)
       )
   }
 
-  redirectToCreatedEducational = (createdEducational) => {
-    console.info('Got New EdU --->', createdEducational)
+  educationalUpdated = (updatedEducational) => {
+    // TODO:
+    // Maybe in a future keep educational sync in enties
+    // but now not really needed...
   }
 
   render() {
-    const { educational } = this.props
-    console.log(educational)
+    const { educational, loading } = this.props
+
+    if (loading && !educational) {
+      return <Spinner />
+    }
+
     return (
       <EducationalForm
-        onSubmit={this.createEducational}
-        onSubmitSuccess={this.redirectToCreatedEducational}
+        onSubmit={this.updateEducational}
+        onSubmitSuccess={this.educationalUpdated}
         initialValues={educational}
       />
     )
@@ -36,7 +52,11 @@ class EducationalDetail extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  educational: getNewEducational(state),
+  educational: getEducational(state),
+  loading: isEducationalLoading(state),
 })
 
-export default connect(mapStateToProps)(EducationalDetail)
+export default connect(mapStateToProps, {
+  loadEducational,
+  unloadEducational,
+})(EducationalDetail)

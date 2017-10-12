@@ -87,14 +87,14 @@ class EducationalForm extends PureComponent {
                 </div>
               </FormGroup>
               <FieldArray
-                name='requirements'
+                name='data.requirements'
                 component={Requirements}
                 language={language}
               />
               <Field
                 documentType='image'
                 label="Add Manual"
-                name="manual.id"
+                name="contents.manual.id"
                 component={ChooseDocument}
                />
             </Col>

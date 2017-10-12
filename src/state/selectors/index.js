@@ -185,6 +185,9 @@ export const getStaticStories = createSelector(
   (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
 )
 
+export const areStaticStoriesLoading = state => state.staticStories.loading
+
+
 export const getStaticStory = createSelector(
   state => state.staticStoryDetail.id,
   state => state.entities.staticStories,
@@ -200,6 +203,23 @@ export const getEducationals = createSelector(
   state => state.entities.educationals,
   (ids, data) => maybeNull(ids)(ids => ids.map(id => data[id]))
 )
+export const areEducationalsLoading = state => state.educationals.list.loading
+
+export const getEducational = createSelector(
+  state => state.educationalDetail.id,
+  state => state.entities.educationals,
+  (id, data) => maybeNull(id)(id => {
+    const edu = data[id]
+    const docs = get(edu, 'documents', [])
+      .map(d => ({ ...d, id: d.document_id }))
+    return {
+      ...edu,
+      contents: joinIds(docs, get(edu, 'contents', {}))
+    }
+  })
+)
+export const isEducationalSaving = state => state.educationalDetail.saving
+export const isEducationalLoading = state => state.educationalDetail.loading
 
 export const getNewEducational = createSelector(
   getLanguages,
@@ -209,6 +229,8 @@ export const getNewEducational = createSelector(
       title: createEmptyMultilangObj(languages),
       activity: createEmptyMultilangObj(languages),
       requirements: [],
+    },
+    contents: {
       manual: {},
     },
     tags: [TAG_EDUCATION],
