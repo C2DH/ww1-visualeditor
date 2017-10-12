@@ -1,14 +1,25 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { Button } from 'reactstrap'
 import EducationalForm from '../../components/EducationalForm'
 import Spinner from '../../components/Spinner'
-import { getEducational, isEducationalLoading } from '../../state/selectors'
-import { loadEducational, unloadEducational } from '../../state/actions'
+import {
+  getEducational,
+  isEducationalLoading,
+  makeTranslator,
+} from '../../state/selectors'
+import {
+  loadEducational,
+  unloadEducational,
+  educationalUpdated,
+} from '../../state/actions'
 import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
+import './EducationalDetail.css'
 
 const updateEducational = wrapAuthApiCall(api.updateEducational)
 const createEducationalCaptions = wrapAuthApiCall(api.createStoryCaptions)
+const fetchEducational = wrapAuthApiCall(api.getStory)
 
 class EducationalDetail extends PureComponent {
 
@@ -24,34 +35,42 @@ class EducationalDetail extends PureComponent {
     return updateEducational(educational)
       .then(updateEducational =>
         createEducationalCaptions(updateEducational.id)
-          .then(() => updateEducational)
+          .then(() => fetchEducational(updateEducational.id))
       )
   }
 
   educationalUpdated = (updatedEducational) => {
-    // TODO:
-    // Maybe in a future keep educational sync in enties
-    // but now not really needed...
+    this.props.educationalUpdated(updatedEducational)
   }
 
   render() {
-    const { educational, loading } = this.props
+    const { educational, loading, trans } = this.props
 
     if (loading && !educational) {
       return <Spinner />
     }
 
     return (
-      <EducationalForm
-        onSubmit={this.updateEducational}
-        onSubmitSuccess={this.educationalUpdated}
-        initialValues={educational}
-      />
+      <div>
+        <div className='EducationalDetail__Top'>
+          <div>{trans(educational, 'data.title')}</div>
+          <div>
+            <Button>Bella</Button>
+            <Button>Socio</Button>
+          </div>
+        </div>
+        <EducationalForm
+          onSubmit={this.updateEducational}
+          onSubmitSuccess={this.educationalUpdated}
+          initialValues={educational}
+        />
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  trans: makeTranslator(state),
   educational: getEducational(state),
   loading: isEducationalLoading(state),
 })
@@ -59,4 +78,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   loadEducational,
   unloadEducational,
+  educationalUpdated,
 })(EducationalDetail)
