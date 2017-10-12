@@ -7,6 +7,7 @@ import ChooseDocument from '../Form/ChooseDocument'
 import Spinner from '../Spinner'
 import Bbox from '../Form/Bbox'
 import Translate from '../Form/Translate'
+import MediumEditor from '../Form/MediumEditor'
 import Input from '../Form/Input'
 import Textarea from '../Form/Textarea'
 import AddButton from '../AddButton'
@@ -22,7 +23,7 @@ import {
 const Requirements = ({ fields, language, languages }) => (
   <div>
     <div style={{ paddingBottom: 20 }}>
-      <AddButton label='Add requirement' onClick={() => fields.push({})} />
+      <AddButton label='Add requirement' onClick={() => fields.push(createEmptyMultilangObj(languages))} />
     </div>
     {fields.map((field, index) => (
       <FormGroup key={index}>
@@ -41,12 +42,50 @@ const Requirements = ({ fields, language, languages }) => (
   </div>
 )
 
+const Steps = ({ fields, language }) => (
+  <div>
+    {fields.map((field, index) => (
+      <div key={index}>
+        <b>{fields.get(index).label}</b>
+        <FormGroup>
+          <div className="EducationalForm__FieldTranslated">
+            <Field
+              placeholder="Insert step title"
+              name={`${field}.title.${language.code}`}
+              component={Input}
+            />
+            <Field
+             name={`${field}.title`}
+             component={Translate}
+             />
+          </div>
+        </FormGroup>
+        <FormGroup>
+          <div className="EducationalForm__FieldTranslated">
+            <Field
+              placeholder="Insert step description"
+              name={`${field}.description.${language.code}`}
+              style={{ border: '1px solid #eee' }}
+              component={MediumEditor}
+            />
+            <Field
+             name={`${field}.description`}
+             component={Translate}
+             />
+          </div>
+        </FormGroup>
+      </div>
+    ))}
+  </div>
+)
+
 class EducationalForm extends PureComponent {
   render() {
     const {
       handleSubmit,
       submitting,
       language,
+      languages,
       invalid,
     } = this.props
 
@@ -90,6 +129,7 @@ class EducationalForm extends PureComponent {
                 name='data.requirements'
                 component={Requirements}
                 language={language}
+                languages={languages}
               />
               <Field
                 documentType='image'
@@ -105,6 +145,24 @@ class EducationalForm extends PureComponent {
                 label='Cover'
                 onEmptyDocument={() => this.props.arrayRemoveAll('educational', 'covers')}
               />
+            </Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col md={6}>
+              <FieldArray
+                name='data.steps'
+                component={Steps}
+                language={language}
+              />
+            </Col>
+            <Col md={6}>
+              <Field
+                documentType='image'
+                label="Add Image"
+                name="contents.Object.id"
+                component={ChooseDocument}
+               />
             </Col>
           </Row>
           <br />

@@ -229,9 +229,42 @@ export const getNewEducational = createSelector(
       title: createEmptyMultilangObj(languages),
       activity: createEmptyMultilangObj(languages),
       requirements: [],
+      steps: [
+        {
+          label: 'Get started',
+          title: createEmptyMultilangObj(languages),
+          description: createEmptyMultilangObj(languages),
+        },
+        {
+          label: 'Research',
+          title: createEmptyMultilangObj(languages),
+          description: createEmptyMultilangObj(languages),
+        },
+        {
+          label: 'Explore',
+          title: createEmptyMultilangObj(languages),
+          description: createEmptyMultilangObj(languages),
+        },
+        {
+          label: 'Report',
+          title: createEmptyMultilangObj(languages),
+          description: createEmptyMultilangObj(languages),
+        },
+        {
+          label: 'Be creative',
+          title: createEmptyMultilangObj(languages),
+          description: createEmptyMultilangObj(languages),
+        },
+        {
+          label: 'Discuss',
+          title: createEmptyMultilangObj(languages),
+          description: createEmptyMultilangObj(languages),
+        },
+      ]
     },
     contents: {
       manual: {},
+      object: {},
     },
     tags: [TAG_EDUCATION],
   })
