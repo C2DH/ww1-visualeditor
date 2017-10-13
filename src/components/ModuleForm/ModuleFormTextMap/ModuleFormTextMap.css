@@ -1,6 +1,7 @@
 .ModuleTextMap__Preview {
-  background-color: #ccc;
   display: flex;
+  flex: 1;
+  flex-direction: row;
 }
 .ModuleTextMap__Preview.reverse {
   flex-direction: row-reverse;

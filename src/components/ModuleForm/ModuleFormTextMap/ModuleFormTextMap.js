@@ -22,7 +22,7 @@ import VisualForm, {
   SideContainer,
   SideForm,
   SideActions,
-  GenericPreviewContainer
+  PreviewContainer,
 } from '../../VisualForm'
 
 import {
@@ -140,8 +140,15 @@ class ModuleFormTextMap extends PureComponent {
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
         </SideContainer>
-        <GenericPreviewContainer
-          className={classNames('ModuleTextMap__Preview', layout === 'map-text' ? 'reverse' : null)}>
+        <PreviewContainer
+          overlayClassName={classNames(
+            'ModuleTextMap__Preview',
+            layout === 'map-text' ? 'reverse' : null
+          )}
+          backgroundType={backgroundType}
+          backgroundColor={backgroundColor}
+          backgroundImage={backgroundImage}
+          backgroundColorOverlay={backgroundColorOverlay}>
           <div className='ModuleTextMap__TextContainer'>
             <Field
               name={`text.content.${language.code}`}
@@ -176,7 +183,7 @@ class ModuleFormTextMap extends PureComponent {
                 />
             </div>
           </div>
-        </GenericPreviewContainer>
+        </PreviewContainer>
       </VisualForm>
     )
   }
