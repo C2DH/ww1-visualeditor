@@ -1,10 +1,15 @@
 import React, { PureComponent } from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
+import { defaultMemoize } from 'reselect'
 import { reduxForm, Field, formValueSelector, change, FieldArray } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { FormGroup, Label, Button, Input } from 'reactstrap'
 
 import ChooseDocument from '../../Form/ChooseDocument'
+import MediumEditor from '../../Form/MediumEditor'
+import MapPreview from '../../MapPreview'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
@@ -17,7 +22,7 @@ import VisualForm, {
   SideContainer,
   SideForm,
   SideActions,
-  PreviewContainer
+  GenericPreviewContainer
 } from '../../VisualForm'
 
 import {
@@ -42,6 +47,7 @@ class ModuleFormTextMap extends PureComponent {
 
   render() {
     const {
+      layout,
       textColor,
       handleSubmit,
       language,
@@ -53,6 +59,7 @@ class ModuleFormTextMap extends PureComponent {
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
+      documents,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
@@ -133,45 +140,65 @@ class ModuleFormTextMap extends PureComponent {
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
         </SideContainer>
-        <PreviewContainer
-          backgroundType={backgroundType}
-          backgroundColor={backgroundColor}
-          backgroundImage={backgroundImage}
-          backgroundColorOverlay={backgroundColorOverlay}>
-          <Field
-            name={`text.content.${language.code}`}
-            className="invisible-input ModuleFormTextObject__Preview-content-input"
-            rows={10}
-            autoComplete="off"
-            component='textarea'
-            style={{ color: textColor }}
-           />
-           <Field
-             name={`text.content`}
-             component={Translate}
-           />
-          <Field
-            name={`map.caption.${language.code}`}
-            className="invisible-input"
-            component='input'
-            style={{ color: textColor }}
-           />
-           <Field
-             name={`map.caption`}
-             component={Translate}
-           />
-        </PreviewContainer>
+        <GenericPreviewContainer
+          className={classNames('ModuleTextMap__Preview', layout === 'map-text' ? 'reverse' : null)}>
+          <div className='ModuleTextMap__TextContainer'>
+            <Field
+              name={`text.content.${language.code}`}
+              className="invisible-input"
+              style={{ width: '100%', color: textColor }}
+              component={MediumEditor}
+              placeholder='Insert text'
+            />
+            <Field
+              name={`text.content`}
+              component={Translate}
+            />
+          </div>
+          <div className='ModuleTextMap__MapContaienr'>
+            <MapPreview
+              documents={documents}
+            />
+            <div className="ModuleTextMap__MapCaption">
+                <Field
+                  name={`map.caption.${language.code}`}
+                  className="invisible-input"
+                  style={{ width: '100%' }}
+                  options={{
+                    disableReturn: true,
+                  }}
+                  placeholder='Insert caption'
+                  component={MediumEditor}
+                />
+                <Field
+                  name={`map.caption`}
+                  component={Translate}
+                />
+            </div>
+          </div>
+        </GenericPreviewContainer>
       </VisualForm>
     )
   }
 }
 
 const selector = formValueSelector('moduleTextMap')
+const getDocuments = defaultMemoize(objects => objects.map(o => ({
+  ...o.id,
+  coordinates: get(o, 'id.data.coordinates.geometry.coordinates', [])
+    .slice(0, 2)
+    // For same position problem....
+    // .map(x => Number(x) + Math.random() / 1000)
+    .map(x => Number(x))
+    .reverse()
+})))
 
 const mapStateToProps = state => ({
+  layout: selector(state, 'layout'),
   textColor: selector(state, 'text.color'),
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
+  documents: getDocuments(selector(state, 'map.objects')),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),

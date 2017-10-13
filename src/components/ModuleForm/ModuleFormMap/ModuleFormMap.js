@@ -1,15 +1,12 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { defaultMemoize } from 'reselect'
 import { reduxForm, Field, FieldArray, formValueSelector, change } from 'redux-form'
 import { get } from 'lodash'
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label, Input } from 'reactstrap'
 import { ListGroup, ListGroupItem } from 'reactstrap'
-import { scaleLinear } from 'd3-scale'
-import ReactMapboxGl, { Popup, Marker, Layer, Feature, Cluster, ZoomControl, GeoJSONLayer, Source } from 'react-mapbox-gl'
 import './ModuleFormMap.css'
-import { getPlaceTypeIcon } from '../../../utils'
-import { makeTranslator } from '../../../state/selectors'
 
 import VisualForm, {
   SideContainer,
@@ -20,6 +17,7 @@ import VisualForm, {
 } from '../../VisualForm'
 
 import AddButton from '../../AddButton'
+import MapPreview from '../../MapPreview'
 import ChooseDocument from '../../Form/ChooseDocument'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
@@ -37,32 +35,7 @@ const mapParams = {
   },
 }
 
-const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw"
-})
-
-const circleScale = scaleLinear().range([30, 100]).domain([1, 150])
-
-const MapToolTip = ({ snapshot, title, text }) => (
-  <div className="MapToolTip">
-    {snapshot && <div className="MapToolTip__img" style={{background: `url(${snapshot})`}}/>}
-    <h5 className="MapToolTip__title">{title}</h5>
-    <p className="MapToolTip__text">{text}</p>
-  </div>
-)
-
 class ModuleFormMap extends PureComponent {
-  state = {
-    selectedDocument: null,
-    center: [6.087, 49.667],
-    zoom: [8],
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.objects !== nextProps.objects) {
-      this.closePopup()
-    }
-  }
 
   changeBackgroundType = (e) => {
     if (e.target.value === 'color') {
@@ -71,29 +44,6 @@ class ModuleFormMap extends PureComponent {
       this.props.change('moduleMap', 'background.object', {})
       this.props.change('moduleMap', 'background.color', null)
     }
-  }
-
-  clusterMarker = (coordinates, pointCount) => {
-    const r = circleScale(pointCount)
-    return <Marker className='MapClusterMarker' coordinates={coordinates} key={coordinates.toString()} style={{
-      width: r,
-      height: r,
-    }}>
-      {pointCount}
-    </Marker>
-  }
-
-  onMarkerClick = (doc) => {
-    this.setState({
-      selectedDocument: doc,
-      center: doc.coordinates,
-    })
-  }
-
-  closePopup = () => {
-    this.setState({
-      selectedDocument: null,
-    })
   }
 
   render() {
@@ -109,21 +59,8 @@ class ModuleFormMap extends PureComponent {
       backgroundColorOverlay,
       backgroundColor,
       doc,
-      objects,
-      trans,
+      documents,
     } = this.props
-    const { selectedDocument, center, zoom } = this.state
-
-    const documents = objects.map(o => ({
-      ...o.id,
-      coordinates: get(o, 'id.data.coordinates.geometry.coordinates', [])
-        .slice(0, 2)
-        // For same position problem....
-        // .map(x => Number(x) + Math.random() / 1000)
-        .map(x => Number(x))
-        .reverse()
-    }))
-
     const backgroundType = backgroundObject ? 'image' : 'color'
 
     return (
@@ -193,47 +130,10 @@ class ModuleFormMap extends PureComponent {
           </SideActions>
         </SideContainer>
         <GenericPreviewContainer className='MapPreviewContainer'>
-          <Map
-            zoom={zoom}
-            center={center}
-            onDrag={this.closePopup}
-            dragRotate={false}
-            touchZoomRotate={false}
-            style="mapbox://styles/eischteweltkrich/cj5cizaj205vv2qlegw01hubm"
-            containerStyle={{
-              width:'100%',
-              height: '100%',
-            }}>
-            <ZoomControl position="topLeft" className="Map__ZoomControl"/>
-            {documents &&
-              <Cluster ClusterMarkerFactory={this.clusterMarker} clusterThreshold={2} radius={60}>
-                {documents.map(doc => {
-                  const icon = getPlaceTypeIcon(doc.data.place_type)
-                  return <Marker
-                    key={doc.id}
-                    className='MapMarker'
-                    onClick={() => this.onMarkerClick(doc)}
-                    coordinates={doc.coordinates}>
-                    <span className={icon.class}>{icon.content}</span>
-                  </Marker>
-                })}
-              </Cluster>}
-              {selectedDocument && (
-                <Popup
-                  coordinates={selectedDocument.coordinates}
-                  anchor='bottom'
-                  offset={[0, -15]}>
-                  <i className="fa fa-times pointer float-right" onClick={this.closePopup} />
-                  <MapToolTip
-                    className="clearfix"
-                    snapshot={selectedDocument.snapshot}
-                    title={selectedDocument.title}
-                    text={trans(selectedDocument, 'data.description')}
-                  />
-                </Popup>
-              )}
-            </Map>
 
+          <MapPreview
+            documents={documents}
+          />
           <div className="MapPreviewCaption">
               <Field
                 name={`caption.${language.code}`}
@@ -257,17 +157,25 @@ class ModuleFormMap extends PureComponent {
 }
 
 const selector = formValueSelector('moduleMap')
+const getDocuments = defaultMemoize(objects => objects.map(o => ({
+  ...o.id,
+  coordinates: get(o, 'id.data.coordinates.geometry.coordinates', [])
+    .slice(0, 2)
+    // For same position problem....
+    // .map(x => Number(x) + Math.random() / 1000)
+    .map(x => Number(x))
+    .reverse()
+})))
 
 const mapStateToProps = state => ({
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
   doc: selector(state, 'id'),
-  objects: selector(state, 'objects'),
+  documents: getDocuments(selector(state, 'objects')),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
   backgroundColor: selector(state, 'background.color'),
-  trans: makeTranslator(state),
 })
 
 export default reduxForm({

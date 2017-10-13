@@ -1,4 +1,26 @@
-.ModuleFormTextGallery-content-input {
+.ModuleTextMap__Preview {
+  background-color: #ccc;
+  display: flex;
+}
+.ModuleTextMap__Preview.reverse {
+  flex-direction: row-reverse;
+}
+
+.ModuleTextMap__MapContaienr {
   width: 50%;
-  font-size: 18px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ModuleTextMap__MapCaption {
+  background-color: white;
+  height: 45px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 10px;
+  display: flex;
+  width: 100%;
+}
+.ModuleTextMap__TextContainer {
+  width: 50%;
+  padding: 10px;
 }

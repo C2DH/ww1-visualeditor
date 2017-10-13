@@ -1,0 +1,45 @@
+.MapMarker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:#F56350;
+  font-size: 2rem;
+  cursor:pointer;
+}
+
+.MapClusterMarker {
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #F56350;
+  border: 2px solid white;
+  font-weight: 500;
+}
+
+.MapToolTip {
+  width: 200px;
+}
+
+.MapToolTip__img {
+  width: 200px;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+.MapToolTip__title {
+  color: #DA715E;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.MapToolTip__text{
+  margin-bottom: 0px;
+  font-family: Georgia, Times, serif;
+}
