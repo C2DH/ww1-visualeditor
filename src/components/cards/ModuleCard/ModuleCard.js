@@ -22,7 +22,7 @@ const ModuleCard = pure(({
 }) => (
   <GenericCard
     className="ModuleCard__card"
-    title={`${module.module} (???)`}
+    title={`${module.module}`}
     backgroundImage={get(module, 'background.object.id.attachment')}
     backgroundColor={get(module, 'background.color')}
     backgroundColorOverlay={get(module, 'background.object.overlay')}
