@@ -10,6 +10,22 @@ import {
   makeTranslator,
 } from '../../../state/selectors'
 
+const getTitle = (module, trans) => {
+  let text
+
+  console.log('--', module)
+  switch (module.module) {
+    case 'text_object':
+    case 'text':
+      text = trans(module, 'text.content')
+      break
+    default:
+      text = ''
+  }
+
+  return `${module.module.replace('_', ' ')} module ${text}`
+}
+
 const ModuleCard = pure(({
   module,
   trans,
@@ -22,7 +38,7 @@ const ModuleCard = pure(({
 }) => (
   <GenericCard
     className="ModuleCard__card"
-    title={`${module.module}`}
+    title={getTitle(module, trans)}
     backgroundImage={get(module, 'background.object.id.attachment')}
     backgroundColor={get(module, 'background.color')}
     backgroundColorOverlay={get(module, 'background.object.overlay')}
