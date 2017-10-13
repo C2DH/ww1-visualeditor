@@ -77,7 +77,6 @@ const createEmptyModuleTextObject = languages => ({
   },
   object: {
     type: 'image',
-    size: 'medium',
     caption: createEmptyMultilangObj(languages, ''),
   },
   layout: 'text-object'

@@ -1,14 +1,17 @@
 import React, { PureComponent } from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector, change } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { FormGroup, Label, Button, Input } from 'reactstrap'
 
 import ChooseDocument from '../../Form/ChooseDocument'
+import MediumEditor from '../../Form/MediumEditor'
 import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
+import AudioPlayer from '../../AudioPlayer'
 
 import './ModuleFormTextObject.css'
 
@@ -22,6 +25,9 @@ import VisualForm, {
 import {
   getCurrentLanguage,
 } from '../../../state/selectors'
+
+import 'video-react/dist/video-react.css'
+import { Player, BigPlayButton } from 'video-react'
 
 class ModuleFormTextObject extends PureComponent {
   changeBackgroundType = (e) => {
@@ -53,9 +59,12 @@ class ModuleFormTextObject extends PureComponent {
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
+      doc,
+      layout,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
+    console.log('~~~', doc)
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
@@ -128,19 +137,6 @@ class ModuleFormTextObject extends PureComponent {
             </div>
             <div className="margin-bottom-15">
               <FormGroup>
-                <Label>Size</Label>
-                <Field
-                  label="Size"
-                  name="object.size"
-                  component={Select}>
-                  <option value='small'>Small</option>
-                  <option value='medium'>Medium</option>
-                  <option value='big'>Big</option>
-                 </Field>
-               </FormGroup>
-            </div>
-            <div className="margin-bottom-15">
-              <FormGroup>
                 <Label>Layout</Label>
                 <Field
                   label="Layout"
@@ -159,32 +155,68 @@ class ModuleFormTextObject extends PureComponent {
           </SideActions>
         </SideContainer>
         <PreviewContainer
+          overlayClassName={classNames(
+            'ModuleFormTextObject__PreviewOverlay',
+            layout === 'object-text' ? 'reverse' : null
+          )}
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
           backgroundColorOverlay={backgroundColorOverlay}>
-          <Field
-            name={`text.content.${language.code}`}
-            className="invisible-input ModuleFormTextObject__Preview-content-input"
-            rows={10}
-            autoComplete="off"
-            component='textarea'
-            style={{ color: textColor }}
-           />
-           <Field
-             name={`text.content`}
-             component={Translate}
-           />
-          <Field
-            name={`object.caption.${language.code}`}
-            className="invisible-input"
-            component='input'
-            style={{ color: textColor }}
-           />
-           <Field
-             name={`object.caption`}
-             component={Translate}
-           />
+
+          <div className='ModuleFormTextObject__TextContainer'>
+            <Field
+              name={`text.content.${language.code}`}
+              className="invisible-input"
+              style={{ width: '100%', color: textColor }}
+              component={MediumEditor}
+              placeholder='Insert text'
+            />
+            <Field
+              name={`text.content`}
+              component={Translate}
+            />
+          </div>
+
+          <div className='ModuleFormTextObject__ObjectContainer'>
+            {(doc && documentType === 'audio') && (
+              <AudioPlayer
+                src={doc.attachment}
+              />
+            )}
+
+            {(doc && documentType === 'video') && (
+              <Player
+                playsInline
+                fluid
+                src={doc.attachment}
+              >
+                <BigPlayButton position='center' />
+              </Player>
+            )}
+
+            {(doc && documentType === 'image') && (
+              <img src={doc.attachment}
+                   className="ModuleFormTextObject__ImagePreview" />
+            )}
+
+            <div className='ModuleFormTextObject__DocumentPreview__Caption'>
+              <Field
+                name={`object.caption.${language.code}`}
+                className="invisible-input"
+                style={{ width: '100%' }}
+                options={{
+                  disableReturn: true,
+                }}
+                placeholder='Insert caption'
+                component={MediumEditor}
+              />
+              <Field
+                name={`object.caption`}
+                component={Translate}
+              />
+            </div>
+          </div>
         </PreviewContainer>
       </VisualForm>
     )
@@ -194,10 +226,12 @@ class ModuleFormTextObject extends PureComponent {
 const selector = formValueSelector('moduleTextObject')
 
 const mapStateToProps = state => ({
+  layout: selector(state, 'layout'),
   textColor: selector(state, 'text.color'),
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
   // Object
+  doc: selector(state, 'object.id'),
   documentType: selector(state, 'object.type'),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),

@@ -1,4 +1,36 @@
-.ModuleFormTextObject__Preview-content-input {
+.ModuleFormTextObject__PreviewOverlay {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  padding: 20px;
+}
+.ModuleFormTextObject__PreviewOverlay.reverse {
+  flex-direction: row-reverse;
+}
+
+.ModuleFormTextObject__TextContainer {
+  padding: 10px;
   width: 50%;
-  font-size: 18px;
+}
+
+.ModuleFormTextObject__ObjectContainer {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ModuleFormTextObject__ImagePreview {
+  max-width: 100%;
+  max-height: calc(100% - 50px);
+  height: auto;
+}
+
+.ModuleFormTextObject__DocumentPreview__Caption {
+  height: 45px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  background-color: white;
 }
