@@ -56,36 +56,39 @@ class EducationalDetail extends PureComponent {
   }
 
   render() {
-    const { educational, loading, trans, saving } = this.props
-    // const baseUrl = process.env.REACT_APP_FRONTEND_URL
-    // const previewUrl = `${baseUrl}/themes/${theme.slug}?_t=${authToken}`
+    const { educational, loading, trans, saving, authToken } = this.props
 
     if (loading && !educational) {
       return <Spinner />
     }
 
+    if (!educational) {
+      return null
+    }
+
+    const baseUrl = process.env.REACT_APP_FRONTEND_URL
+    const previewUrl = `${baseUrl}/education/${educational.slug}?_t=${authToken}`
+
     return (
       <div>
-        {educational && (
-          <div>
-            <div className='EducationalDetail__Top'>
-              <div className='EducationalDetail__TopTitle'>
-                {trans(educational, 'data.title')}{` (${educational.slug})`}
-              </div>
-              <div>
-                <Button disabled={saving} className='EducationalDetail__TopButton' onClick={this.toggledPublished}>
-                  {educational.status === 'draft' ? 'Publish' : 'Unpublish'}
-                </Button>
-                <Button tag={'a'} href={'/'} target="_blank" className="button-link">Preview</Button>
-              </div>
+        <div>
+          <div className='EducationalDetail__Top'>
+            <div className='EducationalDetail__TopTitle'>
+              {trans(educational, 'data.title')}{` (${educational.slug})`}
             </div>
-            <EducationalForm
-              onSubmit={this.updateEducational}
-              onSubmitSuccess={this.educationalUpdated}
-              initialValues={educational}
-            />
+            <div>
+              <Button disabled={saving} className='EducationalDetail__TopButton' onClick={this.toggledPublished}>
+                {educational.status === 'draft' ? 'Publish' : 'Unpublish'}
+              </Button>
+              <Button tag={'a'} href={previewUrl} target="_blank" className="button-link">Preview</Button>
+            </div>
           </div>
-        )}
+          <EducationalForm
+            onSubmit={this.updateEducational}
+            onSubmitSuccess={this.educationalUpdated}
+            initialValues={educational}
+          />
+        </div>
       </div>
     )
   }
