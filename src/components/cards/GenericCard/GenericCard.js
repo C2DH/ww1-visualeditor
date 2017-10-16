@@ -27,7 +27,8 @@ const GenericCard = ({
   cardClick = null,
   footerButton = null,
   editButtons = null,
-  className = 'GenericCard__card'
+  className = 'GenericCard__card',
+  containerClassName = 'GenericCard__div_img'
 }) => (
   <div>
     <Card
@@ -35,7 +36,7 @@ const GenericCard = ({
       onClick={cardClick}
       >
       <BackgroundPreview
-        containerClassName="GenericCard__div_img"
+        containerClassName={containerClassName}
         overlayClassName="GenericCard__div_img_overlay"
         backgroundImage={backgroundImage}
         backgroundColor={backgroundColor}

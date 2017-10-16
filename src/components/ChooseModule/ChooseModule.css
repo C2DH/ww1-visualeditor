@@ -9,6 +9,13 @@
   margin-top: 20px;
 }
 
+.ChooseModule__ChooseModuleCard__img {
+  height: 160px;
+  background-color: #ccc;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 .ChooseModule__ChooseModuleCard-selected {
   margin-top: 20px;
   border: 2px solid lime!important;

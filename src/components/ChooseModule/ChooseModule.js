@@ -2,27 +2,28 @@ import React, { PureComponent } from 'react'
 import { Container, Row, Col, Label, Button } from 'reactstrap'
 import GenericCard from '../cards/GenericCard'
 import { pure } from 'recompose'
+import { Card, CardImg, CardText, CardTitle, CardBlock } from 'reactstrap'
 import './ChooseModule.css'
 
 const modulesTypes = [
-  {type: 'text', label: 'Module text', cover:'http://via.placeholder.com/100x150'},
-  {type: 'object', label: 'Module object', cover:'http://via.placeholder.com/100x150'},
-  {type: 'gallery', label: 'Module gallery', cover:'http://via.placeholder.com/100x150'},
-  {type: 'map', label: 'Module map', cover:'http://via.placeholder.com/100x150'},
-  {type: 'text_object', label: 'Module text & object', cover:'http://via.placeholder.com/100x150'},
-  {type: 'text_gallery', label: 'Module text & gallery', cover:'http://via.placeholder.com/100x150'},
-  {type: 'text_map', label: 'Module text & map', cover:'http://via.placeholder.com/100x150'},
+  {type: 'text', label: 'Module text', cover:'/modules/text.png'},
+  {type: 'object', label: 'Module object', cover:'/modules/object.png'},
+  {type: 'gallery', label: 'Module gallery', cover:'/modules/gallery.png'},
+  {type: 'map', label: 'Module map', cover:'/modules/map.png'},
+  {type: 'text_object', label: 'Module text & object', cover:'/modules/text_object.png'},
+  {type: 'text_gallery', label: 'Module text & gallery', cover:'/modules/text_gallery.png'},
+  {type: 'text_map', label: 'Module text & map', cover:'/modules/text_map.png'},
 ]
 
 const ChooseModuleCard = pure(({ title, cover, cardClick }) => (
   <GenericCard
     className="ChooseModule__ChooseModuleCard"
+    containerClassName='ChooseModule__ChooseModuleCard__img'
     title={title}
     backgroundImage={cover}
     cardClick={cardClick}
   />
 ))
-
 
 class ChooseModule extends PureComponent {
 
