@@ -3,6 +3,39 @@
   width: 100%;
 }
 
+.ModuleCard__editButtons_container {
+  position: absolute;
+  display: inline-flex;
+  padding: 10px;
+  width: 100%;
+}
+
+.ModuleCard__div_img {
+  height: 160px;
+  width: 100%;
+  background-size: cover;
+}
+
+.ModuleCard__div_img_symbolic {
+  height: 160px;
+  background-color: #ccc;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.ModuleCard__div_img_overlay {
+  height: 100%;
+}
+
 .ModuleCard__btn_margin {
   margin-right: 5px;
+}
+
+.ModuleCard__textContainer {
+  width: 100%;
+  height: 60px;
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
 }

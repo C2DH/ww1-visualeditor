@@ -2,8 +2,8 @@ import React from 'react'
 import { get } from 'lodash'
 import { pure } from 'recompose'
 import { connect } from 'react-redux'
-import GenericCard from '../GenericCard'
-import { Button } from 'reactstrap'
+import { Card, Button } from 'reactstrap'
+import BackgroundPreview from '../../BackgroundPreview'
 import './ModuleCard.css'
 
 import {
@@ -11,19 +11,118 @@ import {
 } from '../../../state/selectors'
 
 const getTitle = (module, trans) => {
-  let text
+  const moduleName = module.module.replace('_', ' & ')
 
-  console.log('--', module)
   switch (module.module) {
-    case 'text_object':
-    case 'text':
-      text = trans(module, 'text.content')
-      break
+    case 'text': {
+      const text = trans(module, 'text.content')
+      return `module ${moduleName} ${text}`
+    }
+    case 'map':
+    case 'gallery':
+    case 'object':
+    {
+      const caption = trans(module, 'caption')
+      return `module ${moduleName} ${caption}`
+    }
+    case 'text_gallery':
+    {
+      const text = trans(module, 'text.content')
+      if (text) {
+        return `module ${moduleName} ${text}`
+      }
+      const caption = trans(module, 'caption')
+      if (caption) {
+        return `module ${moduleName} ${caption}`
+      }
+    }
+    case 'text_object': {
+      const text = trans(module, 'text.content')
+      if (text) {
+        return `module ${moduleName} ${text}`
+      }
+      const caption = trans(module, 'object.caption')
+      if (caption) {
+        return `module ${moduleName} ${caption}`
+      }
+    }
+    case 'text_map': {
+      const text = trans(module, 'text.content')
+      if (text) {
+        return `module ${moduleName} ${text}`
+      }
+      const caption = trans(module, 'map.caption')
+      if (caption) {
+        return `module ${moduleName} ${caption}`
+      }
+    }
     default:
-      text = ''
+      return `module ${moduleName}`
+  }
+}
+
+const symbolicBackground = module => ({
+  backgroundImage: `/modules/${module.module}.png`,
+  backgroundType: 'image',
+  symbolic: true,
+})
+
+const standardBackground = module => {
+  // No shit...
+  if (get(module, 'background.object') && !get(module, 'background.object.id')) {
+    return symbolicBackground(module)
   }
 
-  return `${module.module.replace('_', ' ')} module ${text}`
+  return {
+    backgroundImage: get(module, 'background.object.id.attachment'),
+    backgroundColor: get(module, 'background.color'),
+    backgroundColorOverlay: get(module, 'background.object.overlay'),
+    backgroundType: get(module, 'background.object.id.attachment') ? 'image' : 'color',
+  }
+}
+
+const getBackground = module => {
+  switch (module.module) {
+    case 'object': {
+      if (get(module, 'type') === 'image') {
+        return {
+          backgroundImage: get(module, 'id.attachment'),
+          backgroundType: 'image',
+        }
+      }
+    }
+    case 'gallery':
+    {
+      if (get(module, 'objects[0].id')) {
+        return {
+          backgroundImage: get(module, 'objects[0].id.attachment'),
+          backgroundType: 'image',
+        }
+      }
+    }
+    case 'text_gallery':
+    {
+      if (get(module, 'gallery.objects[0].id')) {
+        return {
+          backgroundImage: get(module, 'gallery.objects[0].id.attachment'),
+          backgroundType: 'image',
+        }
+      }
+    }
+    case 'text_object':
+    {
+      if (get(module, 'object.type') === 'image') {
+        return {
+          backgroundImage: get(module, 'object.id.attachment'),
+          backgroundType: 'image',
+        }
+      }
+    }
+    case 'map':
+      return symbolicBackground(module)
+    default:
+      return standardBackground(module)
+  }
 }
 
 const ModuleCard = pure(({
@@ -35,24 +134,40 @@ const ModuleCard = pure(({
   onEditClick,
   showLeftButton = true,
   showRightButton = true,
-}) => (
-  <GenericCard
-    className="ModuleCard__card"
-    title={getTitle(module, trans)}
-    backgroundImage={get(module, 'background.object.id.attachment')}
-    backgroundColor={get(module, 'background.color')}
-    backgroundColorOverlay={get(module, 'background.object.overlay')}
-    editButtons={
-      <div className="w-100 flex">
-        {showLeftButton && <Button onClick={onMoveLeftClick} className="ModuleCard__btn_margin"><i className="fa fa-arrow-up" aria-hidden="true"></i></Button>}
-        {showRightButton && <Button onClick={onMoveRightClick}><i className="fa fa-arrow-down" aria-hidden="true"></i></Button>}
-        <Button onClick={onEditClick} className="ModuleCard__btn_margin flex-right"><i className="fa fa-pencil" aria-hidden="true"></i></Button>
-        <Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>
-      </div>
-    }
-  />
-))
-
+}) => {
+  const {
+    backgroundImage,
+    backgroundColor,
+    backgroundColorOverlay,
+    backgroundType,
+    symbolic
+  } = getBackground(module)
+  return (
+    <div>
+      <Card className='ModuleCard__card'>
+        <BackgroundPreview
+          containerClassName={`ModuleCard__div_img${symbolic ? '_symbolic' : ''}`}
+          overlayClassName="ModuleCard__div_img_overlay"
+          backgroundImage={backgroundImage}
+          backgroundColor={backgroundColor}
+          backgroundColorOverlay={backgroundColorOverlay}
+          backgroundType={backgroundType}>
+        </BackgroundPreview>
+        <div className="ModuleCard__editButtons_container">
+          <div className="w-100 flex">
+            {showLeftButton && <Button onClick={onMoveLeftClick} className="ModuleCard__btn_margin"><i className="fa fa-arrow-up" aria-hidden="true"></i></Button>}
+            {showRightButton && <Button onClick={onMoveRightClick}><i className="fa fa-arrow-down" aria-hidden="true"></i></Button>}
+            <Button onClick={onEditClick} className="ModuleCard__btn_margin flex-right"><i className="fa fa-pencil" aria-hidden="true"></i></Button>
+            <Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>
+          </div>
+        </div>
+        <div className="ModuleCard__textContainer">
+          {getTitle(module, trans)}
+        </div>
+      </Card>
+    </div>
+  )
+})
 
 const mapStateToProps = state => ({
   trans: makeTranslator(state),

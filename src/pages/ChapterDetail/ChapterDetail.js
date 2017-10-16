@@ -28,6 +28,7 @@ import {
 } from '../../state/actions'
 import {
   getChapter,
+  getChapterModules,
   getChapterDeleting,
   getChapterMoving,
   getTheme,
@@ -60,8 +61,7 @@ class ChapterDetail extends PureComponent {
   }
 
   render () {
-    const { trans, chapter, theme, saving, deletingModules, deleting, moving, authToken } = this.props
-    const modules = get(chapter, 'contents.modules', [])
+    const { trans, chapter, modules, theme, saving, deletingModules, deleting, moving, authToken } = this.props
     const baseUrl = process.env.REACT_APP_FRONTEND_URL
     const previewUrl = `${baseUrl}/themes/${theme.slug}/chapters/${chapter.slug}?_t=${authToken}`
 
@@ -139,6 +139,7 @@ const mapStateToProps = state => ({
   trans: makeTranslator(state),
   theme: getTheme(state),
   chapter: getChapter(state),
+  modules: getChapterModules(state),
   saving: isChapterSaving(state),
   deletingModules: getDeletingChapterModules(state),
   deleting: getChapterDeleting(state),

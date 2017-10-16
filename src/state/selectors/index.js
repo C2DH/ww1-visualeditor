@@ -169,6 +169,16 @@ const joinIds = (source, obj) => {
   return mapIds(obj)
 }
 
+export const getChapterModules = createSelector(
+  getChapter,
+  chapter => maybeNull(chapter)(() => {
+    const docs = get(chapter, 'documents', [])
+      .map(d => ({ ...d, id: d.document_id }))
+    return get(chapter, 'contents.modules', [])
+      .map(m => joinIds(docs, m))
+  })
+)
+
 export const makeGetModule = defaultMemoize(index => createSelector(
   getChapter,
   chapter => maybeNull(chapter)(chapter => {
