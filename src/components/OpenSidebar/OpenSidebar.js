@@ -11,7 +11,7 @@ const OpenSidebar = ({ closeMenu, logout, languages, setLanguage }) => (
     <ul className="OpenSidebar__toplist">
       <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Home</Button></Link></li>
       <li><Link to="/themes" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Themes</Button></Link></li>
-      {/* <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Education</Button></Link></li> */}
+      <li><Link to="/educationals" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Education</Button></Link></li>
     </ul>
     <ul className="OpenSidebar__bottomlist">
       <li><a href="https://github.com/C2DH/ww1-visualeditor/wiki" rel="noopener noreferrer" target="_blank" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Help</Button></a></li>
