@@ -12,11 +12,14 @@ import {
   loadEducationals,
   unloadEducationals,
   deleteEducational,
+  moveEducationalAhead,
+  moveEducationalBack,
 } from '../../state/actions'
 import {
   getEducationals,
   areEducationalsLoading,
   makeTranslator,
+  getEducationalsPerformingMoving,
 } from '../../state/selectors'
 import './Educationals.css'
 
@@ -44,11 +47,19 @@ class Educationals extends PureComponent {
   }
 
   render() {
-    const { trans, educationals, loading, deleting } = this.props
+    const {
+      trans,
+      educationals,
+      loading,
+      deleting,
+      performingMoving,
+    } = this.props
+
     return (
       <Container fluid className="margin-r-l-20">
         <HeadingRow title="Educationals">
           {/* <TopSearchInput /> */}
+          {performingMoving && <Spinner noPadding x={1} />}
         </HeadingRow>
 
         <Row>
@@ -58,12 +69,22 @@ class Educationals extends PureComponent {
           {(!educationals && loading) && (
             <Col md={9}><Spinner /></Col>
           )}
-          {educationals && educationals.map(edu => (
+          {educationals && educationals.map((edu, i) => (
             <Col md="3" key={edu.id}>
               <Link to={`/educationals/${edu.id}`} style={deleting[edu.id] ? { pointerEvents: 'none' } : undefined}>
                 <div style={deleting[edu.id] ? { opacity: 0.5 } : undefined}>
                   <EducationalCard
                     educational={edu}
+                    showBackButton={i > 0}
+                    showAheadButton={i < educationals.length - 1}
+                    onAheadClick={e => {
+                      e.preventDefault()
+                      this.props.moveEducationalAhead(educationals, i, edu.id)
+                    }}
+                    onBackClick={e => {
+                      e.preventDefault()
+                      this.props.moveEducationalBack(educationals, i, edu.id)
+                    }}
                     onDeleteClick={e => {
                       e.preventDefault()
                       this.askDeleteEdu(edu)
@@ -94,10 +115,13 @@ const mapStateToProps = state => ({
   educationals: getEducationals(state),
   loading: areEducationalsLoading(state),
   deleting: state.educationals.deleting,
+  performingMoving: getEducationalsPerformingMoving(state),
 })
 
 export default connect(mapStateToProps, {
   loadEducationals,
   unloadEducationals,
   deleteEducational,
+  moveEducationalAhead,
+  moveEducationalBack,
 })(Educationals)

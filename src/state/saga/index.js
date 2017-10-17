@@ -4,6 +4,7 @@ import createMakeCollection from './hos/collection'
 import createMakePaginateCollection from './hos/paginateCollection'
 import createMakeStoryDetail from './hos/storyDetail'
 import createMakeDeleteStory from './hos/deleteStory'
+import createMakeMoveStory from './hos/moveStory'
 import * as api from '../../api'
 import {
   THEME,
@@ -27,9 +28,7 @@ import {
   MOVE_CHAPTER_THEME_FAILURE,
   MOVE_CHAPTER_THEME_SUCCESS,
   MOVE_THEME,
-  MOVE_THEME_LOADING,
-  MOVE_THEME_FAILURE,
-  MOVE_THEME_SUCCESS,
+  MOVE_EDUCATIONAL,
   chapterUpdated,
 } from '../actions'
 
@@ -44,6 +43,7 @@ const makeCollection = createMakeCollection(authApiCall)
 const makePaginateCollection = createMakePaginateCollection(authApiCall)
 const makeStoryDetail = createMakeStoryDetail(authApiCall)
 const makeDeleteStory = createMakeDeleteStory(authApiCall)
+const makeMoveStory = createMakeMoveStory(authApiCall)
 
 function *handleDeleteModuleChapter({ payload }) {
   const { chapter, moduleIndex } = payload
@@ -95,24 +95,6 @@ function *handleMoveChapterTheme({ payload }) {
   }
 }
 
-function *handleMoveTheme({ payload }) {
-  const { themesIds, index, direction } = payload
-  yield put({ type: MOVE_THEME_LOADING, payload })
-  try {
-    let data
-    if (direction === 'ahead') {
-      data = yield authApiCall(api.moveThemeAhead, themesIds, index)
-    } else if (direction === 'back') {
-      data = yield authApiCall(api.moveThemeBack, themesIds, index)
-    } else {
-      throw new Error(`Move theme unxcepted value for direction got: ${direction}`)
-    }
-    yield put({ type: MOVE_THEME_SUCCESS, payload: { ...payload, data } })
-  } catch (error) {
-    yield put({ type: MOVE_THEME_FAILURE, error, payload })
-  }
-}
-
 export default function* rootSaga() {
   yield fork(authFlow)
   yield fork(makePaginateCollection(
@@ -130,7 +112,8 @@ export default function* rootSaga() {
   yield takeEvery(DELETE_MODULE_CHAPTER, handleDeleteModuleChapter)
   yield takeEvery(MOVE_MODULE_CHAPTER, handleMoveModuleChapter)
   yield takeEvery(MOVE_CHAPTER_THEME, handleMoveChapterTheme)
-  yield takeEvery(MOVE_THEME, handleMoveTheme)
+  yield fork(makeMoveStory(MOVE_THEME))
+  yield fork(makeMoveStory(MOVE_EDUCATIONAL))
   yield fork(makeDeleteStory(THEME))
   yield fork(makeDeleteStory(EDUCATIONAL))
   yield fork(makeDeleteStory(CHAPTER, token => ({ id, theme }) =>

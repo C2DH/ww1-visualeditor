@@ -123,6 +123,7 @@ export const getEducationals = token => () =>
     filters: JSON.stringify({
       'tags__slug': 'education',
     }),
+    orderby: 'priority',
   })
 
 export const deleteStory = token => id =>
@@ -286,15 +287,15 @@ export const moveChapterThemeBack = token => (theme, chapterIndex) =>
   }))
   .then(extractBody)
 
-export const moveThemeAhead = token => (themesIds, index) => {
-  const orderedIds = moveArrayAhead(themesIds, index).reverse().join(',')
+export const moveStoryAhead = token => (storiesIds, index) => {
+  const orderedIds = moveArrayAhead(storiesIds, index).reverse().join(',')
   return withToken(token, request.post(`/api/story/priority/${orderedIds}/`))
     .then(extractBody)
     .then(data => ({ ...data, ids: data.ids.reverse() }))
 }
 
-export const moveThemeBack = token => (themesIds, index) => {
-  const orderedIds = moveArrayBack(themesIds, index).reverse().join(',')
+export const moveStoryBack = token => (storiesIds, index) => {
+  const orderedIds = moveArrayBack(storiesIds, index).reverse().join(',')
   return withToken(token, request.post(`/api/story/priority/${orderedIds}/`))
     .then(extractBody)
     .then(data => ({ ...data, ids: data.ids.reverse() }))

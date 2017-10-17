@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import collection from './hor/collection'
 import removeFromCollection from './hor/removeFromCollection'
+import reOrderCollection from './hor/reOrderCollection'
 import resetOn from './hor/resetOn'
 import composeReducers from './composeReducers'
 import {
@@ -8,6 +9,9 @@ import {
   DELETE_EDUCATIONAL_LOADING,
   DELETE_EDUCATIONAL_SUCCESS,
   DELETE_EDUCATIONAL_FAILURE,
+  MOVE_EDUCATIONAL_LOADING,
+  MOVE_EDUCATIONAL_SUCCESS,
+  MOVE_EDUCATIONAL_FAILURE,
   GET_EDUCATIONALS_UNLOAD
 } from '../actions'
 
@@ -27,11 +31,29 @@ const deleting = (prevState = {}, { type, payload }) => {
   }
 }
 
+const moving = (prevState = {}, { type, payload }) => {
+  switch (type) {
+    case MOVE_EDUCATIONAL_LOADING:
+      return {
+        [payload.educationalId]: true,
+      }
+    case MOVE_EDUCATIONAL_SUCCESS:
+    case MOVE_EDUCATIONAL_FAILURE:
+      return {
+        [payload.educationalId]: undefined,
+      }
+    default:
+      return prevState
+  }
+}
+
 const reducer = combineReducers({
   deleting,
+  moving,
   list: composeReducers(
     collection(GET_EDUCATIONALS),
-    removeFromCollection(DELETE_EDUCATIONAL_SUCCESS)
+    removeFromCollection(DELETE_EDUCATIONAL_SUCCESS),
+    reOrderCollection(MOVE_EDUCATIONAL_SUCCESS),
   ),
 })
 

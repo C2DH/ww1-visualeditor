@@ -26,12 +26,12 @@ export const MOVE_THEME_SUCCESS = 'MOVE_THEME_SUCCESS'
 
 export const moveThemeAhead = (themes, index, themeId) => ({
   type: MOVE_THEME,
-  payload: { themesIds: map(themes, 'id'), index, themeId, direction: 'ahead' }
+  payload: { storiesIds: map(themes, 'id'), index, themeId, direction: 'ahead' }
 })
 
 export const moveThemeBack = (themes, index, themeId) => ({
   type: MOVE_THEME,
-  payload: { themesIds: map(themes, 'id'), index, themeId, direction: 'back' }
+  payload: { storiesIds: map(themes, 'id'), index, themeId, direction: 'back' }
 })
 
 export const GET_THEME = 'GET_THEME'

@@ -1,3 +1,5 @@
+import { map } from 'lodash'
+
 export const GET_EDUCATIONALS = 'GET_EDUCATIONALS'
 export const GET_EDUCATIONALS_SUCCESS = 'GET_EDUCATIONALS_SUCCESS'
 export const GET_EDUCATIONALS_FAILURE = 'GET_EDUCATIONALS_FAILURE'
@@ -28,6 +30,31 @@ export const loadEducational = (id) => ({
 
 export const unloadEducational = () => ({
   type: GET_EDUCATIONAL_UNLOAD,
+})
+
+export const MOVE_EDUCATIONAL = 'MOVE_EDUCATIONAL'
+export const MOVE_EDUCATIONAL_LOADING = 'MOVE_EDUCATIONAL_LOADING'
+export const MOVE_EDUCATIONAL_FAILURE = 'MOVE_EDUCATIONAL_FAILURE'
+export const MOVE_EDUCATIONAL_SUCCESS = 'MOVE_EDUCATIONAL_SUCCESS'
+
+export const moveEducationalAhead = (educationals, index, educationalId) => ({
+  type: MOVE_EDUCATIONAL,
+  payload: {
+    storiesIds: map(educationals, 'id'),
+    index,
+    educationalId,
+    direction: 'ahead',
+  }
+})
+
+export const moveEducationalBack = (educationals, index, educationalId) => ({
+  type: MOVE_EDUCATIONAL,
+  payload: {
+    storiesIds: map(educationals, 'id'),
+    index,
+    educationalId,
+    direction: 'back',
+  }
 })
 
 export const PUBLISH_EDUCATIONAL = 'PUBLISH_EDUCATIONAL'

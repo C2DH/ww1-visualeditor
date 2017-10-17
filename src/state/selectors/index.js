@@ -220,6 +220,11 @@ export const getEducationals = createSelector(
 )
 export const areEducationalsLoading = state => state.educationals.list.loading
 
+export const getEducationalsPerformingMoving = createSelector(
+  state => state.educationals.moving,
+  moving => Object.values(moving).filter(v => v).length > 0
+)
+
 export const getEducational = createSelector(
   state => state.educationalDetail.id,
   state => state.entities.educationals,
