@@ -1,3 +1,5 @@
+import { map } from 'lodash'
+
 export const THEME = 'THEME'
 
 export const GET_THEMES = 'GET_THEMES'
@@ -15,6 +17,21 @@ export const loadThemes = (params = {}) => ({
 
 export const unloadThemes = () => ({
   type: GET_THEMES_UNLOAD,
+})
+
+export const MOVE_THEME = 'MOVE_THEME'
+export const MOVE_THEME_LOADING = 'MOVE_THEME_LOADING'
+export const MOVE_THEME_FAILURE = 'MOVE_THEME_FAILURE'
+export const MOVE_THEME_SUCCESS = 'MOVE_THEME_SUCCESS'
+
+export const moveThemeAhead = (themes, index, themeId) => ({
+  type: MOVE_THEME,
+  payload: { themesIds: map(themes, 'id'), index, themeId, direction: 'ahead' }
+})
+
+export const moveThemeBack = (themes, index, themeId) => ({
+  type: MOVE_THEME,
+  payload: { themesIds: map(themes, 'id'), index, themeId, direction: 'back' }
 })
 
 export const GET_THEME = 'GET_THEME'

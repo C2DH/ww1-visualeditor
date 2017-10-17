@@ -96,6 +96,11 @@ export const getThemes = createSelector(
 )
 export const areThemesLoading = state => state.themes.list.loading
 
+export const getThemesPerformingMoving = createSelector(
+  state => state.themes.moving,
+  moving => Object.values(moving).filter(v => v).length > 0
+)
+
 export const getTheme = createSelector(
   state => state.themeDetail.theme.id,
   state => state.entities.themes,

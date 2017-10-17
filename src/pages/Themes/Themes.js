@@ -12,11 +12,14 @@ import {
   loadThemes,
   unloadThemes,
   deleteTheme,
+  moveThemeAhead,
+  moveThemeBack,
 } from '../../state/actions'
 import {
   getThemes,
   areThemesLoading,
   makeTranslator,
+  getThemesPerformingMoving,
 } from '../../state/selectors'
 import './Themes.css'
 
@@ -44,11 +47,12 @@ class Themes extends PureComponent {
   }
 
   render() {
-    const { trans, themes, loading, deleting } = this.props
+    const { trans, themes, loading, deleting, performingMoving } = this.props
     return (
       <Container fluid className="margin-r-l-20">
         <HeadingRow title="Themes">
           {/* <TopSearchInput /> */}
+          {performingMoving && <Spinner noPadding x={1} />}
         </HeadingRow>
 
         <Row>
@@ -58,12 +62,22 @@ class Themes extends PureComponent {
           {(!themes && loading) && (
             <Col md={9}><Spinner /></Col>
           )}
-          {themes && themes.map(theme => (
+          {themes && themes.map((theme, i) => (
             <Col md="3" key={theme.id}>
               <Link to={`/themes/${theme.id}`} style={deleting[theme.id] ? { pointerEvents: 'none' } : undefined}>
                 <div style={deleting[theme.id] ? { opacity: 0.5 } : undefined}>
                   <ThemeCard
                     theme={theme}
+                    showBackButton={i > 0}
+                    showAheadButton={i < themes.length - 1}
+                    onAheadClick={e => {
+                      e.preventDefault()
+                      this.props.moveThemeAhead(themes, i, theme.id)
+                    }}
+                    onBackClick={e => {
+                      e.preventDefault()
+                      this.props.moveThemeBack(themes, i, theme.id)
+                    }}
                     onDeleteClick={e => {
                       e.preventDefault()
                       this.askDeleteTheme(theme)
@@ -94,10 +108,13 @@ const mapStateToProps = state => ({
   themes: getThemes(state),
   loading: areThemesLoading(state),
   deleting: state.themes.deleting,
+  performingMoving: getThemesPerformingMoving(state),
 })
 
 export default connect(mapStateToProps, {
   loadThemes,
   unloadThemes,
   deleteTheme,
+  moveThemeAhead,
+  moveThemeBack,
 })(Themes)

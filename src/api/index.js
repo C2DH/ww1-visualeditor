@@ -108,6 +108,7 @@ export const getThemes = token => () =>
     filters: JSON.stringify({
       'tags__slug': 'theme',
     }),
+    orderby: 'priority',
   })
 
 export const getStaticStories = token => () =>
@@ -284,6 +285,20 @@ export const moveChapterThemeBack = token => (theme, chapterIndex) =>
     }
   }))
   .then(extractBody)
+
+export const moveThemeAhead = token => (themesIds, index) => {
+  const orderedIds = moveArrayAhead(themesIds, index).reverse().join(',')
+  return withToken(token, request.post(`/api/story/priority/${orderedIds}/`))
+    .then(extractBody)
+    .then(data => ({ ...data, ids: data.ids.reverse() }))
+}
+
+export const moveThemeBack = token => (themesIds, index) => {
+  const orderedIds = moveArrayBack(themesIds, index).reverse().join(',')
+  return withToken(token, request.post(`/api/story/priority/${orderedIds}/`))
+    .then(extractBody)
+    .then(data => ({ ...data, ids: data.ids.reverse() }))
+}
 
 export const addChapterToTheme = token => (theme, chapterId) =>
   withToken(token, request.patch(`/api/story/${theme.id}/`).send({

@@ -1,3 +1,14 @@
 .ThemeCard__card {
   margin-top: 20px;
 }
+
+.ThemeCard__buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.ThemeCard__buttons button {
+  margin-left: 2px;
+}

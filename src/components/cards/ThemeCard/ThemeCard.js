@@ -10,7 +10,15 @@ import {
   makeTranslator,
 } from '../../../state/selectors'
 
-const ThemeCard = pure(({ theme, trans, onDeleteClick }) => (
+const ThemeCard = pure(({
+  theme,
+  trans,
+  onDeleteClick,
+  showBackButton = true,
+  showAheadButton = true,
+  onBackClick,
+  onAheadClick,
+}) => (
   <GenericCard
     className="ThemeCard__card"
     title={trans(theme, 'data.title')}
@@ -19,7 +27,15 @@ const ThemeCard = pure(({ theme, trans, onDeleteClick }) => (
     backgroundColorOverlay={get(theme, 'data.background.overlay')}
     backgroundColor={get(theme, 'data.background.backgroundColor')}
     pubblished={get(theme, 'status') === 'public'}
-    footerButton={<Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>}
+    editButtons={
+      <div className="ThemeCard__buttons">
+        {showBackButton && <Button onClick={onBackClick}><i className="fa fa-arrow-left" aria-hidden="true"></i></Button>}
+        {showAheadButton && <Button onClick={onAheadClick}><i className="fa fa-arrow-right" aria-hidden="true"></i></Button>}
+      </div>
+    }
+    footerButton={
+      <Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>
+    }
   />
 ))
 
