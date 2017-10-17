@@ -14,8 +14,8 @@ const ThemeCard = pure(({
   theme,
   trans,
   onDeleteClick,
-  showBackButton = true,
-  showAheadButton = true,
+  showBackButton = false,
+  showAheadButton = false,
   onBackClick,
   onAheadClick,
 }) => (

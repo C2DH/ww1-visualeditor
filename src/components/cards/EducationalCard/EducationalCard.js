@@ -14,8 +14,8 @@ const EducationalCard = pure(({
   educational,
   trans,
   onDeleteClick,
-  showBackButton = true,
-  showAheadButton = true,
+  showBackButton = false,
+  showAheadButton = false,
   onBackClick,
   onAheadClick,
 }) => (
