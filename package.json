@@ -2,7 +2,7 @@
   "name": "ww1-visualeditor",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://miller.inmagik.com",
+  "proxy": "https://editor.ww1.lu",
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
