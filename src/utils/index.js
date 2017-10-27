@@ -126,7 +126,7 @@ export const getBoundingBoxImage = (token, imageUrl, bbox) => {
   if (isArray(bbox) && bbox.length === 4 && token) {
     const bboxUrl = appendBeforeExtension(imageUrl, `_c[${bbox.join(',')}]`)
     // TODO: Move hardcoded url away...
-    return `https://ww1.lu/services/images?url=${bboxUrl}&token=${token}`
+    return `https://ww1.lu/services/images?url=${encodeURI(bboxUrl)}&token=${token}`
   }
   return imageUrl
 }

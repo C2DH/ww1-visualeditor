@@ -78,6 +78,7 @@ const standardBackground = module => {
     backgroundColor: get(module, 'background.color'),
     backgroundColorOverlay: get(module, 'background.object.overlay'),
     backgroundType: get(module, 'background.object.id.attachment') ? 'image' : 'color',
+    bbox: get(module, 'background.object.bbox', []),
   }
 }
 
@@ -140,7 +141,8 @@ const ModuleCard = pure(({
     backgroundColor,
     backgroundColorOverlay,
     backgroundType,
-    symbolic
+    symbolic,
+    bbox,
   } = getBackground(module)
   return (
     <div>
@@ -151,7 +153,8 @@ const ModuleCard = pure(({
           backgroundImage={backgroundImage}
           backgroundColor={backgroundColor}
           backgroundColorOverlay={backgroundColorOverlay}
-          backgroundType={backgroundType}>
+          backgroundType={backgroundType}
+          bbox={bbox}>
         </BackgroundPreview>
         <div className="ModuleCard__editButtons_container">
           <div className="w-100 flex">

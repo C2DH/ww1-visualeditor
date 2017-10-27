@@ -26,6 +26,7 @@ const ThemeCard = pure(({
     backgroundImage={get(theme, 'covers[0].attachment')}
     backgroundColorOverlay={get(theme, 'data.background.overlay')}
     backgroundColor={get(theme, 'data.background.backgroundColor')}
+    bbox={get(theme, 'data.background.bbox')}
     pubblished={get(theme, 'status') === 'public'}
     editButtons={
       <div className="ThemeCard__buttons">

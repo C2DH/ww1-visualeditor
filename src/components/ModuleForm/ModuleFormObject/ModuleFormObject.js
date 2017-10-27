@@ -15,6 +15,7 @@ import VisualForm, {
 } from '../../VisualForm'
 
 import ChooseDocument from '../../Form/ChooseDocument'
+import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
 import MediumEditor from '../../Form/MediumEditor'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
@@ -108,6 +109,7 @@ class ModuleFormObject extends PureComponent {
       documentSize,
       documentPosition,
       doc,
+      bbox,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
@@ -164,6 +166,14 @@ class ModuleFormObject extends PureComponent {
                     name="background.object.id"
                     component={ChooseDocument}
                     onEmptyDocument={() => change('moduleObject', 'background.object', {})}
+                    clearBbox={() => this.props.change('moduleObject', 'background.object.bbox', [])}
+                    buttons={(
+                      <Field
+                        name='background.object.bbox'
+                        image={backgroundImage}
+                        component={Bbox}
+                      />
+                    )}
                    />
                  </div>
                 <hr />
@@ -251,7 +261,8 @@ class ModuleFormObject extends PureComponent {
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
           overlayStyle={overlayStyle}
-          backgroundColorOverlay={backgroundColorOverlay}>
+          backgroundColorOverlay={backgroundColorOverlay}
+          bbox={bbox}>
 
           <div
             style={documentPreviewContainerStyle}
@@ -320,6 +331,7 @@ const mapStateToProps = state => ({
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
   backgroundColor: selector(state, 'background.color'),
+  bbox: selector(state, 'background.object.bbox'),
 })
 
 export default reduxForm({

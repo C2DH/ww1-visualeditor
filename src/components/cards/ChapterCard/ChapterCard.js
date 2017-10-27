@@ -27,6 +27,7 @@ const ChapterCard = pure(({
     backgroundImage={get(chapter, 'covers[0].attachment')}
     backgroundColorOverlay={get(chapter, 'data.background.overlay')}
     backgroundColor={get(chapter, 'data.background.backgroundColor')}
+    bbox={get(chapter, 'data.background.bbox')}
     pubblished={get(chapter, 'status') === 'public'}
     editButtons={
       <div className="w-100 flex">

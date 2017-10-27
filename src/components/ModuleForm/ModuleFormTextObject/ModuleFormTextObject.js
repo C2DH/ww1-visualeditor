@@ -61,10 +61,10 @@ class ModuleFormTextObject extends PureComponent {
       backgroundColor,
       doc,
       layout,
+      bbox,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
-    console.log('~~~', doc)
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
@@ -83,6 +83,14 @@ class ModuleFormTextObject extends PureComponent {
                     name="background.object.id"
                     component={ChooseDocument}
                     onEmptyDocument={() => change('moduleTextObject', 'background.object', {})}
+                    clearBbox={() => this.props.change('moduleTextObject', 'background.object.bbox', [])}
+                    buttons={(
+                      <Field
+                        name='background.object.bbox'
+                        image={backgroundImage}
+                        component={Bbox}
+                      />
+                    )}
                    />
                  </div>
                 <div>
@@ -162,7 +170,8 @@ class ModuleFormTextObject extends PureComponent {
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
-          backgroundColorOverlay={backgroundColorOverlay}>
+          backgroundColorOverlay={backgroundColorOverlay}
+          bbox={bbox}>
 
           <div className='ModuleFormTextObject__TextContainer'>
             <Field
@@ -237,6 +246,7 @@ const mapStateToProps = state => ({
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
   backgroundColor: selector(state, 'background.color'),
+  bbox: selector(state, 'background.object.bbox'),
 })
 
 export default reduxForm({

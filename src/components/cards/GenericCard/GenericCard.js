@@ -22,6 +22,7 @@ const GenericCard = ({
   backgroundImage,
   backgroundColor,
   backgroundColorOverlay,
+  bbox,
   pubblished,
   selected,
   cardClick = null,
@@ -41,7 +42,8 @@ const GenericCard = ({
         backgroundImage={backgroundImage}
         backgroundColor={backgroundColor}
         backgroundColorOverlay={backgroundColorOverlay}
-        backgroundType={backgroundType}>
+        backgroundType={backgroundType}
+        bbox={bbox}>
         {pubblished && <PublishedThemeLabel pos={editButtons ? 'bottom' : 'top'}  />}
         {selected && <SelectedModuleLabel />}
       </BackgroundPreview>

@@ -24,10 +24,6 @@ import {
 } from '../../state/selectors'
 
 class ThemeForm extends PureComponent {
-  state = {
-    text: '',
-  }
-
   render() {
     const {
       handleSubmit,

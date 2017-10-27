@@ -50,6 +50,7 @@ class ModuleFormText extends PureComponent {
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
+      bbox,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
@@ -95,6 +96,14 @@ class ModuleFormText extends PureComponent {
                     name="background.object.id"
                     component={ChooseDocument}
                     onEmptyDocument={() => change('moduleText', 'background.object', {})}
+                    clearBbox={() => this.props.change('moduleText', 'background.object.bbox', [])}
+                    buttons={(
+                      <Field
+                        name='background.object.bbox'
+                        image={backgroundImage}
+                        component={Bbox}
+                      />
+                    )}
                    />
                  </div>
                 <hr />
@@ -148,7 +157,8 @@ class ModuleFormText extends PureComponent {
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
           backgroundColorOverlay={backgroundColorOverlay}
-          overlayStyle={overlayStyle}>
+          overlayStyle={overlayStyle}
+          bbox={bbox}>
           <Field
             name={`text.content.${language.code}`}
             className="invisible-input ModuleFormText__Preview-content-input"
@@ -178,6 +188,7 @@ const mapStateToProps = state => ({
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
   backgroundColor: selector(state, 'background.color'),
+  bbox: selector(state, 'background.object.bbox'),
 })
 
 export default reduxForm({

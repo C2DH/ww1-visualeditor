@@ -37,6 +37,7 @@ class ChapterForm extends PureComponent {
       invalid,
       submitting,
       exitLink,
+      bbox,
     } = this.props
 
     const bgPreviewProps = {
@@ -44,6 +45,7 @@ class ChapterForm extends PureComponent {
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
+      bbox,
     }
 
     return (
@@ -66,6 +68,7 @@ class ChapterForm extends PureComponent {
                   name='covers[0]'
                   component={ChooseDocument}
                   onEmptyDocument={() => this.props.arrayRemoveAll('chapter', 'covers')}
+                  clearBbox={() => this.props.change('chapter', 'data.background.bbox', [])}
                   buttons={(
                     <Field
                       name='data.background.bbox'
@@ -149,6 +152,7 @@ const mapStateToProps = state => ({
   backgroundType: selector(state, 'backgroundType'),
   backgroundColor: selector(state, 'data.background.backgroundColor'),
   backgroundColorOverlay: selector(state, 'data.background.overlay'),
+  bbox: selector(state, 'data.background.bbox'),
   color: selector(state, 'data.color'),
   backgroundImage: selector(state, 'covers[0].attachment'),
   covers: selector(state, 'covers'),

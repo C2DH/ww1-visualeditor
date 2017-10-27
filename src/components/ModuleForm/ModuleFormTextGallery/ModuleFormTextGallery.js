@@ -54,6 +54,7 @@ class ModuleFormTextGallery extends PureComponent {
       images,
       layout,
       galleryLayout,
+      bbox,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
@@ -80,6 +81,14 @@ class ModuleFormTextGallery extends PureComponent {
                     name="background.object.id"
                     component={ChooseDocument}
                     onEmptyDocument={() => change('moduleTextGallery', 'background.object', {})}
+                    clearBbox={() => this.props.change('moduleTextGallery', 'background.object.bbox', [])}
+                    buttons={(
+                      <Field
+                        name='background.object.bbox'
+                        image={backgroundImage}
+                        component={Bbox}
+                      />
+                    )}
                    />
                  </div>
                 <hr />
@@ -162,7 +171,8 @@ class ModuleFormTextGallery extends PureComponent {
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
-          backgroundColorOverlay={backgroundColorOverlay}>
+          backgroundColorOverlay={backgroundColorOverlay}
+          bbox={bbox}>
 
         <div className="ModuleFormTextGallery__DocumentPreview__TextContainer">
             <Field
@@ -222,6 +232,7 @@ const mapStateToProps = state => ({
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
   backgroundColor: selector(state, 'background.color'),
+  bbox: selector(state, 'background.object.bbox'),
 })
 
 export default reduxForm({

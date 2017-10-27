@@ -17,6 +17,7 @@ const StoryPreview = ({ story, trans, rightContent, bottomContent, className = '
     backgroundImage={get(story, 'covers[0].attachment')}
     backgroundColorOverlay={get(story, 'data.background.overlay')}
     backgroundColor={get(story, 'data.background.backgroundColor')}
+    bbox={get(story, 'data.background.bbox')}
   >
     <div className="StoryPreview__top">
       <div className="StoryPreview__content">

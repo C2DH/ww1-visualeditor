@@ -15,6 +15,7 @@ import VisualForm, {
 } from '../../VisualForm'
 
 import AddButton from '../../AddButton'
+import Bbox from '../../Form/Bbox'
 import ChooseDocument from '../../Form/ChooseDocument'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
@@ -52,6 +53,7 @@ class ModuleFormGallery extends PureComponent {
       doc,
       layout,
       images,
+      bbox,
     } = this.props
 
     const backgroundType = backgroundObject ? 'image' : 'color'
@@ -78,6 +80,14 @@ class ModuleFormGallery extends PureComponent {
                     name="background.object.id"
                     component={ChooseDocument}
                     onEmptyDocument={() => change('moduleGallery', 'background.object', {})}
+                    clearBbox={() => this.props.change('moduleGallery', 'background.object.bbox', [])}
+                    buttons={(
+                      <Field
+                        name='background.object.bbox'
+                        image={backgroundImage}
+                        component={Bbox}
+                      />
+                    )}
                    />
                  </div>
                 <hr />
@@ -132,7 +142,9 @@ class ModuleFormGallery extends PureComponent {
         <PreviewContainer
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
-          backgroundImage={backgroundImage}>
+          backgroundColorOverlay={backgroundColorOverlay}
+          backgroundImage={backgroundImage}
+          bbox={bbox}>
 
           <Gallery
             images={images}
@@ -176,6 +188,7 @@ const mapStateToProps = state => ({
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),
   backgroundColor: selector(state, 'background.color'),
+  bbox: selector(state, 'background.object.bbox'),
 })
 
 export default reduxForm({

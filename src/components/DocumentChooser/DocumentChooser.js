@@ -120,7 +120,7 @@ class DocumentChooser extends PureComponent {
                           : unselectDocument(doc.id)
                       }}
                       title={doc.title}
-                      cover={doc.attachment}
+                      cover={doc.snapshot || doc.attachment}
                     />
                   ) : (
                     <DocumentCard
