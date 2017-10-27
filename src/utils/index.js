@@ -21,13 +21,16 @@ export const makeContainerStyles = (
   backgroundImage,
   backgroundColorOverlay,
   backgroundColor,
+  bbox,
+  token,
 ) => {
   let themeContainerStyle = {}
   let overlayStyle = {}
 
   if (backgroundType === 'image') {
     if (backgroundImage) {
-      themeContainerStyle = { backgroundImage: `url(${backgroundImage})` }
+      const imageUrl = getBoundingBoxImage(token, backgroundImage, bbox)
+      themeContainerStyle = { backgroundImage: `url(${imageUrl})` }
     }
     if (backgroundColorOverlay) {
       const rgb = hexToRgb(backgroundColorOverlay)
@@ -120,7 +123,7 @@ const appendBeforeExtension = (file, str) => {
 }
 
 export const getBoundingBoxImage = (token, imageUrl, bbox) => {
-  if (isArray(bbox) && bbox.length === 4) {
+  if (isArray(bbox) && bbox.length === 4 && token) {
     const bboxUrl = appendBeforeExtension(imageUrl, `_c[${bbox.join(',')}]`)
     // TODO: Move hardcoded url away...
     return `https://ww1.lu/services/images?url=${bboxUrl}&token=${token}`

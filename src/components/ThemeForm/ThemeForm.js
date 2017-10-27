@@ -22,15 +22,11 @@ import VisualForm, {
 import {
   getCurrentLanguage,
 } from '../../state/selectors'
-import {
-  getBoundingBoxImage,
-} from '../../utils'
 
 class ThemeForm extends PureComponent {
   state = {
     text: '',
   }
-
 
   render() {
     const {
@@ -46,18 +42,14 @@ class ThemeForm extends PureComponent {
       submitting,
       exitLink,
       bbox,
-      token,
     } = this.props
 
-    const boxedBackgroundImage = backgroundImage
-      ? getBoundingBoxImage(token, backgroundImage, bbox)
-      : null
-
     const bgPreviewProps = {
-      backgroundImage: boxedBackgroundImage,
+      backgroundImage,
       backgroundType,
       backgroundColorOverlay,
       backgroundColor,
+      bbox,
     }
 
     return (
@@ -158,7 +150,6 @@ class ThemeForm extends PureComponent {
 const selector = formValueSelector('theme')
 
 const mapStateToProps = state => ({
-  token: state.auth.accessToken,
   backgroundType: selector(state, 'backgroundType'),
   backgroundColor: selector(state, 'data.background.backgroundColor'),
   backgroundColorOverlay: selector(state, 'data.background.overlay'),

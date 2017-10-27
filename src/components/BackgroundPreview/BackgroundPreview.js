@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { makeContainerStyles } from '../../utils'
 
 const BackgroundPreview = ({
@@ -11,6 +12,8 @@ const BackgroundPreview = ({
   backgroundImage,
   backgroundColorOverlay,
   backgroundColor,
+  bbox,
+  token,
 }) => {
   const [
     computedContainerStyle,
@@ -20,6 +23,8 @@ const BackgroundPreview = ({
     backgroundImage,
     backgroundColorOverlay,
     backgroundColor,
+    bbox,
+    token,
   )
 
   const appliedContainerStyle = {
@@ -45,4 +50,7 @@ const BackgroundPreview = ({
   )
 }
 
-export default BackgroundPreview
+const mapStateToProps = state => ({
+  token: state.auth.accessToken,
+})
+export default connect(mapStateToProps)(BackgroundPreview)
