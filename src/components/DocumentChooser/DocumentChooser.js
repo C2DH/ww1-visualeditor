@@ -126,7 +126,7 @@ class DocumentChooser extends PureComponent {
                     <DocumentCard
                       onClick={() => this.chooseDocument(doc)}
                       title={doc.title}
-                      cover={doc.attachment}
+                      cover={doc.snapshot || doc.attachment}
                     />
                   )}
                 </Col>
