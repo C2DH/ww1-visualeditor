@@ -15,6 +15,7 @@ class ChooseDocument extends PureComponent {
   componentWillReceiveProps(nextProps) {
     if (this.props.choosedDocument !== nextProps.choosedDocument && nextProps.choosedDocument) {
       this.props.input.onChange(nextProps.choosedDocument)
+      this.props.clearBbox()
       this.props.hideWidgetFullPage()
     }
   }
@@ -27,6 +28,7 @@ class ChooseDocument extends PureComponent {
   }
 
   emptyDocument = () => {
+    this.props.clearBbox()
     if (typeof this.props.onEmptyDocument === 'function') {
       this.props.onEmptyDocument()
     } else {
