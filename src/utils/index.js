@@ -1,4 +1,4 @@
-import { reduce } from 'lodash'
+import { reduce, isArray } from 'lodash'
 
 export const hexToRgb = (hexStr) => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -112,6 +112,20 @@ export const getPlaceTypeIcon = placeType => {
     }
   }
   return icon
+}
+
+const appendBeforeExtension = (file, str) => {
+  const pieces = file.split('.')
+  return pieces.slice(0, -1).join('.') + `${str}.` + pieces.slice(-1)
+}
+
+export const getBoundingBoxImage = (token, imageUrl, bbox) => {
+  if (isArray(bbox) && bbox.length === 4) {
+    const bboxUrl = appendBeforeExtension(imageUrl, `_c[${bbox.join(',')}]`)
+    // TODO: Move hardcoded url away...
+    return `https://ww1.lu/services/images?url=${bboxUrl}&token=${token}`
+  }
+  return imageUrl
 }
 
 export * from './modules'

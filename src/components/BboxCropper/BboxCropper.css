@@ -1,0 +1,8 @@
+.BboxCropper__Controls {
+  text-align: center;
+  padding: 10px;
+}
+
+.BboxCropper__Controls button {
+  margin-right: 5px;
+}

@@ -5812,9 +5812,9 @@ react-error-overlay@^1.0.7:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
-react-image-crop@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-2.0.5.tgz#7be10b35ea04a99b9b06d27c17f9037ec81a597f"
+react-image-crop@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-3.0.2.tgz#0513e7d38e94b065ef965b92e93a60ededa45484"
 
 react-mapbox-gl@^2.5.0:
   version "2.5.0"

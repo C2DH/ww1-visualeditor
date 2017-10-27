@@ -7,10 +7,14 @@ import {
   unloadBboxCrop,
 } from '../../state/actions'
 import 'react-image-crop/dist/ReactCrop.css'
+import './BboxCropper.css'
+
+const emptyCrop = { x: 0, y: 0, width: 0, height: 0 }
 
 class BboxCropper extends PureComponent {
   state = {
-    bbox: [],
+    crop: emptyCrop,
+    cropPx: emptyCrop,
   }
 
   componentWillUnmount() {
@@ -18,24 +22,66 @@ class BboxCropper extends PureComponent {
   }
 
   saveBbox = () => {
-    this.props.saveCropBbox(this.state.bbox)
+    // Empty crop...
+    const { x, y, width, height } = this.state.cropPx
+
+    if (width === 0 || height === 0) {
+      this.props.saveCropBbox([])
+    } else {
+      this.props.saveCropBbox([ x, y, x + width, y + height ])
+    }
   }
 
-  onCropComplete = ({ x, y, width, height }) => {
-    this.setState({
-      bbox: [x, y, width, height],
-    })
+  clearBbox = () => {
+    this.props.saveCropBbox([])
   }
 
-  // TODO: Init react crop state using bbox prop
+  handleImageLoaded = (image) => {
+    const { bbox } = this.props
+
+    if (bbox.length === 0) {
+      // No crop choosed
+      this.setState({ crop: emptyCrop, cropPx: emptyCrop })
+    } else {
+      // Convert bbox to crop
+      const [ x, y, x2, y2 ] = bbox
+      const width = x2 - x
+      const height = y2 - y
+      const cropPx = {
+        x,
+        width,
+        y,
+        height,
+      }
+      const crop = {
+        x: Math.round((x * 100) / image.naturalWidth),
+        width: Math.round((width * 100) / image.naturalWidth),
+        y: Math.round((y * 100) / image.naturalHeight),
+        height: Math.round((height * 100) / image.naturalHeight),
+      }
+      this.setState({ crop, cropPx })
+    }
+  }
+
+  handleOnChangeCrop = (crop, cropPx) => {
+    this.setState({ crop, cropPx })
+  }
+
   render() {
-    const { bbox, image } = this.props
+    const { image } = this.props
+    const { crop } = this.state
     return (
       <div>
-        <div style={{ padding: 10 }}>
+        <div className='BboxCropper__Controls'>
           <Button onClick={this.saveBbox}>Done</Button>
+          <Button onClick={this.clearBbox}>Clear</Button>
         </div>
-        <ReactCrop src={image} onComplete={this.onCropComplete} />
+        <ReactCrop
+          src={image}
+          crop={crop}
+          onChange={this.handleOnChangeCrop}
+          onImageLoaded={this.handleImageLoaded}
+        />
       </div>
     )
   }
