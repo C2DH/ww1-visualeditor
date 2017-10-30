@@ -3,6 +3,7 @@ import { get } from 'lodash'
 import { pure } from 'recompose'
 import { connect } from 'react-redux'
 import { Card, Button } from 'reactstrap'
+import showdown from 'showdown'
 import BackgroundPreview from '../../BackgroundPreview'
 import './ModuleCard.css'
 
@@ -59,6 +60,11 @@ const getTitle = (module, trans) => {
     default:
       return `module ${moduleName}`
   }
+}
+
+const getTitleConverted = (module, trans) => {
+  const converter = new showdown.Converter()
+  return converter.makeHtml(getTitle(module, trans))
 }
 
 const symbolicBackground = module => ({
@@ -164,9 +170,9 @@ const ModuleCard = pure(({
             <Button onClick={onDeleteClick}><i className="fa fa-trash-o" aria-hidden="true"></i></Button>
           </div>
         </div>
-        <div className="ModuleCard__textContainer">
-          {getTitle(module, trans)}
-        </div>
+        <div
+          className="ModuleCard__textContainer"
+          dangerouslySetInnerHTML={{ __html: getTitleConverted(module, trans) }} />
       </Card>
     </div>
   )
