@@ -46,9 +46,18 @@ class ModuleFormObject extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    if (this.props.documentType === 'audio') {
+      this.props.change('moduleObject', 'size', 'big')
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.documentType !== nextProps.documentType) {
       this.props.change('moduleObject', 'id', null)
+      if (nextProps.documentType === 'audio') {
+        this.props.change('moduleObject', 'size', 'big')
+      }
     }
   }
 
@@ -223,19 +232,21 @@ class ModuleFormObject extends PureComponent {
                 component={ChooseDocument}
                />
             </div>
-            <div className="margin-bottom-15">
-              <FormGroup>
-                <Label>Size</Label>
-                <Field
-                  label="Size"
-                  name="size"
-                  component={Select}>
-                  <option value='small'>Small</option>
-                  <option value='medium'>Medium</option>
-                  <option value='big'>Big</option>
-                 </Field>
-               </FormGroup>
-            </div>
+            {documentType !== 'audio' && (
+              <div className="margin-bottom-15">
+                <FormGroup>
+                  <Label>Size</Label>
+                  <Field
+                    label="Size"
+                    name="size"
+                    component={Select}>
+                    <option value='small'>Small</option>
+                    <option value='medium'>Medium</option>
+                    <option value='big'>Big</option>
+                   </Field>
+                 </FormGroup>
+              </div>
+            )}
             <div>
               <FormGroup>
                 <Label>Position</Label>
