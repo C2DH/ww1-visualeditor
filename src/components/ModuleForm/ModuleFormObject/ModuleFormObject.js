@@ -47,8 +47,12 @@ class ModuleFormObject extends PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.documentType === 'audio') {
+    const { documentSize, documentType, documentPosition } = this.props
+    if (documentType === 'audio' && documentSize !== 'big') {
       this.props.change('moduleObject', 'size', 'big')
+    }
+    if (documentPosition !== 'center') {
+      this.props.change('moduleObject', 'position', 'center')
     }
   }
 
@@ -247,19 +251,6 @@ class ModuleFormObject extends PureComponent {
                  </FormGroup>
               </div>
             )}
-            <div>
-              <FormGroup>
-                <Label>Position</Label>
-                <Field
-                  label="Position"
-                  name="position"
-                  component={Select}>
-                  <option value='left'>Left</option>
-                  <option value='center'>Center</option>
-                  <option value='right'>Right</option>
-                 </Field>
-               </FormGroup>
-            </div>
           </SideForm>
           <SideActions>
             {invalid && <p>Insert an object to save</p>}
