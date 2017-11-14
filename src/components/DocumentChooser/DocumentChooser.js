@@ -49,7 +49,7 @@ class DocumentChooser extends PureComponent {
     }
     return mergeParams({
       filters: {
-        data__type: this.props.documentType,
+        type: this.props.documentType,
       }
     }, params)
   }
@@ -74,9 +74,10 @@ class DocumentChooser extends PureComponent {
 
   searchDocuments = debounce(searchString => {
     this.props.loadDocuments(this.makeParams({
+      // q: `${searchString}*`,
       filters: {
         title__icontains: searchString,
-      }
+      },
     }))
   }, 200)
 
