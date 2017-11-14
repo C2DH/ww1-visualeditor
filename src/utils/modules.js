@@ -19,6 +19,8 @@ export const createEmptyModule = (moduleType, languages) => {
   }
 }
 
+const DEFAULT_BG_COLOR = '#777'
+
 const createEmptyMultilangObj = (languages, term = '') => languages.reduce((r, l) => ({
   ...r,
   [l.code]: term,
@@ -27,7 +29,7 @@ const createEmptyMultilangObj = (languages, term = '') => languages.reduce((r, l
 const createEmptyModuleText = languages => ({
   module: 'text',
   background: {
-    object: {},
+    color: DEFAULT_BG_COLOR,
   },
   text: {
     color: '#000',
@@ -39,7 +41,7 @@ const createEmptyModuleText = languages => ({
 const createEmptyModuleObject = languages => ({
   module: 'object',
   background: {
-    object: {},
+    color: DEFAULT_BG_COLOR,
   },
   type: 'image',
   position: 'center',
@@ -50,7 +52,7 @@ const createEmptyModuleObject = languages => ({
 const createEmptyModuleGallery = languages => ({
   module: 'gallery',
   background: {
-    object: {},
+    color: DEFAULT_BG_COLOR,
   },
   objects: [],
   layout: 'grid',
@@ -60,7 +62,7 @@ const createEmptyModuleGallery = languages => ({
 const createEmptyModuleMap = languages => ({
   module: 'map',
   background: {
-    object: {},
+    color: DEFAULT_BG_COLOR,
   },
   objects: [],
   caption: createEmptyMultilangObj(languages, ''),
@@ -69,7 +71,7 @@ const createEmptyModuleMap = languages => ({
 const createEmptyModuleTextObject = languages => ({
   module: 'text_object',
   background: {
-    object: {},
+    color: DEFAULT_BG_COLOR,
   },
   text: {
     color: '#000',
@@ -85,7 +87,7 @@ const createEmptyModuleTextObject = languages => ({
 const createEmptyModuleTextGallery = languages => ({
   module: 'text_gallery',
   background: {
-    object: {},
+    color: DEFAULT_BG_COLOR,
   },
   text: {
     color: '#000',
@@ -102,7 +104,7 @@ const createEmptyModuleTextGallery = languages => ({
 const createEmptyModuleTextMap = languages => ({
   module: 'text_map',
   background: {
-    object: {},
+    color: DEFAULT_BG_COLOR,
   },
   text: {
     color: '#000',
