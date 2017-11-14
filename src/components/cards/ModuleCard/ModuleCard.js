@@ -4,6 +4,7 @@ import { pure } from 'recompose'
 import { connect } from 'react-redux'
 import { Card, Button } from 'reactstrap'
 import showdown from 'showdown'
+import htmlToText from 'html-to-text'
 import BackgroundPreview from '../../BackgroundPreview'
 import './ModuleCard.css'
 
@@ -11,12 +12,22 @@ import {
   makeTranslator,
 } from '../../../state/selectors'
 
+const safeMarkdown = (markdown) => {
+  const converter = new showdown.Converter()
+  const html = converter.makeHtml(markdown)
+  const text = htmlToText.fromString(html, {
+    ignoreHref: true,
+    uppercaseHeadings: false,
+  })
+  return text
+}
+
 const getTitle = (module, trans) => {
   const moduleName = module.module.replace('_', ' & ')
 
   switch (module.module) {
     case 'text': {
-      const text = trans(module, 'text.content')
+      const text = safeMarkdown(trans(module, 'text.content'))
       return `module ${moduleName} ${text}`
     }
     case 'map':
@@ -24,47 +35,42 @@ const getTitle = (module, trans) => {
     case 'object':
     {
       const caption = trans(module, 'caption')
-      return `module ${moduleName} ${caption}`
+      return `module ${moduleName} ${safeMarkdown(caption)}`
     }
     case 'text_gallery':
     {
       const text = trans(module, 'text.content')
       if (text) {
-        return `module ${moduleName} ${text}`
+        return `module ${moduleName} ${safeMarkdown(text)}`
       }
       const caption = trans(module, 'caption')
       if (caption) {
-        return `module ${moduleName} ${caption}`
+        return `module ${moduleName} ${safeMarkdown(caption)}`
       }
     }
     case 'text_object': {
       const text = trans(module, 'text.content')
       if (text) {
-        return `module ${moduleName} ${text}`
+        return `module ${moduleName} ${safeMarkdown(text)}`
       }
       const caption = trans(module, 'object.caption')
       if (caption) {
-        return `module ${moduleName} ${caption}`
+        return `module ${moduleName} ${safeMarkdown(caption)}`
       }
     }
     case 'text_map': {
       const text = trans(module, 'text.content')
       if (text) {
-        return `module ${moduleName} ${text}`
+        return `module ${moduleName} ${safeMarkdown(text)}`
       }
       const caption = trans(module, 'map.caption')
       if (caption) {
-        return `module ${moduleName} ${caption}`
+        return `module ${moduleName} ${safeMarkdown(caption)}`
       }
     }
     default:
       return `module ${moduleName}`
   }
-}
-
-const getTitleConverted = (module, trans) => {
-  const converter = new showdown.Converter()
-  return converter.makeHtml(getTitle(module, trans))
 }
 
 const symbolicBackground = module => ({
@@ -172,7 +178,7 @@ const ModuleCard = pure(({
         </div>
         <div
           className="ModuleCard__textContainer"
-          dangerouslySetInnerHTML={{ __html: getTitleConverted(module, trans) }} />
+          dangerouslySetInnerHTML={{ __html: getTitle(module, trans) }} />
       </Card>
     </div>
   )
