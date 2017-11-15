@@ -1,6 +1,12 @@
 import { createSelector, defaultMemoize } from 'reselect'
 import { reduce, keys, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
-import { TAG_THEME, TAG_CHAPTER, TAG_EDUCATION } from '../consts'
+import {
+  TAG_THEME,
+  TAG_CHAPTER,
+  TAG_EDUCATION,
+  DEFAULT_BG_COLOR,
+  DEFAULT_OVERLAY_COLOR,
+} from '../consts'
 
 // fp <3
 const maybeNull = a => fn => isNull(a) ? null : fn(a)
@@ -24,15 +30,15 @@ export const createEmptyMultilangObj = languages => languages.reduce((r, l) => (
 }), {})
 
 const createBasicStory = (languages, tag) => ({
-  backgroundType: 'image',
+  backgroundType: 'color',
   covers: [],
   data: {
     title: createEmptyMultilangObj(languages),
     abstract: createEmptyMultilangObj(languages),
     background: {
-      backgroundColor: '',
+      backgroundColor: DEFAULT_BG_COLOR,
       bbox: [],
-      overlay: '',
+      overlay: DEFAULT_OVERLAY_COLOR,
     },
     color: '',
   },

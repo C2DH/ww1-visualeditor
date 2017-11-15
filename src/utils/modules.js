@@ -1,3 +1,5 @@
+import { DEFAULT_BG_COLOR } from '../state/consts'
+
 export const createEmptyModule = (moduleType, languages) => {
   switch (moduleType) {
     case 'text':
@@ -18,8 +20,6 @@ export const createEmptyModule = (moduleType, languages) => {
       throw new Error(`Invalid module type ${moduleType}`)
   }
 }
-
-const DEFAULT_BG_COLOR = '#777'
 
 const createEmptyMultilangObj = (languages, term = '') => languages.reduce((r, l) => ({
   ...r,
@@ -61,9 +61,7 @@ const createEmptyModuleGallery = languages => ({
 
 const createEmptyModuleMap = languages => ({
   module: 'map',
-  background: {
-    color: DEFAULT_BG_COLOR,
-  },
+  background: {},
   objects: [],
   caption: createEmptyMultilangObj(languages, ''),
 })

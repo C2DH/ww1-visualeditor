@@ -9,6 +9,7 @@ import ChooseDocument from '../../Form/ChooseDocument'
 import MediumEditor from '../../Form/MediumEditor'
 import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
+import { required } from '../../Form/validate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
 import AudioPlayer from '../../AudioPlayer'
@@ -25,6 +26,9 @@ import VisualForm, {
 import {
   getCurrentLanguage,
 } from '../../../state/selectors'
+import {
+  DEFAULT_OVERLAY_COLOR,
+} from '../../../state/consts'
 
 import 'video-react/dist/video-react.css'
 import { Player, BigPlayButton } from 'video-react'
@@ -34,7 +38,10 @@ class ModuleFormTextObject extends PureComponent {
     if (e.target.value === 'color') {
       this.props.change('moduleTextObject', 'background.object', null)
     } else {
-      this.props.change('moduleTextObject', 'background.object', {})
+      this.props.change('moduleTextObject', 'background.object', {
+        id: null,
+        overlay: DEFAULT_OVERLAY_COLOR,
+      })
       this.props.change('moduleTextObject', 'background.color', null)
     }
   }
@@ -99,7 +106,7 @@ class ModuleFormTextObject extends PureComponent {
                     name="background.object.overlay"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>
@@ -112,7 +119,7 @@ class ModuleFormTextObject extends PureComponent {
                     name="background.color"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>

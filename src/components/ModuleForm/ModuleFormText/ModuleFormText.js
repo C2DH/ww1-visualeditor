@@ -1,6 +1,12 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, Field, formValueSelector, change } from 'redux-form'
+import {
+  reduxForm,
+  Field,
+  formValueSelector,
+  getFormSyncErrors,
+  change
+} from 'redux-form'
 import { Link } from 'react-router-dom'
 import { Button, Input, Label } from 'reactstrap'
 
@@ -11,7 +17,7 @@ import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
 import MediumEditor from '../../Form/MediumEditor'
-import { requiredAtLeastOne } from '../../Form/validate'
+import { requiredAtLeastOne, required } from '../../Form/validate'
 
 import './ModuleFormText.css'
 
@@ -25,13 +31,19 @@ import VisualForm, {
 import {
   getCurrentLanguage,
 } from '../../../state/selectors'
+import {
+  DEFAULT_OVERLAY_COLOR,
+} from '../../../state/consts'
 
 class ModuleFormText extends PureComponent {
   changeBackgroundType = (e) => {
     if (e.target.value === 'color') {
       this.props.change('moduleText', 'background.object', null)
     } else {
-      this.props.change('moduleText', 'background.object', {})
+      this.props.change('moduleText', 'background.object', {
+        id: null,
+        overlay: DEFAULT_OVERLAY_COLOR,
+      })
       this.props.change('moduleText', 'background.color', null)
     }
   }
@@ -43,6 +55,7 @@ class ModuleFormText extends PureComponent {
       handleSubmit,
       language,
       invalid,
+      formErrors,
       submitting,
       exitLink,
       change,
@@ -113,7 +126,7 @@ class ModuleFormText extends PureComponent {
                     name="background.object.overlay"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>
@@ -126,7 +139,7 @@ class ModuleFormText extends PureComponent {
                     name="background.color"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>
@@ -147,7 +160,7 @@ class ModuleFormText extends PureComponent {
              />
           </SideForm>
           <SideActions>
-            {invalid && <p>Insert text to save</p>}
+            {formErrors && formErrors.text && <p className="text-danger">Insert text to save</p>}
             <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
@@ -178,12 +191,14 @@ class ModuleFormText extends PureComponent {
 }
 
 const selector = formValueSelector('moduleText')
+const getSyncErrors = getFormSyncErrors('moduleText')
 
 const mapStateToProps = state => ({
   textColor: selector(state, 'text.color'),
   textPosition: selector(state, 'text.position'),
   backgroundObject: selector(state, 'background.object'),
   language: getCurrentLanguage(state),
+  formErrors: getSyncErrors(state),
   // Background
   backgroundImage: selector(state, 'background.object.id.attachment'),
   backgroundColorOverlay: selector(state, 'background.object.overlay'),

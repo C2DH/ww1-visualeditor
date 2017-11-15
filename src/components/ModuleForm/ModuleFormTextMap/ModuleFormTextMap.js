@@ -13,6 +13,7 @@ import MapPreview from '../../MapPreview'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
+import { required } from '../../Form/validate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
 
@@ -28,6 +29,9 @@ import VisualForm, {
 import {
   getCurrentLanguage,
 } from '../../../state/selectors'
+import {
+  DEFAULT_OVERLAY_COLOR,
+} from '../../../state/consts'
 
 const mapParams = {
   filters: {
@@ -40,7 +44,10 @@ class ModuleFormTextMap extends PureComponent {
     if (e.target.value === 'color') {
       this.props.change('moduleTextMap', 'background.object', null)
     } else {
-      this.props.change('moduleTextMap', 'background.object', {})
+      this.props.change('moduleTextMap', 'background.object', {
+        id: null,
+        overlay: DEFAULT_OVERLAY_COLOR,
+      })
       this.props.change('moduleTextMap', 'background.color', null)
     }
   }
@@ -98,7 +105,7 @@ class ModuleFormTextMap extends PureComponent {
                     name="background.object.overlay"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>
@@ -111,7 +118,7 @@ class ModuleFormTextMap extends PureComponent {
                     name="background.color"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>

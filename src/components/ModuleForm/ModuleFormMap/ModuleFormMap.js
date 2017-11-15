@@ -67,6 +67,7 @@ class ModuleFormMap extends PureComponent {
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
         <SideContainer>
           <SideForm>
+            {/*
             <div className="margin-bottom-15">
               <Label for="backgroundType">Background</Label>
               <Input
@@ -114,6 +115,7 @@ class ModuleFormMap extends PureComponent {
               </div>
             )}
             <hr />
+            */}
             <div className="margin-bottom-15">
               <FieldArray
                 name="objects"

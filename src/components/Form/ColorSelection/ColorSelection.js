@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Label, Button, ButtonGroup, FormGroup, Input, Col } from 'reactstrap'
+import { Label, Button, ButtonGroup, FormGroup, Input, Col, FormFeedback } from 'reactstrap'
 import './ColorSelection.css'
 
 export const isValidHex = hex =>
@@ -33,6 +33,7 @@ class ColorSelection extends PureComponent {
             <Label for="hex" sm={2} className="ColorSelection__hex_label">Hex</Label>
             <Col sm={6}>
               <Input type="text" value={value} onChange={onChange} name="hex" id="hex" placeholder="#" className="ColorSelection__hex_input" size="sm" />
+              {meta.error && <FormFeedback>{meta.error}</FormFeedback>}
             </Col>
           </FormGroup>
         )}

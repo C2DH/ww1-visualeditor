@@ -20,6 +20,7 @@ import ChooseDocument from '../../Form/ChooseDocument'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
 import MediumEditor from '../../Form/MediumEditor'
+import { required } from '../../Form/validate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import Select from '../../Form/Select'
 import Gallery from '../../Gallery'
@@ -27,13 +28,19 @@ import Gallery from '../../Gallery'
 import {
   getCurrentLanguage,
 } from '../../../state/selectors'
+import {
+  DEFAULT_OVERLAY_COLOR,
+} from '../../../state/consts'
 
 class ModuleFormGallery extends PureComponent {
   changeBackgroundType = (e) => {
     if (e.target.value === 'color') {
       this.props.change('moduleGallery', 'background.object', null)
     } else {
-      this.props.change('moduleGallery', 'background.object', {})
+      this.props.change('moduleGallery', 'background.object', {
+        id: null,
+        overlay: DEFAULT_OVERLAY_COLOR,
+      })
       this.props.change('moduleGallery', 'background.color', null)
     }
   }
@@ -97,7 +104,7 @@ class ModuleFormGallery extends PureComponent {
                     name="background.object.overlay"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>
@@ -110,7 +117,7 @@ class ModuleFormGallery extends PureComponent {
                     name="background.color"
                     colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                     component={ColorSelection}
-                    validate={[isValidHex]}
+                    validate={[isValidHex, required]}
                    />
                  </div>
               </div>

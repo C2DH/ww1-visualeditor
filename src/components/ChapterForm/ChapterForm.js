@@ -1,6 +1,12 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, Field, formValueSelector, arrayRemoveAll } from 'redux-form'
+import {
+  reduxForm,
+  Field,
+  formValueSelector,
+  arrayRemoveAll,
+  getFormSyncErrors,
+} from 'redux-form'
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Label } from 'reactstrap'
 
@@ -9,7 +15,7 @@ import Bbox from '../Form/Bbox'
 import Translate from '../Form/Translate'
 import ColorSelection, { isValidHex } from '../Form/ColorSelection'
 import Select from '../Form/Select'
-import { requiredAtLeastOne } from '../Form/validate'
+import { requiredAtLeastOne, required } from '../Form/validate'
 
 import './ChapterForm.css'
 import VisualForm, {
@@ -26,6 +32,7 @@ import {
 class ChapterForm extends PureComponent {
   render() {
     const {
+      formErrors,
       handleSubmit,
       backgroundColor,
       backgroundColorOverlay,
@@ -84,7 +91,7 @@ class ChapterForm extends PureComponent {
                   colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                   name="data.background.overlay"
                   component={ColorSelection}
-                  validate={[isValidHex]}
+                  validate={[isValidHex, required]}
                  />
               </div>
             )}
@@ -94,7 +101,7 @@ class ChapterForm extends PureComponent {
                 colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
                 name="data.background.backgroundColor"
                 component={ColorSelection}
-                validate={[isValidHex]}
+                validate={[isValidHex, required]}
                />
             )}
 
@@ -108,7 +115,8 @@ class ChapterForm extends PureComponent {
              />
           </SideForm>
           <SideActions>
-            {invalid && <p>Insert title to save</p>}
+            {formErrors && formErrors.data && formErrors.data.title &&
+              <p className='text-danger'>Insert title to save</p>}
             <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
@@ -147,8 +155,10 @@ class ChapterForm extends PureComponent {
 }
 
 const selector = formValueSelector('chapter')
+const getSyncErrors = getFormSyncErrors('chapter')
 
 const mapStateToProps = state => ({
+  formErrors: getSyncErrors(state),
   backgroundType: selector(state, 'backgroundType'),
   backgroundColor: selector(state, 'data.background.backgroundColor'),
   backgroundColorOverlay: selector(state, 'data.background.overlay'),
