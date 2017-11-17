@@ -70,6 +70,16 @@ export const [
   getDocumentsLoading,
 ] = makePaginateListSelectors(state => state.widgets.chooseDocuments.list)
 
+export const getDocumentsPlaceTypes = createSelector(
+  state => state.widgets.chooseDocuments.facets,
+  facets => maybeNull(facets)(() => {
+    if (facets.data__place_type) {
+      return facets.data__place_type.map(f => f.data__place_type)
+    }
+    return []
+  })
+)
+
 export const getSelectedDocumentsById = state => state.widgets.chooseDocuments.selectedDocuments
 
 export const getSelectedDocuments = createSelector(

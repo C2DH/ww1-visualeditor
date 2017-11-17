@@ -29,6 +29,7 @@ import {
   getDocumentsCount,
   getDocumentsLoading,
   getSelectedDocumentsById,
+  getDocumentsPlaceTypes,
 } from '../../state/selectors'
 
 const mergeParams = (s1, s2) => ({
@@ -43,6 +44,7 @@ const mergeParams = (s1, s2) => ({
 class DocumentChooser extends PureComponent {
   state = {
     searchString: '',
+    placeTypeFilters: {},
   }
 
   makeParams = (params = {}) => {
@@ -58,17 +60,34 @@ class DocumentChooser extends PureComponent {
 
   // Params \w user filters
   getFilterParams = (searchString) => {
-    return this.makeParams({
+    let params = {
       // q: `${searchString}*`,
       filters: {
         title__icontains: searchString,
       },
-    })
+    }
+    if (this.props.withPlaceTypeFilters) {
+      const placeTypes = Object.keys(this.state.placeTypeFilters)
+        .filter(placeType => this.state.placeTypeFilters[placeType])
+      if (placeTypes.length > 0) {
+        params.filters.data__place_type__in = placeTypes
+      }
+    }
+    return this.makeParams(params)
   }
 
   componentDidMount() {
+    const { loadDocuments, withPlaceTypeFilters } = this.props
     const { searchString } = this.state
-    this.props.loadDocuments(this.getFilterParams(searchString))
+
+    if (withPlaceTypeFilters) {
+      // Load facets for place filters
+      loadDocuments(this.makeParams({
+        facets: 'data__place_type',
+      }))
+    } else {
+      loadDocuments(this.makeParams())
+    }
   }
 
   componentWillUnmount() {
@@ -83,6 +102,17 @@ class DocumentChooser extends PureComponent {
     const searchString = e.target.value
     this.setState({ searchString })
     this.searchDocuments(searchString)
+  }
+
+  togglePlaceTypeFilter = (placeType) => {
+    this.setState(prevState => ({
+      placeTypeFilters: {
+        ...prevState.placeTypeFilters,
+        [placeType]: !prevState.placeTypeFilters[placeType],
+      }
+    }), () => {
+      this.props.loadDocuments(this.getFilterParams(this.state.searchString))
+    })
   }
 
   searchDocuments = debounce(searchString => {
@@ -104,6 +134,7 @@ class DocumentChooser extends PureComponent {
       documents,
       canLoadMore,
       unselectAllDocuments,
+      withPlaceTypeFilters,
       selectedDocuments,
       multi,
       count,
@@ -111,6 +142,7 @@ class DocumentChooser extends PureComponent {
       selectDocument,
       unselectDocument,
       selectionDone,
+      placeTypes,
     } = this.props
     return (
       <Container fluid className="margin-r-l-20">
@@ -125,9 +157,22 @@ class DocumentChooser extends PureComponent {
             value={this.state.searchString}
             onChange={this.handleSearchChange}
           />
+          {withPlaceTypeFilters && placeTypes && (
+            <div className="DocumentChooser__PlaceTypeFilters">
+              {placeTypes.map(placeType => (
+                <span key={placeType} style={{ marginRight: 15 }}>
+                  <input
+                    checked={!!this.state.placeTypeFilters[placeType]}
+                    onChange={() => this.togglePlaceTypeFilter(placeType)}
+                    type='checkbox'
+                  />{' '}{placeType}
+                </span>
+              ))}
+            </div>
+          )}
         </HeadingRow>
 
-        <div className="DocumentChooser__List">
+        <div className={`DocumentChooser__List${withPlaceTypeFilters ? ' wPlaceFilters' : ''}`}>
           {documents && (
             <Row>
               {documents.map(doc => (
@@ -179,9 +224,12 @@ class DocumentChooser extends PureComponent {
 DocumentChooser.defaultProps = {
   // Is a multi select document or a pick one only?
   multi: false,
+  // \w UI for place type filters
+  withPlaceTypeFilters: false,
 }
 
 const mapStateToProps = state => ({
+  placeTypes: getDocumentsPlaceTypes(state),
   documents: getDocuments(state),
   selectedDocuments: getSelectedDocumentsById(state),
   canLoadMore: canLoadMoreDocuments(state),

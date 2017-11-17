@@ -20,7 +20,7 @@ const makePaginateCollection = apiCall => (
       const offset = reset
         ? 0
         : yield select(state => selectState(state).pagination.offset)
-      const { results, next, count } = yield apiCall(apiFn, {
+      const { results, next, count, facets } = yield apiCall(apiFn, {
         ...params,
         limit: all ? BIG_PAGE_SIZE : pageSize,
         offset,
@@ -33,6 +33,7 @@ const makePaginateCollection = apiCall => (
           offset: nextOffset,
           count,
           reset,
+          facets,
         },
       })
     } catch (error) {

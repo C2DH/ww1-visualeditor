@@ -122,6 +122,7 @@ class ModuleFormMap extends PureComponent {
                 params={mapParams}
                 component={ChooseDocuments}
                 validate={notAnEmptyList}
+                withPlaceTypeFilters
               />
             </div>
           </SideForm>

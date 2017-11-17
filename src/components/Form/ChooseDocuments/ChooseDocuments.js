@@ -60,6 +60,7 @@ class ChooseDocuments extends PureComponent {
     this.props.showWidgetFullPage('documentChooser', {
       documentType: this.props.documentType,
       params: this.props.params,
+      withPlaceTypeFilters: this.props.withPlaceTypeFilters,
       multi: true,
     }, this.props.fields.name)
     // Chekka
@@ -92,6 +93,11 @@ class ChooseDocuments extends PureComponent {
       </div>
     )
   }
+}
+
+ChooseDocuments.defaultProps = {
+  // Show docs chooser widget \w UI for place type filters
+  withPlaceTypeFilters: false,
 }
 
 const mapStateToProps = (state, ownProps) => {

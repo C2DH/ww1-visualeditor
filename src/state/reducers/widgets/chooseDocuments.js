@@ -4,6 +4,7 @@ import paginateCollection from '../hor/paginateCollection'
 import {
   GET_DOCUMENTS,
   GET_DOCUMENTS_UNLOAD,
+  GET_DOCUMENTS_SUCCESS,
   CHOOSE_DOCUMENT,
   SELECT_DOCUMENTS,
   SELECT_DOCUMENT,
@@ -60,10 +61,22 @@ const selectionDone = (prevState = false, { type }) => {
   }
 }
 
+const facets = (prevState = null, { type, payload }) => {
+  if (
+    type === GET_DOCUMENTS_SUCCESS &&
+    payload.facets &&
+    Object.keys(payload.facets).length > 0
+  ) {
+    return payload.facets
+  }
+  return prevState
+}
+
 const reducer = combineReducers({
   choosedDocument,
   selectedDocuments,
   selectionDone,
+  facets,
   list: paginateCollection(GET_DOCUMENTS),
 })
 

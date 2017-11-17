@@ -11,9 +11,17 @@
   z-index: 99;
 }
 
+.DocumentChooser__PlaceTypeFilters {
+  height: 30px;
+}
+
 .DocumentChooser__List {
   padding-top: 90px;
   padding-bottom: 70px;
+}
+
+.DocumentChooser__List.wPlaceFilters {
+  padding-top: 120px;
 }
 
 .DocumentChooser__BottomContent {
