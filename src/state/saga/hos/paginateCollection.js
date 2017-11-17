@@ -4,6 +4,7 @@ import qs from 'query-string'
 import { takeLatestAndCancel } from '../effects'
 
 export const DEFAULT_PAGE_SIZE = 50
+export const BIG_PAGE_SIZE = 1000
 
 // Saga for a generic paginated collection
 const makePaginateCollection = apiCall => (
@@ -13,7 +14,7 @@ const makePaginateCollection = apiCall => (
   pageSize = DEFAULT_PAGE_SIZE,
   transform = identity,
 ) => {
-  function* handleGetPaginatedList({ payload: { params, reset } }) {
+  function* handleGetPaginatedList({ payload: { params, reset, all } }) {
     yield put({ type: `${actionType}_LOADING` })
     try {
       const offset = reset
@@ -21,7 +22,7 @@ const makePaginateCollection = apiCall => (
         : yield select(state => selectState(state).pagination.offset)
       const { results, next, count } = yield apiCall(apiFn, {
         ...params,
-        limit: pageSize,
+        limit: all ? BIG_PAGE_SIZE : pageSize,
         offset,
       })
       const nextOffset = next ? +qs.parse(qs.extract(next)).offset : null

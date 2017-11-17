@@ -9,6 +9,7 @@ import {
   SELECT_DOCUMENT,
   UNSELECT_DOCUMENT,
   UNSELECT_DOCUMENTS,
+  UNSELECT_ALL_DOCUMENTS,
   SELECTION_DONE,
 } from '../../actions'
 
@@ -43,6 +44,8 @@ const selectedDocuments = (prevState = {}, { type, payload }) => {
         ...prevState,
         ...payload.reduce((r, id) => ({ ...r, [id]: undefined }), {})
       }
+    case UNSELECT_ALL_DOCUMENTS:
+      return {}
     default:
       return prevState
   }

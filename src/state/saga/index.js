@@ -1,4 +1,5 @@
-import { fork, takeEvery, put } from 'redux-saga/effects'
+import { fork, take, takeEvery, put, select } from 'redux-saga/effects'
+import { takeLatestAndCancel } from './effects'
 import makeAuth from './auth'
 import createMakeCollection from './hos/collection'
 import createMakePaginateCollection from './hos/paginateCollection'
@@ -12,6 +13,8 @@ import {
   STATIC_STORY,
   GET_THEMES,
   GET_DOCUMENTS,
+  GET_DOCUMENTS_UNLOAD,
+  GET_DOCUMENTS_SUCCESS,
   GET_STATIC_STORIES,
   GET_EDUCATIONALS,
   EDUCATIONAL,
@@ -29,8 +32,15 @@ import {
   MOVE_CHAPTER_THEME_SUCCESS,
   MOVE_THEME,
   MOVE_EDUCATIONAL,
+  SELECT_ALL_DOCUMENTS,
   chapterUpdated,
+  selectDocuments,
+  unselectAllDocuments,
 } from '../actions'
+
+import {
+  canLoadMoreDocuments
+} from '../selectors'
 
 const { authFlow, authApiCall } = makeAuth({
   meCall: api.me,
@@ -95,6 +105,31 @@ function *handleMoveChapterTheme({ payload }) {
   }
 }
 
+function *handleSelectAllDocumets({ payload: { params } }) {
+  // Load all the shit
+  while (yield select(canLoadMoreDocuments)) {
+    yield put({
+      type: GET_DOCUMENTS,
+      payload: {
+        params,
+        reset: false,
+        all: true,
+      }
+    })
+    const { type } = yield take([GET_DOCUMENTS_SUCCESS, GET_DOCUMENTS])
+    // If something trigger another request in time stop all (stacca stacca)
+    if (type === GET_DOCUMENTS) {
+      return
+    }
+  }
+  // Clear all prev selections
+  yield put(unselectAllDocuments())
+  // Select all docs
+  const allIds = yield select(state => state.widgets.chooseDocuments.list.ids)
+  yield put(selectDocuments(allIds))
+  // Done!
+}
+
 export default function* rootSaga() {
   yield fork(authFlow)
   yield fork(makePaginateCollection(
@@ -102,6 +137,12 @@ export default function* rootSaga() {
     api.getDocuments,
     state => state.widgets.chooseDocuments.list,
   ))
+  yield fork(
+    takeLatestAndCancel,
+    SELECT_ALL_DOCUMENTS,
+    GET_DOCUMENTS_UNLOAD,
+    handleSelectAllDocumets
+  )
   yield fork(makeCollection(GET_THEMES, api.getThemes))
   yield fork(makeStoryDetail(THEME))
   yield fork(makeStoryDetail(CHAPTER))

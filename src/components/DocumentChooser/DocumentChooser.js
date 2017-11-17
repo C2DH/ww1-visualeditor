@@ -19,6 +19,8 @@ import {
   selectDocument,
   unselectDocument,
   selectionDone,
+  selectAllDocuments,
+  unselectAllDocuments,
 } from '../../state/actions'
 
 import {
@@ -54,8 +56,19 @@ class DocumentChooser extends PureComponent {
     }, params)
   }
 
+  // Params \w user filters
+  getFilterParams = (searchString) => {
+    return this.makeParams({
+      // q: `${searchString}*`,
+      filters: {
+        title__icontains: searchString,
+      },
+    })
+  }
+
   componentDidMount() {
-    this.props.loadDocuments(this.makeParams())
+    const { searchString } = this.state
+    this.props.loadDocuments(this.getFilterParams(searchString))
   }
 
   componentWillUnmount() {
@@ -73,22 +86,24 @@ class DocumentChooser extends PureComponent {
   }
 
   searchDocuments = debounce(searchString => {
-    this.props.loadDocuments(this.makeParams({
-      // q: `${searchString}*`,
-      filters: {
-        title__icontains: searchString,
-      },
-    }))
+    this.props.loadDocuments(this.getFilterParams(searchString))
   }, 200)
 
+  selectAll = () => {
+    const { selectAllDocuments } = this.props
+    const { searchString } = this.state
+    selectAllDocuments(this.getFilterParams(searchString))
+  }
+
   loadMore = () => {
-    this.props.loadMoreDocuments(this.makeParams())
+    this.props.loadMoreDocuments(this.getFilterParams(this.state.searchString))
   }
 
   render() {
     const {
       documents,
       canLoadMore,
+      unselectAllDocuments,
       selectedDocuments,
       multi,
       count,
@@ -101,6 +116,11 @@ class DocumentChooser extends PureComponent {
       <Container fluid className="margin-r-l-20">
         <HeadingRow title="Select documents" className="DocumentChooser__StickyHeader">
           {loading && <Spinner noPadding x={2} />}
+          <div style={{ marginLeft: 20 }}>
+            <Button disabled={loading} onClick={this.selectAll}>Select All</Button>
+            {' '}
+            <Button disabled={loading} onClick={unselectAllDocuments}>Clear Selection</Button>
+          </div>
           <TopSearchInput
             value={this.state.searchString}
             onChange={this.handleSearchChange}
@@ -178,4 +198,6 @@ export default connect(mapStateToProps, {
   selectDocument,
   unselectDocument,
   selectionDone,
+  selectAllDocuments,
+  unselectAllDocuments,
 })(DocumentChooser)
