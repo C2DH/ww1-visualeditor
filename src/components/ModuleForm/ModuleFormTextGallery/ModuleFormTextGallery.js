@@ -202,7 +202,7 @@ class ModuleFormTextGallery extends PureComponent {
             />
             <div className="ModuleFormTextGallery__DocumentPreview__Caption">
                 <Field
-                  name={`caption.${language.code}`}
+                  name={`gallery.caption.${language.code}`}
                   className="invisible-input"
                   style={{ width: '100%' }}
                   component={MediumEditor}
@@ -212,7 +212,7 @@ class ModuleFormTextGallery extends PureComponent {
                   }}
                 />
                 <Field
-                  name={`caption`}
+                  name={`gallery.caption`}
                   component={Translate}
                 />
             </div>
