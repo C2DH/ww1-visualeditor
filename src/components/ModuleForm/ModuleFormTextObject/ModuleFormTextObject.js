@@ -205,7 +205,7 @@ class ModuleFormTextObject extends PureComponent {
               <Player
                 playsInline
                 fluid
-                src={doc.attachment}
+                src={doc.url || doc.attachment}
               >
                 <BigPlayButton position='center' />
               </Player>

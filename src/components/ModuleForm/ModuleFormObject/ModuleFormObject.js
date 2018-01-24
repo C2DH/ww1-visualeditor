@@ -296,7 +296,7 @@ class ModuleFormObject extends PureComponent {
                 height={this.state.playerHeight}
                 playsInline
                 fluid={false}
-                src={doc.attachment}
+                src={doc.url || doc.attachment}
               >
                 <BigPlayButton position='center' />
               </Player>
