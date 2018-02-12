@@ -2,16 +2,45 @@
   display: flex;
   flex: 1;
   flex-direction: row;
-  padding: 20px;
+  padding: 40px;
 }
 .ModuleFormTextObject__PreviewOverlay.reverse {
   flex-direction: row-reverse;
 }
 
 .ModuleFormTextObject__TextContainer {
-  padding: 10px;
+  padding: 15px;
   width: 50%;
+  display: flex;
+  align-items: center;
 }
+
+.ModuleFormTextObject__TextContainer h1,
+.ModuleFormTextObject__TextContainer h2{
+  color: #f56350;
+}
+
+.ModuleFormTextObject__TextContainer p{
+  font-size: 1.5rem;
+}
+
+.ModuleFormTextObject__TextContainer a{
+   color: #f56350;
+ }
+
+.ModuleFormTextObject__TextContainer a:hover{
+   color: #f56350;
+ }
+
+.ModuleFormTextObject__TextContainer a[href^="object"]{
+   border-bottom: 1px dashed #f56350;
+   color: inherit;
+ }
+
+.ModuleFormTextObject__TextContainer a[href^="object"]:hover{
+   color: inherit;
+ }
+
 
 .ModuleFormTextObject__ObjectContainer {
   height: 100%;
@@ -19,18 +48,38 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 0 15px;
 }
 
 .ModuleFormTextObject__ImagePreview {
   max-width: 100%;
   max-height: calc(100% - 50px);
   height: auto;
+  margin: auto;
 }
 
+
 .ModuleFormTextObject__DocumentPreview__Caption {
-  height: 45px;
+  height: 50px;
   padding: 10px;
   width: 100%;
   display: flex;
   background-color: white;
+  flex-wrap: nowrap;
+}
+
+.ModuleFormTextObject__DocumentPreview__Caption .medium-editor-element{
+  max-height: 100%;
+  overflow: auto;
+}
+
+.ModuleFormTextObject__video_container{
+  width: 100%;
+  max-height: 70%;
+}
+
+.ModuleFormTextObject__video_container .video-react{
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
 }

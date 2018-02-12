@@ -72,13 +72,13 @@ class ModuleFormText extends PureComponent {
     if (textPosition) {
       switch (textPosition) {
         case 'center':
-          overlayStyle = { alignItems: 'center' }
+          overlayStyle = { alignItems: 'center', textAlign:'center' }
           break
         case 'left':
-          overlayStyle = { alignItems: 'flex-start' }
+          overlayStyle = { alignItems: 'flex-start', textAlign:'left'  }
           break
         case 'right':
-          overlayStyle = { alignItems: 'flex-end' }
+          overlayStyle = { alignItems: 'flex-end', textAlign:'right'  }
           break
         default:
           overlayStyle = {}
@@ -174,7 +174,7 @@ class ModuleFormText extends PureComponent {
           bbox={bbox}>
           <Field
             name={`text.content.${language.code}`}
-            className="invisible-input ModuleFormText__Preview-content-input"
+            className="invisible-input visual-preview ModuleFormText__Preview-content-input"
             component={MediumEditor}
             placeholder="Insert text"
             style={{ color: textColor }}

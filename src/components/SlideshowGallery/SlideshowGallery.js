@@ -36,20 +36,20 @@ class SlideshowGallery extends PureComponent {
 
     return (
       <div style={this.props.style} className={classNames('SlideshowGallery', this.props.className)}>
-        <div className="SlideshowGallery__SideControls">
-          {hasPrev && <Button onClick={this.goPrev}><i className="fa fa-arrow-left" /></Button>}
-        </div>
         <div>
           <div className='SlideshowGallery__CurrentImageContainer'>
             {currentImage && <img className="SlideshowGallery__CurrentImage" src={currentImage} />}
           </div>
           {currentImage && (<div className='SlideshowGallery__BottomControls'>
+            <button onClick={this.goPrev} disabled={!hasPrev} className="SlideshowGallery__control_btn">
+              <i className="material-icons md-28">keyboard_arrow_left</i>
+            </button>
             <div>{currentIndex + 1} {' / '} {images.length}</div>
+              <button onClick={this.goNext} disabled={!hasNext} className="SlideshowGallery__control_btn">
+                <i className="material-icons md-28">keyboard_arrow_right</i>
+              </button>
           </div>)}
         </div>
-        <div className="SlideshowGallery__SideControls">
-         {hasNext && <Button onClick={this.goNext}><i className="fa fa-arrow-right" /></Button>}
-       </div>
       </div>
     )
   }

@@ -2,6 +2,7 @@
   display: flex;
   flex: 1;
   flex-direction: row;
+  padding: 40px;
 }
 .ModuleTextMap__Preview.reverse {
   flex-direction: row-reverse;
@@ -12,7 +13,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0 15px;
 }
+
 .ModuleTextMap__MapCaption {
   background-color: white;
   height: 45px;
@@ -21,7 +24,48 @@
   display: flex;
   width: 100%;
 }
+
 .ModuleTextMap__TextContainer {
   width: 50%;
   padding: 10px;
+  padding: 0 15px;
 }
+
+.ModuleTextMap__TextContainer {
+  padding: 15px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.ModuleTextMap__TextContainer h1,
+.ModuleTextMap__TextContainer h2{
+  color: #f56350;
+}
+
+.ModuleTextMap__TextContainer p{
+  font-size: 1.5rem;
+}
+
+.ModuleTextMap__TextContainer a{
+   color: #f56350;
+ }
+
+.ModuleTextMap__TextContainer a:hover{
+   color: #f56350;
+ }
+
+.ModuleTextMap__TextContainer a[href^="object"]{
+   border-bottom: 1px dashed #f56350;
+   color: inherit;
+ }
+
+.ModuleTextMap__TextContainer a[href^="object"]:hover{
+   color: inherit;
+ }
+
+.ModuleTextMap__TextContainer .medium-editor-element,
+.ModuleTextMap__MapCaption .medium-editor-element{
+   max-height: 100%;
+   overflow: auto;
+ }

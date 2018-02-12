@@ -4,8 +4,9 @@
 }
 .SlideshowGallery__CurrentImageContainer {
   display: flex;
-  height: calc(100% - 20px);
+  height: calc(100% - 70px);
   justify-content: center;
+  padding: 20px;
 }
 
 .SlideshowGallery__CurrentImage {
@@ -23,9 +24,32 @@
   flex-direction: column;
 }
 
+
 .SlideshowGallery__BottomControls {
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
+    padding: 20px;
+    width: 160px;
+    height: 40px;
+    border-radius: 30px;
+    margin: 15px auto;
+    background-color: rgba(0,0,0,.5);
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    font-family: 'Atlas Grotesk Web',Arial,sans-serif;
+}
+
+.SlideshowGallery__control_btn {
+    border: 0;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
 }

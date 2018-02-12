@@ -1,4 +1,29 @@
 .ModuleFormText__Preview-content-input {
   width: 50%;
-  font-size: 18px;
 }
+
+.ModuleFormText__Preview-content-input h1,
+.ModuleFormText__Preview-content-input h2{
+  color: #f56350;
+}
+
+.ModuleFormText__Preview-content-input p{
+  font-size: 1.5rem;
+}
+
+ .ModuleFormText__Preview-content-input a{
+   color: #f56350;
+ }
+
+ .ModuleFormText__Preview-content-input a:hover{
+   color: #f56350;
+ }
+
+ .ModuleFormText__Preview-content-input a[href^="object"]{
+   border-bottom: 1px dashed #f56350;
+   color: inherit;
+ }
+
+ .ModuleFormText__Preview-content-input a[href^="object"]:hover{
+   color: inherit;
+ }

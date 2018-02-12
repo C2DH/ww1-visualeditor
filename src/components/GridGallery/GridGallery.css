@@ -1,9 +1,21 @@
 .GridGallery {
   overflow-y: scroll;
+  width: 100%;
+  height: 100%;
 }
 
-.GridGallery__Row {
-  padding-bottom: 10px;
+.GridGallery__scroll{
+  column-width: 13em;
+  column-gap: 1em;
+  padding: 20px;
+}
+
+.GridGallery__Section {
+ display: inline-block;
+ margin:  0.5em 0;
+ padding:  0;
+ width:  100%;
+ border: 10px white solid;
 }
 
 .GridGallery__Image {

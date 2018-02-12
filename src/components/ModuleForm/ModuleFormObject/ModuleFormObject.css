@@ -1,13 +1,36 @@
 .ModuleFormObject__DocumentPreview {
   width: 100%;
   height: calc(100% - 50px);
-  /*background-size: cover;*/
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .ModuleFormObject__DocumentPreview__Caption {
-  height: 45px;
+  height: 50px;
   padding: 10px;
   width: 100%;
   display: flex;
   background-color: white;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.ModuleFormObject__DocumentPreview__Caption .medium-editor-element{
+  max-height: 100%;
+  overflow: auto;
+}
+
+.visual-preview .video-react{
+  margin: auto;
+}
+
+.visual-preview.video.big{
+  position: relative;
+  overflow: hidden;
+}
+
+.visual-preview.video.big .ModuleFormObject__DocumentPreview__Caption {
+  position: absolute;
+  bottom: 0px;
+  width: 100% !important;
 }

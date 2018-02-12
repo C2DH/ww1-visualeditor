@@ -35,8 +35,9 @@ export const makeContainerStyles = (
     if (backgroundColorOverlay) {
       const rgb = hexToRgb(backgroundColorOverlay)
       if (rgb) {
-        const rgba = rgb.concat(['0.3']).join(',')
-        overlayStyle = { backgroundColor: `rgba(${rgba})` }
+        const rgbColor = rgb.join(',')
+        const linearGradient =  `linear-gradient(rgb(${rgbColor}) 0%, rgba(${rgbColor}, 0.7) 5%,rgba(${rgbColor}, 0.7) 95%,rgb(${rgbColor}) 100%)`;
+        overlayStyle = { background: linearGradient }
       }
     }
   } else {

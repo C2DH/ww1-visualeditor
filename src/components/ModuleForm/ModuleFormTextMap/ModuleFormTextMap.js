@@ -158,7 +158,7 @@ class ModuleFormTextMap extends PureComponent {
         </SideContainer>
         <PreviewContainer
           overlayClassName={classNames(
-            'ModuleTextMap__Preview',
+            'ModuleTextMap__Preview visual-preview',
             layout === 'map-text' ? 'reverse' : null
           )}
           backgroundType={backgroundType}

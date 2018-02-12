@@ -1,6 +1,15 @@
 .ThemeForm__Preview-title-input {
-  font-size: 35px;
+  font-family: 'Behrens Antiqua' ,Georgia,serif;
+  font-size: 5.265rem;
+  text-transform: uppercase;
 }
 .ThemeForm__Preview-description-input {
-  font-size: 18px;
+  font-family: Georgia,serif;
+  font-size: 1.5rem;
+}
+
+.ThemeForm__Preview-input-cont{
+  display: flex;
+  align-items: center;
+  width: 100%;
 }

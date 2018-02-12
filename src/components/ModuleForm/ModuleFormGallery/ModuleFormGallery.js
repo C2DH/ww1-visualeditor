@@ -151,6 +151,7 @@ class ModuleFormGallery extends PureComponent {
           backgroundColor={backgroundColor}
           backgroundColorOverlay={backgroundColorOverlay}
           backgroundImage={backgroundImage}
+          overlayStyle={{padding:0}}
           bbox={bbox}>
 
           <Gallery
@@ -159,7 +160,7 @@ class ModuleFormGallery extends PureComponent {
             className='ModuleFormGallery__DocumentPreview__Gallery'
           />
 
-          <div className="ModuleFormGallery__DocumentPreview__Caption">
+          <div className="ModuleFormGallery__DocumentPreview__Caption visual-preview">
               <Field
                 name={`caption.${language.code}`}
                 className="invisible-input"

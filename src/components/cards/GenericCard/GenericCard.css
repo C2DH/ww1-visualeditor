@@ -38,6 +38,9 @@
   height: 160px;
   width: 100%;
   background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #ccc;
 }
 
 .GenericCard__div_img_overlay {

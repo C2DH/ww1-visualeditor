@@ -89,8 +89,7 @@ class Home extends PureComponent {
         <Row>
           <Col md={4}>
             <div className="Home__Col-title-container">
-              <h4>Last Themes</h4>
-              <Badge className="Home__titlebadge">All</Badge>
+              <h4>Themes</h4>
             </div>
             <div className="Home__Addbtn_container">
               <AddButton label="Add theme" tag={Link} to={'/themes/new'}/>
@@ -118,8 +117,7 @@ class Home extends PureComponent {
           </Col>
           <Col md={4}>
             <div className="Home__Col-title-container">
-              <h4>Last Educational</h4>
-              <Badge className="Home__titlebadge">All</Badge>
+              <h4>Educational</h4>
             </div>
             <div className="Home__Addbtn_container">
               <AddButton label="Add educational" tag={Link} to={'/educationals/new'}/>
@@ -147,7 +145,6 @@ class Home extends PureComponent {
           <Col md={4}>
             <div className="Home__Col-title-container">
               <h4>Static Pages</h4>
-              <Badge className="Home__titlebadge">All</Badge>
             </div>
             {(!staticStories && loadingStaticStories) && <Spinner />}
             <div>

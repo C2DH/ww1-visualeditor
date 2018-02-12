@@ -148,8 +148,8 @@ class ModuleFormObject extends PureComponent {
         documentPreviewContainerStyle.width = '50%'
         documentPreviewContainerStyle.height = '50%'
       } else if (documentSize === 'medium') {
-        documentPreviewContainerStyle.width = '70%'
-        documentPreviewContainerStyle.height = '70%'
+        documentPreviewContainerStyle.width = '80%'
+        documentPreviewContainerStyle.height = '80%'
       } else if (documentSize === 'big') {
         documentPreviewContainerStyle.width = '100%'
         documentPreviewContainerStyle.height = '100%'
@@ -281,6 +281,7 @@ class ModuleFormObject extends PureComponent {
 
           <div
             style={documentPreviewContainerStyle}
+            className={`visual-preview ${documentSize} ${documentType}`}
             ref={ref => this.videoCont = ref}>
 
             {(doc && documentType === 'audio') && (
@@ -295,7 +296,7 @@ class ModuleFormObject extends PureComponent {
                 width={this.state.playerWidth}
                 height={this.state.playerHeight}
                 playsInline
-                fluid={false}
+                fluid={documentSize ==='big'?true:false}
                 src={doc.url || doc.attachment}
               >
                 <BigPlayButton position='center' />
@@ -303,12 +304,12 @@ class ModuleFormObject extends PureComponent {
             )}
 
             {(doc && documentType === 'image') && (
-              <div style={{ backgroundImage: `url(${doc.attachment})` }} className="ModuleFormObject__DocumentPreview"></div>
+              <div style={{ backgroundImage: `url(${doc.attachment})`, backgroundSize: documentSize !='big'?'contain':'cover' }} className="ModuleFormObject__DocumentPreview"></div>
             )}
 
             <div
               className="ModuleFormObject__DocumentPreview__Caption"
-              style={documentType === 'video' ? {width: this.state.playerWidth} : undefined}>
+              style={documentType === 'video' ? {width: this.state.playerWidth, margin:'auto'} : undefined}>
 
               <Field
                 name={`caption.${language.code}`}

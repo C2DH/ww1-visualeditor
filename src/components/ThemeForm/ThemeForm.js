@@ -122,32 +122,38 @@ class ThemeForm extends PureComponent {
           </SideActions>
         </SideContainer>
         <PreviewContainer {...bgPreviewProps}>
-          <Field
-            name={`data.title.${language.code}`}
-            className="invisible-input ThemeForm__Preview-title-input"
-            autoComplete="off"
-            component={'input'}
-            placeholder="Insert theme title"
-            style={{ color }}
-           />
-           <Field
-             name={`data.title`}
-             validate={requiredAtLeastOne}
-             component={Translate}
-           />
-          <Field
-            name={`data.abstract.${language.code}`}
-            className="invisible-input ThemeForm__Preview-description-input"
-            rows={10}
-            autoComplete="off"
-            placeholder="Insert theme description"
-            component={'textarea'}
-            style={{ color }}
-           />
-           <Field
-             name={`data.abstract`}
-             component={Translate}
-           />
+          <div className="ThemeForm__Preview-inputs-cont">
+            <div className="ThemeForm__Preview-input-cont">
+              <Field
+                name={`data.title.${language.code}`}
+                className="invisible-input ThemeForm__Preview-title-input"
+                autoComplete="off"
+                component={'input'}
+                placeholder="Insert theme title"
+                style={{ color }}
+               />
+               <Field
+                 name={`data.title`}
+                 validate={requiredAtLeastOne}
+                 component={Translate}
+               />
+            </div>
+           <div className="ThemeForm__Preview-input-cont">
+             <Field
+               name={`data.abstract.${language.code}`}
+               className="col-7 invisible-input ThemeForm__Preview-description-input"
+               rows={10}
+               autoComplete="off"
+               placeholder="Insert theme description"
+               component={'textarea'}
+               style={{ color }}
+              />
+              <Field
+                name={`data.abstract`}
+                component={Translate}
+              />
+           </div>
+          </div>   
         </PreviewContainer>
       </VisualForm>
     )

@@ -1,12 +1,18 @@
 .ModuleFormGallery__DocumentPreview__Gallery {
   height: calc(100% - 50px);
-  margin-bottom: 5px;
 }
 
 .ModuleFormGallery__DocumentPreview__Caption {
-  height: 45px;
+  height: 50px;
   padding: 10px;
   width: 100%;
   display: flex;
   background-color: white;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.ModuleFormObject__DocumentPreview__Caption .medium-editor-element{
+  max-height: 100%;
+  overflow: auto;
 }

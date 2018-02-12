@@ -5,7 +5,7 @@ import './GenericCard.css'
 
 const PublishedThemeLabel = ({ pos }) => (
   <div style={pos === 'top' ? { padding:3 } : { position: 'absolute', bottom: 65, left: 5 }}>
-    <Badge>Published</Badge>
+    <Badge color="success">Published</Badge>
   </div>
 )
 

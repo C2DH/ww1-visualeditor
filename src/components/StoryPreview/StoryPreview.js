@@ -11,7 +11,7 @@ import './StoryPreview.css'
 
 const StoryPreview = ({ story, trans, rightContent, bottomContent, className = '' }) => (
   <BackgroundPreview
-    containerClassName={`StoryPreview__container ${className}`}
+    containerClassName={`visual-preview ${story.tags[0].slug} StoryPreview__container ${className}`}
     overlayClassName="StoryPreview__overlay"
     backgroundType={get(story, 'covers', []).length > 0 ? 'image' : 'color'}
     backgroundImage={get(story, 'covers[0].attachment')}
@@ -22,11 +22,14 @@ const StoryPreview = ({ story, trans, rightContent, bottomContent, className = '
     <div className="StoryPreview__top">
       <div className="StoryPreview__content">
         <h1 style={{ color: get(story, 'data.color') }}>{trans(story, 'data.title')}</h1>
-        <h2 style={{ color: get(story, 'data.color') }}>{trans(story, 'data.abstract')}</h2>
+        <p className="col-7" style={{ color: get(story, 'data.color') }}>{trans(story, 'data.abstract')}</p>
       </div>
       <div className="StoryPreview__top_right">{rightContent}</div>
     </div>
-    <div className="StoryPreview__bottom">{bottomContent}</div>
+    {
+      bottomContent &&
+      <div className="StoryPreview__bottom">{bottomContent}</div>
+    }
   </BackgroundPreview>
 )
 

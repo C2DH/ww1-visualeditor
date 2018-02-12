@@ -1,7 +1,38 @@
+
 .ChapterForm__Preview-description-input {
-  font-weight: bold;
-  font-size: 35px;
+  font-family: 'Vinter Web',Georgia,serif;
+  font-size: 4rem;
 }
+
 .ChapterForm__Preview-description-description {
-  font-size: 18px;
+  font-family: Georgia,serif;
+  font-size: 1.5rem;
+  font-style: italic;
+}
+
+.ChapterForm__Preview-input-cont{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ChapterForm__Preview-inputs-cont{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ChapterForm__Preview-input-cont > input,
+.ChapterForm__Preview-input-cont > textarea{
+  text-align: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.ChapterForm__Preview-input-cont > textarea{
+  flex-basis: 65%;
+  flex-grow: 0;
+  margin-left: auto;
 }

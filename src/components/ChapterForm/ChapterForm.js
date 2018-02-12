@@ -122,32 +122,38 @@ class ChapterForm extends PureComponent {
           </SideActions>
         </SideContainer>
         <PreviewContainer {...bgPreviewProps}>
-          <Field
-            name={`data.title.${language.code}`}
-            className="invisible-input ChapterForm__Preview-description-input"
-            autoComplete="off"
-            component='input'
-            placeholder="Insert chapter title"
-            style={{ color }}
-           />
-           <Field
-             name={`data.title`}
-             validate={requiredAtLeastOne}
-             component={Translate}
-           />
-          <Field
-            name={`data.abstract.${language.code}`}
-            className="invisible-input ChapterForm__Preview-description-description"
-            rows={10}
-            autoComplete="off"
-            component='textarea'
-            placeholder="Insert chapter description"
-            style={{ color }}
-           />
-           <Field
-             name={`data.abstract`}
-             component={Translate}
-           />
+          <div className="ChapterForm__Preview-inputs-cont">
+            <div className="ChapterForm__Preview-input-cont">
+              <Field
+                name={`data.title.${language.code}`}
+                className="invisible-input ChapterForm__Preview-description-input"
+                autoComplete="off"
+                component='input'
+                placeholder="Insert chapter title"
+                style={{ color }}
+               />
+               <Field
+                 name={`data.title`}
+                 validate={requiredAtLeastOne}
+                 component={Translate}
+               />
+             </div>
+            <div className="ChapterForm__Preview-input-cont">
+              <Field
+                name={`data.abstract.${language.code}`}
+                className="invisible-input ChapterForm__Preview-description-description"
+                rows={10}
+                autoComplete="off"
+                component='textarea'
+                placeholder="Insert chapter description"
+                style={{ color }}
+               />
+               <Field
+                 name={`data.abstract`}
+                 component={Translate}
+               />
+             </div>
+         </div>
         </PreviewContainer>
       </VisualForm>
     )

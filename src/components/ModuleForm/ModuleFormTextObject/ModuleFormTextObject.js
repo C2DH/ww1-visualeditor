@@ -171,7 +171,7 @@ class ModuleFormTextObject extends PureComponent {
         </SideContainer>
         <PreviewContainer
           overlayClassName={classNames(
-            'ModuleFormTextObject__PreviewOverlay',
+            'ModuleFormTextObject__PreviewOverlay visual-preview',
             layout === 'object-text' ? 'reverse' : null
           )}
           backgroundType={backgroundType}
@@ -184,7 +184,7 @@ class ModuleFormTextObject extends PureComponent {
             <Field
               name={`text.content.${language.code}`}
               className="invisible-input"
-              style={{ width: '100%', color: textColor }}
+              style={{ width: '100%', color: textColor, maxHeight:'100%', overflowY:'auto' }}
               component={MediumEditor}
               placeholder='Insert text'
             />
@@ -202,13 +202,16 @@ class ModuleFormTextObject extends PureComponent {
             )}
 
             {(doc && documentType === 'video') && (
-              <Player
-                playsInline
-                fluid
-                src={doc.url || doc.attachment}
-              >
-                <BigPlayButton position='center' />
-              </Player>
+              <div className="ModuleFormTextObject__video_container">
+                <Player
+                  playsInline
+                  fluid={true}
+                  src={doc.url || doc.attachment}
+                >
+                  <BigPlayButton position='center' />
+                </Player>
+              </div>
+
             )}
 
             {(doc && documentType === 'image') && (

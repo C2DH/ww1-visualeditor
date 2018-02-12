@@ -15,15 +15,13 @@ class GridGallery extends PureComponent {
 
     return (
       <div className={classNames('GridGallery', this.props.className)}>
-        {grouppedImages.map((images, i) => (
-          <Row key={i} className='GridGallery__Row'>
-            {images.map(image => (
-              <Col key={image} md={md}>
+        <div className="GridGallery__scroll">
+          {images.map((image, i) => (
+            <section key={'image_' + i} className='GridGallery__Section'>
                 <img src={image} className='GridGallery__Image' />
-              </Col>
-            ))}
-          </Row>
-        ))}
+            </section>
+          ))}
+        </div>
       </div>
     )
   }
