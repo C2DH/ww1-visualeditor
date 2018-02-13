@@ -28,48 +28,48 @@ const getTitle = (module, trans) => {
   switch (module.module) {
     case 'text': {
       const text = safeMarkdown(trans(module, 'text.content'))
-      return `module ${moduleName} ${text}`
+      return `<span class="badge badge-primary">${moduleName}</span> ${text}`
     }
     case 'map':
     case 'gallery':
     case 'object':
     {
       const caption = trans(module, 'caption')
-      return `module ${moduleName} ${safeMarkdown(caption)}`
+      return `<span class="badge badge-primary">${moduleName}</span> ${safeMarkdown(caption)}`
     }
     case 'text_gallery':
     {
       const text = trans(module, 'text.content')
       if (text) {
-        return `module ${moduleName} ${safeMarkdown(text)}`
+        return `<span class="badge badge-primary">${moduleName}</span> ${safeMarkdown(text)}`
       }
       const caption = trans(module, 'caption')
       if (caption) {
-        return `module ${moduleName} ${safeMarkdown(caption)}`
+        return `<span class="badge badge-primary">${moduleName}</span> ${safeMarkdown(caption)}`
       }
     }
     case 'text_object': {
       const text = trans(module, 'text.content')
       if (text) {
-        return `module ${moduleName} ${safeMarkdown(text)}`
+        return `<span class="badge badge-primary">${moduleName}</span> ${safeMarkdown(text)}`
       }
       const caption = trans(module, 'object.caption')
       if (caption) {
-        return `module ${moduleName} ${safeMarkdown(caption)}`
+        return `<span class="badge badge-primary">${moduleName}</span> ${safeMarkdown(caption)}`
       }
     }
     case 'text_map': {
       const text = trans(module, 'text.content')
       if (text) {
-        return `module ${moduleName} ${safeMarkdown(text)}`
+        return `<span class="badge badge-primary">${moduleName}</span> ${safeMarkdown(text)}`
       }
       const caption = trans(module, 'map.caption')
       if (caption) {
-        return `module ${moduleName} ${safeMarkdown(caption)}`
+        return `<span class="badge badge-primary">${moduleName}</span> ${safeMarkdown(caption)}`
       }
     }
     default:
-      return `module ${moduleName}`
+      return `<span class="badge badge-primary">${moduleName}</span>`
   }
 }
 
