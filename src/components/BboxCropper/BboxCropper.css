@@ -1,3 +1,8 @@
+.BboxCropper__Container {
+  height: 100vh;
+}
+
+
 .BboxCropper__Controls {
   text-align: center;
   padding: 10px;
@@ -5,4 +10,12 @@
 
 .BboxCropper__Controls button {
   margin-right: 5px;
+}
+
+.BboxCropper__col_crop{
+  text-align: center
+}
+
+.ReactCrop__image{
+  max-height: calc(100vh - 65px)
 }

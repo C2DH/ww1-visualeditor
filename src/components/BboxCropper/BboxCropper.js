@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import ReactCrop from 'react-image-crop'
+import ReactCrop, { makeAspectCrop } from 'react-image-crop'
 import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
 import {
@@ -9,12 +9,12 @@ import {
 import 'react-image-crop/dist/ReactCrop.css'
 import './BboxCropper.css'
 
-const emptyCrop = { x: 0, y: 0, width: 0, height: 0 }
+const emptyCrop = { x: 0, y: 0, width: 0, height: 0}
 
 class BboxCropper extends PureComponent {
   state = {
-    crop: emptyCrop,
-    cropPx: emptyCrop,
+    // crop: emptyCrop,
+    // cropPx: emptyCrop,
   }
 
   componentWillUnmount() {
@@ -24,7 +24,6 @@ class BboxCropper extends PureComponent {
   saveBbox = () => {
     // Empty crop...
     const { x, y, width, height } = this.state.cropPx
-
     if (width === 0 || height === 0) {
       this.props.saveCropBbox([])
     } else {
@@ -36,12 +35,43 @@ class BboxCropper extends PureComponent {
     this.props.saveCropBbox([])
   }
 
+
+  // onButtonClick = (ratio) => {
+  //   const { crop, cropPx, image } = this.state;
+  //   console.log(crop, cropPx)
+  //   const ciao = makeAspectCrop({
+  //     x: crop.x,
+  //     y: crop.y,
+  //     aspect: ratio,
+  //     height: crop.height,
+  //   }, image.naturalWidth / image.naturalHeight)
+  //   const ciao2 = {
+  //     x: cropPx.x,
+  //     y: cropPx.y,
+  //     width: cropPx.height*ciao.width/ciao.height,
+  //     height: cropPx.height
+  //   }
+  //   console.log(ciao, ciao2)
+  //   this.setState({
+  //     crop: ciao,
+  //     cropPx:ciao2,
+  //   });
+  // }
+
   handleImageLoaded = (image) => {
     const { bbox } = this.props
 
     if (bbox.length === 0) {
       // No crop choosed
-      this.setState({ crop: emptyCrop, cropPx: emptyCrop })
+      const cropStart = makeAspectCrop({
+                x: 0,
+                y: 0,
+                height: 0,
+                width: 0,
+                aspect: 16/9,
+      }, image.naturalWidth / image.naturalHeight)
+
+      this.setState({ crop: cropStart, cropPx: cropStart, image, })
     } else {
       // Convert bbox to crop
       const [ x, y, x2, y2 ] = bbox
@@ -58,8 +88,9 @@ class BboxCropper extends PureComponent {
         width: Math.round((width * 100) / image.naturalWidth),
         y: Math.round((y * 100) / image.naturalHeight),
         height: Math.round((height * 100) / image.naturalHeight),
+        aspect: 16/9,
       }
-      this.setState({ crop, cropPx })
+      this.setState({ crop, cropPx, image, })
     }
   }
 
@@ -71,17 +102,26 @@ class BboxCropper extends PureComponent {
     const { image } = this.props
     const { crop } = this.state
     return (
-      <div>
-        <div className='BboxCropper__Controls'>
-          <Button onClick={this.saveBbox}>Done</Button>
-          <Button onClick={this.clearBbox}>Clear</Button>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <div className='BboxCropper__Controls'>
+              <Button onClick={this.saveBbox}>Done</Button>
+              <Button onClick={this.clearBbox}>Clear</Button>
+              {/*<Button onClick={() => this.onButtonClick(16/9)}>16/9</Button>*/}
+            </div>
+          </div>
         </div>
-        <ReactCrop
-          src={image}
-          crop={crop}
-          onChange={this.handleOnChangeCrop}
-          onImageLoaded={this.handleImageLoaded}
-        />
+        <div className="row">
+          <div className="col BboxCropper__col_crop">
+            <ReactCrop
+              src={image}
+              crop={crop}
+              onChange={this.handleOnChangeCrop}
+              onImageLoaded={this.handleImageLoaded}
+              />
+          </div>
+        </div>
       </div>
     )
   }
