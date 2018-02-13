@@ -23,7 +23,7 @@ import {
 const Requirements = ({ fields, language, languages }) => (
   <div>
     <div style={{ paddingBottom: 20 }}>
-      <AddButton label='Add requirement' onClick={() => fields.push(createEmptyMultilangObj(languages))} />
+      <AddButton label='Add skill' onClick={() => fields.push(createEmptyMultilangObj(languages))} />
     </div>
     {fields.map((field, index) => (
       <FormGroup key={index}>
@@ -65,7 +65,7 @@ const Steps = ({ fields, language }) => (
             <Field
               placeholder="Insert step description"
               name={`${field}.description.${language.code}`}
-              style={{ border: '1px solid #eee' }}
+              style={{ border: '1px solid #eee', width: '100%' }}
               component={MediumEditor}
             />
             <Field
@@ -95,7 +95,7 @@ class EducationalForm extends PureComponent {
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label>Title</Label>
+                <Label className="font-weight-bold">Title</Label>
                 <div className="EducationalForm__FieldTranslated">
                   <Field placeholder="Insert a title" name={`data.title.${language.code}`} component={Input} />
                   <Field
@@ -111,7 +111,7 @@ class EducationalForm extends PureComponent {
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label>Goals of the activity</Label>
+                <Label className="font-weight-bold">Goals of the activity</Label>
                 <div className="EducationalForm__FieldTranslated">
                   <Field
                     placeholder="Insert a description"
@@ -125,20 +125,29 @@ class EducationalForm extends PureComponent {
                    />
                 </div>
               </FormGroup>
-              <FieldArray
-                name='data.requirements'
-                component={Requirements}
-                language={language}
-                languages={languages}
-              />
+              <hr></hr>
+            <FormGroup>
+                <Label className="font-weight-bold">Skills</Label>
+                <FieldArray
+                  name='data.requirements'
+                  component={Requirements}
+                  language={language}
+                  languages={languages}
+                />
+            </FormGroup>
+            <hr></hr>
+            <FormGroup>
+              <Label className="font-weight-bold">Manual</Label>
               <Field
-                documentType='image'
+                documentType='pdf'
                 label="Add Manual"
                 name="contents.manual.id"
                 component={ChooseDocument}
                />
+             </FormGroup>
             </Col>
             <Col md={6}>
+              <Label className="font-weight-bold">Illustration</Label>
               <Field
                 name='covers[0]'
                 component={ChooseDocument}
@@ -157,6 +166,7 @@ class EducationalForm extends PureComponent {
               />
             </Col>
             <Col md={6}>
+              <Label className="font-weight-bold">Object</Label>
               <Field
                 documentType='image'
                 label="Add Image"
@@ -165,10 +175,10 @@ class EducationalForm extends PureComponent {
                />
             </Col>
           </Row>
-          <br />
           <Row>
             <Col md={6}>
-              <Button type='submit' block disabled={invalid}>Save</Button>
+              <hr></hr>
+              <Button className="mb-3 btn-lg" type='submit' disabled={invalid}>Save</Button>
             </Col>
           </Row>
         </Container>

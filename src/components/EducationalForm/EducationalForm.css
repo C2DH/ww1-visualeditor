@@ -6,4 +6,9 @@
 
 .EducationalForm__FieldTranslated {
   display: flex;
+  align-items: center;
+}
+
+.EducationalForm__FieldTranslated > *{
+  margin-right: 5px;
 }
