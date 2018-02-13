@@ -61,10 +61,10 @@ class DocumentChooser extends PureComponent {
   // Params \w user filters
   getFilterParams = (searchString) => {
     let params = {
-      // q: `${searchString}*`,
-      filters: {
-        title__icontains: searchString,
-      },
+      q: `${searchString}*`,
+      // filters: {
+      //   title__icontains: searchString,
+      // },
     }
     if (this.props.withPlaceTypeFilters) {
       const placeTypes = Object.keys(this.state.placeTypeFilters)
@@ -153,10 +153,7 @@ class DocumentChooser extends PureComponent {
             {' '}
             <Button disabled={loading} onClick={unselectAllDocuments}>Clear Selection</Button>
           </div>
-          <TopSearchInput
-            value={this.state.searchString}
-            onChange={this.handleSearchChange}
-          />
+          
           {withPlaceTypeFilters && placeTypes && (
             <div className="DocumentChooser__PlaceTypeFilters">
               {placeTypes.map(placeType => (
@@ -170,6 +167,10 @@ class DocumentChooser extends PureComponent {
               ))}
             </div>
           )}
+          <TopSearchInput
+            value={this.state.searchString}
+            onChange={this.handleSearchChange}
+          />
         </HeadingRow>
 
         <div className={`DocumentChooser__List${withPlaceTypeFilters ? ' wPlaceFilters' : ''}`}>

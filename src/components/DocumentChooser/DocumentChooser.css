@@ -12,7 +12,9 @@
 }
 
 .DocumentChooser__PlaceTypeFilters {
-  height: 30px;
+  height: 100%;
+  margin-left: 30px;
+  margin-top: 5px;
 }
 
 .DocumentChooser__List {
