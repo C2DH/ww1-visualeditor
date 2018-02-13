@@ -24,3 +24,29 @@
   height: auto;
   margin: auto;
 }
+
+.squared  .GridGallery__Section {
+ display: inline-block;
+ margin:  0.5em 0;
+ padding:  0;
+ width:  100%;
+ border: 10px white solid;
+ position: relative;
+}
+
+.squared  .GridGallery__Section:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.squared  .GridGallery__Image{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.squared .GridGallery__scroll{
+  column-width: 8em;
+}

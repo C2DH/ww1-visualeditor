@@ -2,7 +2,7 @@
   display: flex;
   flex: 1;
   flex-direction: row;
-  padding: 20px;
+  padding: 40px;
 }
 
 .ModuleFormTextGallery__PreviewOverlay.reverse {
@@ -18,18 +18,52 @@
 .ModuleFormTextGallery__DocumentPreview__Gallery {
   height: calc(100% - 50px);
   width: 100%;
-  margin-bottom: 5px;
 }
 
 .ModuleFormTextGallery__DocumentPreview__Caption {
-  height: 45px;
-  padding: 10px;
-  width: 100%;
-  display: flex;
   background-color: white;
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 10px;
+  display: flex;
+  width: 100%;
 }
 
 .ModuleFormTextGallery__DocumentPreview__TextContainer {
-  padding: 10px;
+  padding: 15px;
   width: 50%;
+  display: flex;
+  align-items: center;
 }
+
+.ModuleFormTextGallery__DocumentPreview__TextContainer h1,
+.ModuleFormTextGallery__DocumentPreview__TextContainer h2{
+  color: #f56350;
+}
+
+.ModuleFormTextGallery__DocumentPreview__TextContainer p{
+  font-size: 1.5rem;
+}
+
+.ModuleFormTextGallery__DocumentPreview__TextContainer a{
+   color: #f56350;
+ }
+
+.ModuleFormTextGallery__DocumentPreview__TextContainer a:hover{
+   color: #f56350;
+ }
+
+.ModuleFormTextGallery__DocumentPreview__TextContainer a[href^="object"]{
+   border-bottom: 1px dashed #f56350;
+   color: inherit;
+ }
+
+.ModuleFormTextGallery__DocumentPreview__TextContainer a[href^="object"]:hover{
+   color: inherit;
+ }
+
+.ModuleFormTextGallery__DocumentPreview__TextContainer .medium-editor-element,
+.ModuleFormTextGallery__DocumentPreview__Caption .medium-editor-element{
+   max-height: 100%;
+   overflow: auto;
+ }

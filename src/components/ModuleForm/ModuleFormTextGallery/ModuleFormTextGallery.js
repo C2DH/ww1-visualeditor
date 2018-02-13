@@ -172,7 +172,7 @@ class ModuleFormTextGallery extends PureComponent {
         </SideContainer>
         <PreviewContainer
           overlayClassName={classNames(
-            'ModuleFormTextGallery__PreviewOverlay',
+            'ModuleFormTextGallery__PreviewOverlay visual-preview',
             layout === 'gallery-text' ? 'reverse' : null
           )}
           backgroundType={backgroundType}
@@ -198,7 +198,7 @@ class ModuleFormTextGallery extends PureComponent {
             <Gallery
               images={images}
               layout={galleryLayout}
-              className='ModuleFormTextGallery__DocumentPreview__Gallery'
+              className='ModuleFormTextGallery__DocumentPreview__Gallery squared'
             />
             <div className="ModuleFormTextGallery__DocumentPreview__Caption">
                 <Field
