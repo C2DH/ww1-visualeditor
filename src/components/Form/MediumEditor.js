@@ -30,7 +30,7 @@ class MediumEditor extends PureComponent {
   }
 
   showDocumentChooser = () => {
-    this.props.showWidgetFullPage('documentChooser', undefined, this.props.input.name)
+    this.props.showWidgetFullPage('documentChooser', {documentType: 'entity', params: {filters:{data__type: 'glossary'}}}, this.props.input.name)
   }
 
   componentWillUnmount() {
