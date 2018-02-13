@@ -12,3 +12,12 @@
 .EducationalForm__FieldTranslated > *{
   margin-right: 5px;
 }
+
+.EducationalForm__FieldTranslated .medium-editor-element a{
+  color: #0275d8;
+}
+
+.EducationalForm__FieldTranslated .medium-editor-element a[href^="object"]{
+   border-bottom: 1px dashed #0275d8;
+   color: inherit;
+ }

@@ -46,6 +46,7 @@ class MediumEditor extends PureComponent {
     }
   })
 
+
   render() {
     const { input: { value, onChange }, style, className, placeholder, options } = this.props
     const converter = new showdown.Converter()
@@ -57,9 +58,9 @@ class MediumEditor extends PureComponent {
         text={converter.makeHtml(value)}
         onChange={(text, medium) => onChange(toMarkdown(text))}
         options={{
-          extensions: { doc: this.documentPicker },
+          extensions: { doc: this.documentPicker},
           toolbar: {
-            buttons: ['bold', 'italic', 'h2', 'h1', 'anchor', 'doc']
+            buttons: ['bold', 'italic', 'h2', 'quote', 'anchor', 'doc']
           },
           placeholder: placeholder ? { text: placeholder } : false,
           ...options,
