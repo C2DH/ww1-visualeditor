@@ -2,6 +2,7 @@
   font-family: 'Behrens Antiqua' ,Georgia,serif;
   font-size: 5.265rem;
   text-transform: uppercase;
+  width: 100%;
 }
 .ThemeForm__Preview-description-input {
   font-family: Georgia,serif;
