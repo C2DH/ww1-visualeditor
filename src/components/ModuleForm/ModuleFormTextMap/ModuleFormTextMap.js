@@ -135,6 +135,7 @@ class ModuleFormTextMap extends PureComponent {
                 name="map.objects"
                 params={mapParams}
                 component={ChooseDocuments}
+                withPlaceTypeFilters
               />
             </div>
             <div className="margin-bottom-15">
