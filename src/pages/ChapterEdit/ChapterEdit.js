@@ -11,7 +11,7 @@ import {
 import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 
-const updateChapter = wrapAuthApiCall(api.updateStory)
+const updateChapter = wrapAuthApiCall(api.updateChapter)
 const getStory = wrapAuthApiCall(api.getStory)
 
 class ChapterEdit extends PureComponent {

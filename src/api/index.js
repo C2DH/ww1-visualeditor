@@ -13,6 +13,17 @@ export const withToken = (token, baseRequest) =>
 // headers and so on are useless
 export const extractBody = ({ body }) => body
 
+// Return a chapter \w data.count_modules ....
+const countChapterModules = chapter => {
+  return {
+    ...chapter,
+    data: {
+      ...chapter.data,
+      count_modules: get(chapter, 'contents.modules.length', 0),
+    }
+  }
+}
+
 // Prepare story for server...
 const prepareStory = story => {
   let storyForServer = { ...story }
@@ -154,8 +165,12 @@ export const updateStory = token => story => {
   .then(extractBody)
 }
 
-export const createStory = token => (theme, languages = []) => {
-  const storyToCreate = prepareStory(theme)
+export const updateChapter = token => (chapter, languages = []) => {
+  return updateStory(token)(countChapterModules(chapter), languages)
+}
+
+export const createStory = token => (story, languages = []) => {
+  const storyToCreate = prepareStory(story)
   return withToken(
     token,
     request.post(`/api/story/`)
@@ -168,6 +183,10 @@ export const createStory = token => (theme, languages = []) => {
       })
   )
   .then(extractBody)
+}
+
+export const createChapter = token => (chapter, languages = []) => {
+  return createStory(token)(countChapterModules(chapter), languages)
 }
 
 export const mentionStory = token => (fromStory, toStory) =>
@@ -220,6 +239,10 @@ export const createChapterCaptions = token => chapterId =>
 
 export const createModuleChapter = token => (chapter, module) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    data: {
+      ...chapter.data,
+      count_modules: get(chapter, 'contents.modules.length', 0) + 1,
+    },
     contents: JSON.stringify({
       modules: get(chapter, 'contents.modules', []).concat(onlyId(module))
     })
@@ -245,6 +268,10 @@ export const updateEducational = token => edu =>
 
 export const deleteModuleChapter = token => (chapter, moduleIndex) =>
   withToken(token, request.patch(`/api/story/${chapter.id}/`).send({
+    data: {
+      ...chapter.data,
+      count_modules: get(chapter, 'contents.modules.length', 1) - 1,
+    },
     contents: JSON.stringify({
       modules: get(chapter, 'contents.modules', []).filter((m, i) =>
         i !== moduleIndex

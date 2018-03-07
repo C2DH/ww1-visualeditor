@@ -12,7 +12,7 @@ import {
 import * as api from '../../api'
 import { wrapAuthApiCall } from '../../state'
 
-const createChapter = wrapAuthApiCall(api.createStory)
+const createChapter = wrapAuthApiCall(api.createChapter)
 const mentionStory = wrapAuthApiCall(api.mentionStory)
 const getStory = wrapAuthApiCall(api.getStory)
 const addChapterToTheme = wrapAuthApiCall(api.addChapterToTheme)
@@ -54,7 +54,7 @@ class NewChapter extends PureComponent {
 const mapStateToProps = state => ({
   languages: getLanguages(state),
   theme: getTheme(state),
-  chapter: newChapter(state,)
+  chapter: newChapter(state),
 })
 
 export default connect(mapStateToProps, {
