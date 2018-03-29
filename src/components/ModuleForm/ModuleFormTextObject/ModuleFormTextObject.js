@@ -104,7 +104,7 @@ class ModuleFormTextObject extends PureComponent {
                   <Field
                     label="Background Overlay"
                     name="background.object.overlay"
-                    colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
                     component={ColorSelection}
                     validate={[isValidHex, required]}
                    />
@@ -117,7 +117,7 @@ class ModuleFormTextObject extends PureComponent {
                   <Field
                     label="Background Color"
                     name="background.color"
-                    colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
                     component={ColorSelection}
                     validate={[isValidHex, required]}
                    />

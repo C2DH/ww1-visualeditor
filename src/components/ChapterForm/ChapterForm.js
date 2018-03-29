@@ -88,7 +88,7 @@ class ChapterForm extends PureComponent {
                 <hr />
                 <Field
                   label="Background overlay"
-                  colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                  colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
                   name="data.background.overlay"
                   component={ColorSelection}
                   validate={[isValidHex, required]}
@@ -98,7 +98,7 @@ class ChapterForm extends PureComponent {
             {backgroundType === 'color' && (
               <Field
                 label="Background color"
-                colors={['#818A91', '#777', '#ADADAD', '#999', '#373A3C', '#DDD']}
+                colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
                 name="data.background.backgroundColor"
                 component={ColorSelection}
                 validate={[isValidHex, required]}
